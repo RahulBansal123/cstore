@@ -14,7 +14,7 @@ import actions from '../../actions';
 
 import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import Loading from '../../components/Common/Loading';
 
 class Login extends React.PureComponent {
   render() {
@@ -41,7 +41,7 @@ class Login extends React.PureComponent {
 
     return (
       <div className="login-form">
-        {isLoading && <LoadingIndicator />}
+        {isLoading && <Loading />}
         <form onSubmit={handleSubmit} noValidate>
           <Row>
             <Col

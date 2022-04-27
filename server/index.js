@@ -20,12 +20,10 @@ const socket = require('./socket');
 const { database, port } = keys;
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-// parse application/x-www-form-urlencoded
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// parse application/json
 app.use(bodyParser.json());
 app.use(
   helmet({
@@ -35,7 +33,6 @@ app.use(
 );
 app.use(cors());
 
-// Connect to MongoDB
 mongoose.set('useCreateIndex', true);
 mongoose
   .connect(database.url, {
@@ -51,7 +48,6 @@ mongoose
 require('./config/passport')(app);
 app.use(routes);
 
-// if development
 if (process.env.NODE_ENV !== 'production') {
   const compiler = webpack(webpackConfig);
 
@@ -87,11 +83,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const server = app.listen(port, () => {
-  console.log(
-    `${chalk.green('✓')} ${chalk.blue(
-      `Listening on port ${port}. Visit http://localhost:${port}/ in your browser.`
-    )}`
-  );
+  console.log(`${chalk.green('✓')} ${chalk.blue(`Listening on port ${port}`)}`);
 });
 
 socket(server);

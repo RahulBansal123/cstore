@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import SubPage from '../../components/Manager/SubPage';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import Loading from '../../components/Common/Loading';
 import NotFound from '../../components/Common/NotFound';
 import MerchantList from '../../components/Manager/MerchantList';
 
@@ -26,14 +26,14 @@ class Merchant extends React.PureComponent {
       isLoading,
       approveMerchant,
       rejectMerchant,
-      deleteMerchant
+      deleteMerchant,
     } = this.props;
 
     return (
-      <div className='merchant-dashboard'>
+      <div className="merchant-dashboard">
         <SubPage title={'Merchants'} isMenuOpen={null} />
         {isLoading ? (
-          <LoadingIndicator inline />
+          <Loading inline />
         ) : merchants.length > 0 ? (
           <MerchantList
             merchants={merchants}
@@ -42,17 +42,17 @@ class Merchant extends React.PureComponent {
             deleteMerchant={deleteMerchant}
           />
         ) : (
-          <NotFound message='no merchants found.' />
+          <NotFound message="no merchants found." />
         )}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     merchants: state.merchant.merchants,
-    isLoading: state.merchant.isLoading
+    isLoading: state.merchant.isLoading,
   };
 };
 

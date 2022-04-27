@@ -1,57 +1,58 @@
-const colors = [
-  '#FF6633',
-  '#FFB399',
-  '#FF33FF',
-  '#00B3E6',
-  '#E6B333',
-  '#3366E6',
-  '#999966',
-  '#99FF99',
-  '#B34D4D',
-  '#80B300',
-  '#809900',
-  '#E6B3B3',
-  '#6680B3',
-  '#66991A',
-  '#FF99E6',
-  '#CCFF1A',
-  '#FF1A66',
-  '#E6331A',
-  '#33FFCC',
-  '#66994D',
-  '#B366CC',
-  '#4D8000',
-  '#B33300',
-  '#CC80CC',
-  '#66664D',
-  '#991AFF',
-  '#E666FF',
-  '#4DB3FF',
-  '#1AB399',
-  '#E666B3',
-  '#33991A',
-  '#CC9999',
-  '#B3B31A',
-  '#00E680',
-  '#4D8066',
-  '#809980',
-  '#E6FF80',
-  '#1AFF33',
-  '#999933',
-  '#FF3380',
-  '#CCCC00',
-  '#66E64D',
-  '#4D80CC',
-  '#9900B3',
-  '#E64D66',
-  '#4DB380',
-  '#FF4D4D',
-  '#99E6E6',
-  '#6666FF'
-];
+const colors = ['#66994D', '#4D8000', '#999933'];
 
-export const getRandomColors = s => {
+export const getColors = (s) => {
   const index = Math.floor(Math.random() * colors.length);
 
   return colors[index];
+};
+
+const dateOpt = {
+  timeZone: 'UTC',
+  weekday: 'long',
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+};
+
+export const dateFormat = (date) => {
+  const newDate = new Date(date);
+  return newDate.toLocaleDateString('en-US', dateOpt);
+};
+
+export const selectOptionsFormat = (data, empty = false, from) => {
+  let newSelectOptions = [];
+
+  if (data && data.length > 0) {
+    data.map((option) => {
+      let newOption = {};
+      newOption.value = option._id;
+      newOption.label = option.name;
+      newSelectOptions.push(newOption);
+    });
+  }
+  if (empty) {
+    const emptyOption = {
+      value: 0,
+      label: 'Select option',
+    };
+    newSelectOptions.unshift(emptyOption);
+  }
+
+  return newSelectOptions;
+};
+
+export const selectOptionsUnFormat = (data) => {
+  if (!data) return null;
+
+  let newSelectOptions = [];
+
+  if (data && data.length > 0) {
+    data.map((option) => {
+      let newOption = {};
+      newOption._id = option.value;
+      newSelectOptions.push(newOption._id);
+    });
+  }
+
+  return newSelectOptions;
 };

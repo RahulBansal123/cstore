@@ -6,6 +6,5 @@ export const allFieldsValidation = (data, rules, options) => {
   if (!validationResponse.isValid) {
     validationResponse.errors = validation.errors.all();
   }
-
   return validationResponse;
 };

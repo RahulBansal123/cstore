@@ -12,7 +12,7 @@ import actions from '../../actions';
 
 import CategoryList from '../../components/Manager/CategoryList';
 import SubPage from '../../components/Manager/SubPage';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import Loading from '../../components/Common/Loading';
 import NotFound from '../../components/Common/NotFound';
 
 class List extends React.PureComponent {
@@ -26,16 +26,16 @@ class List extends React.PureComponent {
     return (
       <>
         <SubPage
-          title='Categories'
-          actionTitle='Add'
+          title="Categories"
+          actionTitle="Add"
           handleAction={() => history.push('/dashboard/category/add')}
         >
           {isLoading ? (
-            <LoadingIndicator inline />
+            <Loading inline />
           ) : categories.length > 0 ? (
             <CategoryList categories={categories} />
           ) : (
-            <NotFound message='no categories found.' />
+            <NotFound message="no categories found." />
           )}
         </SubPage>
       </>
@@ -43,11 +43,11 @@ class List extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     categories: state.category.categories,
     isLoading: state.category.isLoading,
-    user: state.account.user
+    user: state.account.user,
   };
 };
 

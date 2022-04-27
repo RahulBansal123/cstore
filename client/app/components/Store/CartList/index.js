@@ -1,9 +1,3 @@
-/**
- *
- * CartList
- *
- */
-
 import React from 'react';
 
 import { Link } from 'react-router-dom';
@@ -11,7 +5,7 @@ import { Container, Row, Col } from 'reactstrap';
 
 import Button from '../../Common/Button';
 
-const CartList = props => {
+const CartList = (props) => {
   const { cartItems, handleRemoveFromCart } = props;
 
   const handleProductClick = () => {
@@ -19,16 +13,16 @@ const CartList = props => {
   };
 
   return (
-    <div className='cart-list'>
+    <div className="cart-list">
       {cartItems.map((item, index) => (
-        <div key={index} className='item-box'>
-          <div className='item-details'>
+        <div key={index} className="item-box">
+          <div className="item-details">
             <Container>
-              <Row className='mb-2 align-items-center'>
-                <Col xs='10' className='pr-0'>
-                  <div className='d-flex align-items-center'>
+              <Row className="mb-2 align-items-center">
+                <Col xs="10" className="pr-0">
+                  <div className="d-flex align-items-center">
                     <img
-                      className='item-image mr-2'
+                      className="item-image mr-2"
                       src={`${
                         item.imageUrl
                           ? item.imageUrl
@@ -38,39 +32,39 @@ const CartList = props => {
 
                     <Link
                       to={`/product/${item.slug}`}
-                      className='item-link one-line-ellipsis'
+                      className="item-link one-line-ellipsis"
                       onClick={handleProductClick}
                     >
-                      <h1 className='item-name one-line-ellipsis'>
+                      <h1 className="item-name one-line-ellipsis">
                         {item.name}
                       </h1>
                     </Link>
                   </div>
                 </Col>
-                <Col xs='2' className='text-right'>
+                <Col xs="2" className="text-right">
                   <Button
                     borderless
-                    variant='empty'
+                    variant="empty"
                     ariaLabel={`remove ${item.name} from cart`}
-                    icon={<i className='icon-trash' aria-hidden='true' />}
+                    icon={<i className="icon-trash" aria-hidden="true" />}
                     onClick={() => handleRemoveFromCart(item)}
                   />
                 </Col>
               </Row>
-              <Row className='mb-2 align-items-center'>
-                <Col xs='9'>
-                  <p className='item-label'>price</p>
+              <Row className="mb-2 align-items-center">
+                <Col xs="9">
+                  <p className="item-label">price</p>
                 </Col>
-                <Col xs='3' className='text-right'>
-                  <p className='value price'>{` $${item?.totalPrice}`}</p>
+                <Col xs="3" className="text-right">
+                  <p className="value price">{` $${item?.totalPrice}`}</p>
                 </Col>
               </Row>
-              <Row className='mb-2 align-items-center'>
-                <Col xs='9'>
-                  <p className='item-label'>quantity</p>
+              <Row className="mb-2 align-items-center">
+                <Col xs="9">
+                  <p className="item-label">quantity</p>
                 </Col>
-                <Col xs='3' className='text-right'>
-                  <p className='value quantity'>{` ${item.quantity}`}</p>
+                <Col xs="3" className="text-right">
+                  <p className="value quantity">{` ${item.quantity}`}</p>
                 </Col>
               </Row>
             </Container>

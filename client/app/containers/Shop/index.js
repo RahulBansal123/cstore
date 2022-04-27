@@ -24,7 +24,7 @@ class Shop extends React.PureComponent {
 
   render() {
     const { products, advancedFilters, filterProducts } = this.props;
-    const { totalProducts, pageNumber, pages, order } = advancedFilters;
+    const { totalProducts, pageNumber, pages } = advancedFilters;
 
     return (
       <div className="shop">

@@ -19,10 +19,9 @@ import {
   SET_MERCHANTS_LOADING,
   SET_SELL_SUBMITTING,
   SET_SELL_LOADING,
-  SIGNUP_RESET
+  SIGNUP_RESET,
 } from './constants';
 
-import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
 import { signOut } from '../Login/actions';
 
@@ -32,7 +31,7 @@ export const sellFormChange = (name, value) => {
 
   return {
     type: SELL_FORM_CHANGE,
-    payload: formData
+    payload: formData,
   };
 };
 
@@ -42,7 +41,7 @@ export const merchantSignupChange = (name, value) => {
 
   return {
     type: SIGNUP_CHANGE,
-    payload: formData
+    payload: formData,
   };
 };
 
@@ -56,7 +55,7 @@ export const sellWithUs = () => {
         email: 'required|email',
         phoneNumber: ['required', `regex:${phoneno}`],
         brand: 'required',
-        business: 'required|min:10'
+        business: 'required|min:10',
       };
 
       const merchant = getState().merchant.sellFormData;
@@ -69,7 +68,7 @@ export const sellWithUs = () => {
         'regex.phoneNumber': 'Phone number format is invalid.',
         'required.brand': 'Brand is required.',
         'required.business': 'Business is required.',
-        'min.business': 'Business must be at least 10 characters.'
+        'min.business': 'Business must be at least 10 characters.',
       });
 
       if (!isValid) {
@@ -87,13 +86,13 @@ export const sellWithUs = () => {
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
-        autoDismiss: 1
+        autoDismiss: 1,
       };
 
       dispatch({ type: SELL_FORM_RESET });
       dispatch(success(successfulOptions));
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     } finally {
       dispatch({ type: SET_SELL_SUBMITTING, payload: false });
       dispatch({ type: SET_SELL_LOADING, payload: false });
@@ -110,48 +109,48 @@ export const fetchMerchants = () => {
 
       dispatch({
         type: FETCH_MERCHANTS,
-        payload: response.data.merchants
+        payload: response.data.merchants,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     } finally {
       dispatch({ type: SET_MERCHANTS_LOADING, payload: false });
     }
   };
 };
 
-export const approveMerchant = merchant => {
+export const approveMerchant = (merchant) => {
   return async (dispatch, getState) => {
     try {
       await axios.put(`/api/merchant/approve/${merchant._id}`);
 
       dispatch(fetchMerchants());
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
 
-export const rejectMerchant = merchant => {
+export const rejectMerchant = (merchant) => {
   return async (dispatch, getState) => {
     try {
       await axios.put(`/api/merchant/reject/${merchant._id}`);
 
       dispatch(fetchMerchants());
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
 
-export const merchantSignUp = token => {
+export const merchantSignUp = (token) => {
   return async (dispatch, getState) => {
     try {
       const rules = {
         email: 'required|email',
         password: 'required|min:6',
         firstName: 'required',
-        lastName: 'required'
+        lastName: 'required',
       };
 
       const merchant = getState().merchant.signupFormData;
@@ -160,7 +159,7 @@ export const merchantSignUp = token => {
         'required.email': 'Email is required.',
         'required.password': 'Password is required.',
         'required.firstName': 'First Name is required.',
-        'required.lastName': 'Last Name is required.'
+        'required.lastName': 'Last Name is required.',
       });
 
       if (!isValid) {
@@ -172,7 +171,7 @@ export const merchantSignUp = token => {
       const successfulOptions = {
         title: `You have signed up successfully! Please sign in with the email and password. Thank you!`,
         position: 'tr',
-        autoDismiss: 1
+        autoDismiss: 1,
       };
 
       dispatch(signOut());
@@ -180,14 +179,13 @@ export const merchantSignUp = token => {
       dispatch(push('/login'));
       dispatch({ type: SIGNUP_RESET });
     } catch (error) {
-      const title = `Please try to signup again!`;
-      handleError(error, dispatch, title);
+      console.log('error');
     }
   };
 };
 
 // delete merchant api
-export const deleteMerchant = id => {
+export const deleteMerchant = (id) => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.delete(`/api/merchant/delete/${id}`);
@@ -195,18 +193,18 @@ export const deleteMerchant = id => {
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
-        autoDismiss: 1
+        autoDismiss: 1,
       };
 
       if (response.data.success == true) {
         dispatch(success(successfulOptions));
         dispatch({
           type: REMOVE_MERCHANT,
-          payload: id
+          payload: id,
         });
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };

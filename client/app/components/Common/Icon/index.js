@@ -1,27 +1,4 @@
-/**
- *
- * Icon
- *
- */
-
 import React from 'react';
-
-const BagIcon = () => {
-  return (
-    <svg
-      aria-hidden="true"
-      className="bag-icon"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 512 512"
-      enableBackground="new 0 0 512 512"
-    >
-      <g>
-        <path d="m417.9,104.4h-65.5c-2.2-51-44.8-92.4-96.4-92.4s-94.2,41.3-96.5,92.4h-66.5l-30.1,395.6h386.2l-31.2-395.6zm-161.9-71.6c40.1,0 73.5,32 75.7,71.6h-151.4c2.2-39.6 35.6-71.6 75.7-71.6zm-143.3,92.4h46.7v68.5h20.8v-68.5h151.6v68.5h20.8v-68.5h47.8l27,354h-341.7l27-354z" />
-      </g>
-    </svg>
-  );
-};
 
 const BarsIcon = () => {
   return <span className="bars-icon fa fa-bars" aria-hidden="true" />;
@@ -204,93 +181,6 @@ const TrashIcon = ({ className = '', width = '20', height = '20' }) => {
   );
 };
 
-const XIcon = ({ className = '', width = '20', height = '20' }) => {
-  return (
-    <svg
-      className={`${className} x-icon`}
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
-  );
-};
-
-const HeartIcon = ({ className = '' }) => {
-  return (
-    <svg
-      className={`${className}`}
-      enableBackground="new 467 392 58 57"
-      viewBox="467 392 58 57"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g
-        id="Group"
-        fill="none"
-        fillRule="evenodd"
-        transform="translate(467 392)"
-      >
-        <path
-          d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z"
-          id="heart"
-          fill="#AAB8C2"
-        />
-        <circle
-          id="main-circ"
-          fill="#E2264D"
-          opacity="0"
-          cx="29.5"
-          cy="29.5"
-          r="1.5"
-        />
-
-        <g id="grp7" opacity="0" transform="translate(7 6)">
-          <circle id="oval1" fill="#FF6347" cx="2" cy="6" r="2" />
-          <circle id="oval2" fill="#FF4500" cx="5" cy="2" r="2" />
-        </g>
-
-        <g id="grp6" opacity="0" transform="translate(0 28)">
-          <circle id="oval1" fill="#FF6347" cx="2" cy="7" r="2" />
-          <circle id="oval2" fill="#FF4500" cx="3" cy="2" r="2" />
-        </g>
-
-        <g id="grp3" opacity="0" transform="translate(52 28)">
-          <circle id="oval2" fill="#FF6347" cx="2" cy="7" r="2" />
-          <circle id="oval1" fill="#FF4500" cx="4" cy="2" r="2" />
-        </g>
-
-        <g id="grp2" opacity="0" transform="translate(44 6)">
-          <circle id="oval2" fill="#FF6347" cx="5" cy="6" r="2" />
-          <circle id="oval1" fill="#FF4500" cx="2" cy="2" r="2" />
-        </g>
-
-        <g id="grp5" opacity="0" transform="translate(14 50)">
-          <circle id="oval1" fill="#FFA500" cx="6" cy="5" r="2" />
-          <circle id="oval2" fill="#FF6347" cx="2" cy="2" r="2" />
-        </g>
-
-        <g id="grp4" opacity="0" transform="translate(35 50)">
-          <circle id="oval1" fill="#FFA500" cx="6" cy="5" r="2" />
-          <circle id="oval2" fill="#FF6347" cx="2" cy="2" r="2" />
-        </g>
-
-        <g id="grp1" opacity="0" transform="translate(24)">
-          <circle id="oval1" fill="#FFA500" cx="2.5" cy="3" r="2" />
-          <circle id="oval2" fill="#FF6347" cx="7.5" cy="2" r="2" />
-        </g>
-      </g>
-    </svg>
-  );
-};
-
 const ArrowBackIcon = ({ className = '', width = '20', height = '20' }) => {
   return (
     <svg
@@ -312,7 +202,6 @@ const ArrowBackIcon = ({ className = '', width = '20', height = '20' }) => {
 };
 
 export {
-  BagIcon,
   BarsIcon,
   CloseIcon,
   CheckIcon,
@@ -320,7 +209,5 @@ export {
   AddressIcon,
   ReviewIcon,
   TrashIcon,
-  HeartIcon,
-  XIcon,
   ArrowBackIcon,
 };

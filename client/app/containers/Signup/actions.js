@@ -18,7 +18,6 @@ import {
 
 import { setAuth } from '../Authentication/actions';
 import setToken from '../../utils/token';
-import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
 
 export const signupChange = (name, value) => {
@@ -83,8 +82,7 @@ export const signUp = () => {
       dispatch(success(successfulOptions));
       dispatch({ type: SIGNUP_RESET });
     } catch (error) {
-      const title = `Please try to signup again!`;
-      handleError(error, dispatch, title);
+      console.log('error');
     } finally {
       dispatch({ type: SET_SIGNUP_SUBMITTING, payload: false });
       dispatch({ type: SET_SIGNUP_LOADING, payload: false });

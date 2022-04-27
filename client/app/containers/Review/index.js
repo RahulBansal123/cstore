@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import SubPage from '../../components/Manager/SubPage';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import Loading from '../../components/Common/Loading';
 import NotFound from '../../components/Common/NotFound';
 import ReviewList from '../../components/Manager/ReviewList';
 
@@ -20,19 +20,14 @@ class Review extends React.PureComponent {
   }
 
   render() {
-    const {
-      reviews,
-      isLoading,
-      approveReview,
-      rejectReview,
-      deleteReview
-    } = this.props;
+    const { reviews, isLoading, approveReview, rejectReview, deleteReview } =
+      this.props;
 
     return (
-      <div className='review-dashboard'>
+      <div className="review-dashboard">
         <SubPage title={'Reviews'} isMenuOpen={null}>
           {isLoading ? (
-            <LoadingIndicator inline />
+            <Loading inline />
           ) : reviews.length > 0 ? (
             <ReviewList
               reviews={reviews}
@@ -41,7 +36,7 @@ class Review extends React.PureComponent {
               deleteReview={deleteReview}
             />
           ) : (
-            <NotFound message='no reviews found.' />
+            <NotFound message="no reviews found." />
           )}
         </SubPage>
       </div>
@@ -49,10 +44,10 @@ class Review extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     reviews: state.review.reviews,
-    isLoading: state.review.isLoading
+    isLoading: state.review.isLoading,
   };
 };
 

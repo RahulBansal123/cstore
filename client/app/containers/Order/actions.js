@@ -14,24 +14,23 @@ import {
   FETCH_ORDER,
   UPDATE_ORDER_STATUS,
   SET_ORDERS_LOADING,
-  CLEAR_ORDERS
+  CLEAR_ORDERS,
 } from './constants';
 
 import { clearCart, getCartId } from '../Cart/actions';
 import { toggleCart } from '../Navigation/actions';
-import handleError from '../../utils/error';
 
-export const updateOrderStatus = value => {
+export const updateOrderStatus = (value) => {
   return {
     type: UPDATE_ORDER_STATUS,
-    payload: value
+    payload: value,
   };
 };
 
-export const setOrderLoading = value => {
+export const setOrderLoading = (value) => {
   return {
     type: SET_ORDERS_LOADING,
-    payload: value
+    payload: value,
   };
 };
 
@@ -45,44 +44,44 @@ export const fetchOrders = () => {
       if (response.data.orders) {
         dispatch({
           type: FETCH_ORDERS,
-          payload: response.data.orders
+          payload: response.data.orders,
         });
       }
     } catch (error) {
       dispatch(clearOrders());
-      handleError(error, dispatch);
+      console.log('error');
     } finally {
       dispatch(setOrderLoading(false));
     }
   };
 };
 
-export const fetchSearchOrders = filter => {
+export const fetchSearchOrders = (filter) => {
   return async (dispatch, getState) => {
     try {
       dispatch(setOrderLoading(true));
 
       const response = await axios.get(`/api/order/search`, {
         params: {
-          search: filter.value
-        }
+          search: filter.value,
+        },
       });
 
       dispatch({ type: FETCH_SEARCHED_ORDERS, payload: response.data.orders });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     } finally {
       dispatch(setOrderLoading(false));
     }
   };
 };
 
-export const searchOrders = filter => {
+export const searchOrders = (filter) => {
   return async (dispatch, getState) => {
     try {
       dispatch(fetchSearchOrders(filter));
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -98,10 +97,10 @@ export const fetchOrder = (id, withLoading = true) => {
 
       dispatch({
         type: FETCH_ORDER,
-        payload: response.data.order
+        payload: response.data.order,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     } finally {
       if (withLoading) {
         dispatch(setOrderLoading(false));
@@ -119,7 +118,7 @@ export const cancelOrder = () => {
 
       dispatch(push(`/dashboard/orders`));
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -132,7 +131,7 @@ export const updateOrderItemStatus = (itemId, status) => {
       const response = await axios.put(`/api/order/status/item/${itemId}`, {
         orderId: order._id,
         cartId: order.cartId,
-        status
+        status,
       });
 
       if (response.data.orderCancelled) {
@@ -145,12 +144,12 @@ export const updateOrderItemStatus = (itemId, status) => {
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
-        autoDismiss: 1
+        autoDismiss: 1,
       };
 
       dispatch(success(successfulOptions));
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -164,14 +163,14 @@ export const addOrder = () => {
       if (cartId) {
         const response = await axios.post(`/api/order/add`, {
           cartId,
-          total
+          total,
         });
 
         dispatch(push(`/order/success/${response.data.order._id}`));
         dispatch(clearCart());
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -194,6 +193,6 @@ export const placeOrder = () => {
 
 export const clearOrders = () => {
   return {
-    type: CLEAR_ORDERS
+    type: CLEAR_ORDERS,
   };
 };

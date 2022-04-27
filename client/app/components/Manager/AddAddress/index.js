@@ -8,23 +8,22 @@ import React from 'react';
 
 import { Row, Col } from 'reactstrap';
 
-import Checkbox from '../../Common/Checkbox';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 
-const AddAddress = props => {
+const AddAddress = (props) => {
   const { addressFormData, formErrors, addressChange, addAddress } = props;
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     addAddress();
   };
 
   return (
-    <div className='add-address'>
+    <div className="add-address">
       <form onSubmit={handleSubmit} noValidate>
         <Row>
-          <Col xs='12' md='12'>
+          <Col xs="12" md="12">
             <Input
               type={'text'}
               error={formErrors['address']}
@@ -37,7 +36,7 @@ const AddAddress = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12'>
+          <Col xs="12" md="12">
             <Input
               type={'text'}
               error={formErrors['city']}
@@ -50,7 +49,7 @@ const AddAddress = props => {
               }}
             />
           </Col>
-          <Col xs='12' lg='6'>
+          <Col xs="12" lg="6">
             <Input
               type={'text'}
               error={formErrors['state']}
@@ -63,7 +62,7 @@ const AddAddress = props => {
               }}
             />
           </Col>
-          <Col xs='12' lg='6'>
+          <Col xs="12" lg="6">
             <Input
               type={'text'}
               error={formErrors['country']}
@@ -76,7 +75,7 @@ const AddAddress = props => {
               }}
             />
           </Col>
-          <Col xs='12' lg='6'>
+          <Col xs="12" lg="6">
             <Input
               type={'text'}
               error={formErrors['zipCode']}
@@ -89,8 +88,8 @@ const AddAddress = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12'>
-            <Checkbox
+          <Col xs="12" md="12">
+            {/* <Checkbox
               id={'default'}
               label={'As the Default'}
               name={'isDefault'}
@@ -98,12 +97,12 @@ const AddAddress = props => {
               toggleCheckboxChange={(name, value) => {
                 addressChange(name, value);
               }}
-            />
+            /> */}
           </Col>
         </Row>
         <hr />
-        <div className='add-address-actions'>
-          <Button type='submit' text='Add Address' />
+        <div className="add-address-actions">
+          <Button type="submit" text="Add Address" />
         </div>
       </form>
     </div>

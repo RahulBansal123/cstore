@@ -12,7 +12,7 @@ import actions from '../../actions';
 
 import OrderDetails from '../../components/Manager/OrderDetails';
 import NotFound from '../../components/Common/NotFound';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import Loading from '../../components/Common/Loading';
 
 class OrderPage extends React.PureComponent {
   componentDidMount() {
@@ -34,13 +34,13 @@ class OrderPage extends React.PureComponent {
       user,
       isLoading,
       cancelOrder,
-      updateOrderItemStatus
+      updateOrderItemStatus,
     } = this.props;
 
     return (
-      <div className='order-page'>
+      <div className="order-page">
         {isLoading ? (
-          <LoadingIndicator backdrop />
+          <Loading backdrop />
         ) : order._id ? (
           <OrderDetails
             order={order}
@@ -56,18 +56,18 @@ class OrderPage extends React.PureComponent {
             }}
           />
         ) : (
-          <NotFound message='no order found.' />
+          <NotFound message="no order found." />
         )}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.account.user,
     order: state.order.order,
-    isLoading: state.order.isLoading
+    isLoading: state.order.isLoading,
   };
 };
 

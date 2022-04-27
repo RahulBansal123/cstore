@@ -14,8 +14,7 @@ import actions from '../../actions';
 
 import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
-import Checkbox from '../../components/Common/Checkbox';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import Loading from '../../components/Common/Loading';
 
 class Signup extends React.PureComponent {
   render() {
@@ -39,7 +38,7 @@ class Signup extends React.PureComponent {
 
     return (
       <div className="signup-form">
-        {isLoading && <LoadingIndicator />}
+        {isLoading && <Loading />}
         <h1 className="text-center">Sign Up! and don't miss the FOMO</h1>
         <form onSubmit={handleSubmit} noValidate>
           <Row>

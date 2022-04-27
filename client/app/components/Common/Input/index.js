@@ -1,18 +1,11 @@
-/**
- *
- * Input
- *
- */
-
 import React from 'react';
 import ReactStars from 'react-rating-stars-component';
 
-const Input = props => {
+const Input = (props) => {
   const {
     type,
     value,
     error,
-    step,
     decimals,
     min,
     max,
@@ -22,10 +15,10 @@ const Input = props => {
     label,
     name,
     onInputChange,
-    inlineElement
+    inlineElement,
   } = props;
 
-  const _onChange = e => {
+  const _onChange = (e) => {
     if (e.target.name == 'image') {
       onInputChange(e.target.name, e.target.files[0]);
     } else {
@@ -41,7 +34,7 @@ const Input = props => {
         {label && <label>{label}</label>}
         <textarea
           type={'textarea'}
-          onChange={e => {
+          onChange={(e) => {
             _onChange(e);
           }}
           rows={rows}
@@ -50,13 +43,13 @@ const Input = props => {
           placeholder={placeholder}
           className={'textarea-text'}
         />
-        <span className='invalid-message'>{error && error[0]}</span>
+        <span className="invalid-message">{error && error[0]}</span>
       </div>
     );
   } else if (type === 'number') {
     const styles = `input-box${error ? ' invalid' : ''}`;
 
-    const handleOnInput = e => {
+    const handleOnInput = (e) => {
       if (!decimals) {
         e.target.value = e.target.value.replace(/[^0-9]*/g, '');
       }
@@ -65,14 +58,14 @@ const Input = props => {
       <div className={styles}>
         {label && <label>{label}</label>}
         <input
-          autoComplete='on'
-          step='step'
+          autoComplete="on"
+          step="step"
           min={min || 0}
           max={max || null}
-          pattern='[0-9]'
+          pattern="[0-9]"
           onInput={handleOnInput}
           type={type}
-          onChange={e => {
+          onChange={(e) => {
             _onChange(e);
           }}
           disabled={disabled}
@@ -81,7 +74,7 @@ const Input = props => {
           placeholder={placeholder}
           className={'input-number'}
         />
-        <span className='invalid-message'>{error && error[0]}</span>
+        <span className="invalid-message">{error && error[0]}</span>
       </div>
     );
   } else if (type === 'stars') {
@@ -98,15 +91,15 @@ const Input = props => {
           activeColor={'#ffb302'}
           a11y={true}
           isHalf={false}
-          emptyIcon={<i className='fa fa-star' />}
-          halfIcon={<i className='fa fa-star-half-alt' />}
-          filledIcon={<i className='fa fa-star' />}
+          emptyIcon={<i className="fa fa-star" />}
+          halfIcon={<i className="fa fa-star-half-alt" />}
+          filledIcon={<i className="fa fa-star" />}
           value={value}
-          onChange={value => {
+          onChange={(value) => {
             onInputChange(name, value);
           }}
         />
-        <span className='invalid-message'>{error && error[0]}</span>
+        <span className="invalid-message">{error && error[0]}</span>
       </div>
     );
   } else {
@@ -117,12 +110,12 @@ const Input = props => {
     return (
       <div className={styles}>
         {label && <label>{label}</label>}
-        <div className='input-text-block'>
+        <div className="input-text-block">
           <input
             className={'input-text'}
-            autoComplete='on'
+            autoComplete="on"
             type={type}
-            onChange={e => {
+            onChange={(e) => {
               _onChange(e);
             }}
             disabled={disabled}
@@ -132,7 +125,7 @@ const Input = props => {
           />
           {inlineElement}
         </div>
-        <span className='invalid-message'>{error && error[0]}</span>
+        <span className="invalid-message">{error && error[0]}</span>
       </div>
     );
   }
@@ -142,7 +135,7 @@ Input.defaultProps = {
   step: 1,
   decimals: true,
   rows: '4',
-  inlineElement: null
+  inlineElement: null,
 };
 
 export default Input;

@@ -1,12 +1,6 @@
-/**
- *
- * LoadingIndicator
- *
- */
-
 import React from 'react';
 
-const LoadingIndicator = props => {
+const Loading = (props) => {
   const { inline, backdrop } = props;
 
   return (
@@ -24,9 +18,9 @@ const LoadingIndicator = props => {
   );
 };
 
-LoadingIndicator.defaultProps = {
+Loading.defaultProps = {
   inline: false,
-  backdrop: false
+  backdrop: false,
 };
 
-export default LoadingIndicator;
+export default Loading;

@@ -1,9 +1,3 @@
-/*
- *
- * Edit
- *
- */
-
 import React from 'react';
 
 import { connect } from 'react-redux';
@@ -35,13 +29,13 @@ class Edit extends React.PureComponent {
       addressEditChange,
       defaultChange,
       updateAddress,
-      deleteAddress
+      deleteAddress,
     } = this.props;
 
     return (
       <SubPage
-        title='Edit Address'
-        actionTitle='Cancel'
+        title="Edit Address"
+        actionTitle="Cancel"
         handleAction={() => history.goBack()}
       >
         {address?._id ? (
@@ -54,17 +48,17 @@ class Edit extends React.PureComponent {
             defaultChange={defaultChange}
           />
         ) : (
-          <NotFound message='no Address found.' />
+          <NotFound message="no Address found." />
         )}
       </SubPage>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     address: state.address.address,
-    formErrors: state.address.editFormErrors
+    formErrors: state.address.editFormErrors,
   };
 };
 

@@ -19,14 +19,10 @@ import {
   ADD_CATEGORY,
   REMOVE_CATEGORY,
   SET_CATEGORIES_LOADING,
-  RESET_CATEGORY
+  RESET_CATEGORY,
 } from './constants';
 
-import handleError from '../../utils/error';
-import {
-  formatSelectOptions,
-  unformatSelectOptions
-} from '../../helpers/select';
+import { selectOptionsFormat, selectOptionsUnFormat } from '../../helpers';
 import { allFieldsValidation } from '../../utils/validation';
 
 export const categoryChange = (name, value) => {
@@ -35,7 +31,7 @@ export const categoryChange = (name, value) => {
 
   return {
     type: CATEGORY_CHANGE,
-    payload: formData
+    payload: formData,
   };
 };
 
@@ -45,14 +41,14 @@ export const categoryEditChange = (name, value) => {
 
   return {
     type: CATEGORY_EDIT_CHANGE,
-    payload: formData
+    payload: formData,
   };
 };
 
-export const categorySelect = value => {
+export const categorySelect = (value) => {
   return {
     type: CATEGORY_SELECT,
-    payload: value
+    payload: value,
   };
 };
 
@@ -70,10 +66,10 @@ export const fetchStoreCategories = () => {
 
       dispatch({
         type: FETCH_STORE_CATEGORIES,
-        payload: response.data.categories
+        payload: response.data.categories,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -87,10 +83,10 @@ export const fetchCategories = () => {
 
       dispatch({
         type: FETCH_CATEGORIES,
-        payload: response.data.categories
+        payload: response.data.categories,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     } finally {
       dispatch({ type: SET_CATEGORIES_LOADING, payload: false });
     }
@@ -98,21 +94,21 @@ export const fetchCategories = () => {
 };
 
 // fetch category api
-export const fetchCategory = id => {
+export const fetchCategory = (id) => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.get(`/api/category/${id}`);
 
-      response.data.category.products = formatSelectOptions(
+      response.data.category.products = selectOptionsFormat(
         response.data.category.products
       );
 
       dispatch({
         type: FETCH_CATEGORY,
-        payload: response.data.category
+        payload: response.data.category,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -124,7 +120,7 @@ export const addCategory = () => {
       const rules = {
         name: 'required',
         description: 'required|max:200',
-        products: 'required'
+        products: 'required',
       };
 
       const category = getState().category.categoryFormData;
@@ -132,7 +128,7 @@ export const addCategory = () => {
       const newCategory = {
         name: category.name,
         description: category.description,
-        products: unformatSelectOptions(category.products)
+        products: selectOptionsUnFormat(category.products),
       };
 
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
@@ -140,7 +136,7 @@ export const addCategory = () => {
         'required.description': 'Description is required.',
         'max.description':
           'Description may not be greater than 200 characters.',
-        'required.products': 'Products are required.'
+        'required.products': 'Products are required.',
       });
 
       if (!isValid) {
@@ -152,20 +148,20 @@ export const addCategory = () => {
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
-        autoDismiss: 1
+        autoDismiss: 1,
       };
 
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
         dispatch({
           type: ADD_CATEGORY,
-          payload: response.data.category
+          payload: response.data.category,
         });
         dispatch(resetCategory());
         dispatch(goBack());
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -177,7 +173,7 @@ export const updateCategory = () => {
       const rules = {
         name: 'required',
         description: 'required|max:200',
-        products: 'required'
+        products: 'required',
       };
 
       const category = getState().category.category;
@@ -185,7 +181,7 @@ export const updateCategory = () => {
       const newCategory = {
         name: category.name,
         description: category.description,
-        products: category.products && unformatSelectOptions(category.products)
+        products: category.products && selectOptionsUnFormat(category.products),
       };
 
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
@@ -193,24 +189,24 @@ export const updateCategory = () => {
         'required.description': 'Description is required.',
         'max.description':
           'Description may not be greater than 200 characters.',
-        'required.products': 'Products are required.'
+        'required.products': 'Products are required.',
       });
 
       if (!isValid) {
         return dispatch({
           type: SET_CATEGORY_FORM_EDIT_ERRORS,
-          payload: errors
+          payload: errors,
         });
       }
 
       const response = await axios.put(`/api/category/${category._id}`, {
-        category: newCategory
+        category: newCategory,
       });
 
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
-        autoDismiss: 1
+        autoDismiss: 1,
       };
 
       if (response.data.success === true) {
@@ -219,7 +215,7 @@ export const updateCategory = () => {
         dispatch(goBack());
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -230,27 +226,27 @@ export const activateCategory = (id, value) => {
     try {
       const response = await axios.put(`/api/category/${id}/active`, {
         category: {
-          isActive: value
-        }
+          isActive: value,
+        },
       });
 
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
-        autoDismiss: 1
+        autoDismiss: 1,
       };
 
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
 
 // delete category api
-export const deleteCategory = id => {
+export const deleteCategory = (id) => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.delete(`/api/category/delete/${id}`);
@@ -258,19 +254,19 @@ export const deleteCategory = id => {
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
-        autoDismiss: 1
+        autoDismiss: 1,
       };
 
       if (response.data.success == true) {
         dispatch(success(successfulOptions));
         dispatch({
           type: REMOVE_CATEGORY,
-          payload: id
+          payload: id,
         });
         dispatch(goBack());
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };

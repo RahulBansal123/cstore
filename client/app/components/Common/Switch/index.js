@@ -1,26 +1,18 @@
-/**
- *
- * Switch
- *
- */
-
 import React from 'react';
-
-import Tooltip from '../Tooltip';
 
 class Switch extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      checked: this.props.checked
+      checked: this.props.checked,
     };
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.checked !== this.props.checked) {
       this.setState({
-        checked: this.props.checked
+        checked: this.props.checked,
       });
     }
   }
@@ -29,7 +21,7 @@ class Switch extends React.Component {
     const value = e.target.checked;
 
     this.setState({
-      checked: value
+      checked: value,
     });
 
     if (this.props.toggleCheckboxChange) {
@@ -38,26 +30,23 @@ class Switch extends React.Component {
   }
 
   render() {
-    const { className, style, id, label, tooltip, tooltipContent } = this.props;
+    const { className, style, id, label } = this.props;
     const { checked } = this.state;
-
-    const tooltipId = `tooltip-${id}`;
 
     const classNames = `switch-checkbox${`${className && ` ${className}`}`}`;
 
     return (
-      <div className={classNames} id={tooltipId} style={style}>
-        {tooltip && <Tooltip target={tooltipId}>{tooltipContent}</Tooltip>}
+      <div className={classNames} style={style}>
         <input
           id={id}
           type={'checkbox'}
-          className='switch-checkbox-input'
+          className="switch-checkbox-input"
           checked={checked}
-          onChange={e => this._onChange(e)}
+          onChange={(e) => this._onChange(e)}
         />
-        <label htmlFor={id} className='switch-label'>
-          {label && <span className='switch-label-text'>{label} </span>}
-          <span className='switch-label-toggle'></span>
+        <label htmlFor={id} className="switch-label">
+          {label && <span className="switch-label-text">{label} </span>}
+          <span className="switch-label-toggle"></span>
         </label>
       </div>
     );
@@ -65,7 +54,7 @@ class Switch extends React.Component {
 }
 
 Switch.defaultProps = {
-  className: ''
+  className: '',
 };
 
 export default Switch;

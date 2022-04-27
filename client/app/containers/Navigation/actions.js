@@ -5,7 +5,6 @@
  */
 
 import axios from 'axios';
-import handleError from '../../utils/error';
 import {
   TOGGLE_MENU,
   TOGGLE_CART,
@@ -48,7 +47,7 @@ export const onSuggestionsFetchRequested = (value) => {
         });
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };

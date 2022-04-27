@@ -6,9 +6,8 @@ import actions from '../../actions';
 
 import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import Loading from '../../components/Common/Loading';
 import NotFound from '../../components/Common/NotFound';
-import { BagIcon } from '../../components/Common/Icon';
 import ProductReviews from '../../components/Store/ProductReviews';
 
 class ProductPage extends React.PureComponent {
@@ -51,7 +50,7 @@ class ProductPage extends React.PureComponent {
     return (
       <div className="product-shop">
         {isLoading ? (
-          <LoadingIndicator />
+          <Loading />
         ) : Object.keys(product).length > 0 ? (
           <>
             <Row className="flex-row">
@@ -109,7 +108,6 @@ class ProductPage extends React.PureComponent {
                           }
                           text="Remove From Basket"
                           className="bag-btn"
-                          icon={<BagIcon />}
                           onClick={() => handleRemoveFromCart(product)}
                         />
                       ) : (
@@ -120,7 +118,6 @@ class ProductPage extends React.PureComponent {
                           }
                           text="Add To Basket"
                           className="bag-btn"
-                          icon={<BagIcon />}
                           onClick={() => handleAddToCart(product)}
                         />
                       )}

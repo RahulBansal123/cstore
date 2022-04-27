@@ -14,7 +14,7 @@ import SubPage from '../../components/Manager/SubPage';
 import OrderList from '../../components/Manager/OrderList';
 import OrderSearch from '../../components/Manager/OrderSearch';
 import NotFound from '../../components/Common/NotFound';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import Loading from '../../components/Common/Loading';
 
 class Customer extends React.PureComponent {
   componentDidMount() {
@@ -25,21 +25,21 @@ class Customer extends React.PureComponent {
     const { history, user, orders, isLoading, searchOrders } = this.props;
 
     return (
-      <div className='order-dashboard'>
+      <div className="order-dashboard">
         <SubPage
-          title='Customer Orders'
-          actionTitle='My Orders'
+          title="Customer Orders"
+          actionTitle="My Orders"
           handleAction={() =>
             user.role === 'ROLE_ADMIN' && history.push('/dashboard/orders')
           }
         >
           <OrderSearch onSearchSubmit={searchOrders} />
           {isLoading ? (
-            <LoadingIndicator inline />
+            <Loading inline />
           ) : orders.length > 0 ? (
             <OrderList orders={orders} />
           ) : (
-            <NotFound message='No orders found.' />
+            <NotFound message="No orders found." />
           )}
         </SubPage>
       </div>
@@ -47,12 +47,12 @@ class Customer extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.account.user,
     orders: state.order.searchedOrders,
     isLoading: state.order.isLoading,
-    isOrderAddOpen: state.order.isOrderAddOpen
+    isOrderAddOpen: state.order.isOrderAddOpen,
   };
 };
 

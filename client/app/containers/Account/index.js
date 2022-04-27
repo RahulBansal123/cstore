@@ -1,9 +1,3 @@
-/*
- *
- * Account
- *
- */
-
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -21,7 +15,7 @@ class Account extends React.PureComponent {
     const { user, accountChange, updateProfile } = this.props;
 
     return (
-      <div className='account'>
+      <div className="account">
         <SubPage title={'Account Details'} isMenuOpen={null}>
           <AccountDetails
             user={user}
@@ -34,11 +28,9 @@ class Account extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.account.user,
-    resetFormData: state.resetPassword.resetFormData,
-    formErrors: state.resetPassword.formErrors
   };
 };
 

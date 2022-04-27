@@ -1,9 +1,3 @@
-/*
- *
- * List
- *
- */
-
 import React from 'react';
 
 import { connect } from 'react-redux';
@@ -25,14 +19,14 @@ class List extends React.PureComponent {
     return (
       <>
         <SubPage
-          title='Addresses'
+          title="Addresses"
           actionTitle={'Add'}
           handleAction={() => history.push('/dashboard/address/add')}
         >
           {addresses.length > 0 ? (
             <AddressList addresses={addresses} />
           ) : (
-            <NotFound message='No Addresses Found!' />
+            <NotFound message="No Addresses Found!" />
           )}
         </SubPage>
       </>
@@ -40,9 +34,9 @@ class List extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    addresses: state.address.addresses
+    addresses: state.address.addresses,
   };
 };
 

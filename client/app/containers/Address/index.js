@@ -1,9 +1,3 @@
-/*
- *
- * Address
- *
- */
-
 import React from 'react';
 
 import { connect } from 'react-redux';
@@ -19,21 +13,21 @@ import Page404 from '../../components/Common/Page404';
 class Address extends React.PureComponent {
   render() {
     return (
-      <div className='address-dashboard'>
+      <div className="address-dashboard">
         <Switch>
-          <Route exact path='/dashboard/address' component={List} />
-          <Route exact path='/dashboard/address/edit/:id' component={Edit} />
-          <Route exact path='/dashboard/address/add' component={Add} />
-          <Route path='*' component={Page404} />
+          <Route exact path="/dashboard/address" component={List} />
+          <Route exact path="/dashboard/address/edit/:id" component={Edit} />
+          <Route exact path="/dashboard/address/add" component={Add} />
+          <Route path="*" component={Page404} />
         </Switch>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.account.user
+    user: state.account.user,
   };
 };
 

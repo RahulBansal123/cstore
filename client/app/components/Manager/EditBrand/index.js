@@ -12,26 +12,26 @@ import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 import Switch from '../../Common/Switch';
 
-const EditBrand = props => {
+const EditBrand = (props) => {
   const {
     brand,
     brandChange,
     formErrors,
     updateBrand,
     deleteBrand,
-    activateBrand
+    activateBrand,
   } = props;
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     updateBrand();
   };
 
   return (
-    <div className='edit-brand'>
+    <div className="edit-brand">
       <form onSubmit={handleSubmit} noValidate>
         <Row>
-          <Col xs='12'>
+          <Col xs="12">
             <Input
               type={'text'}
               error={formErrors['name']}
@@ -44,7 +44,7 @@ const EditBrand = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12'>
+          <Col xs="12" md="12">
             <Input
               type={'textarea'}
               error={formErrors['description']}
@@ -57,29 +57,27 @@ const EditBrand = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12' className='mt-3 mb-2'>
+          <Col xs="12" md="12" className="mt-3 mb-2">
             <Switch
               style={{ width: 100 }}
-              tooltip={brand.isActive}
-              tooltipContent={`Disabling ${brand.name} will also disable all ${brand.name} products.`}
               id={`enable-brand-${brand._id}`}
               name={'isActive'}
               label={'Active?'}
               checked={brand.isActive}
-              toggleCheckboxChange={value => activateBrand(brand._id, value)}
+              toggleCheckboxChange={(value) => activateBrand(brand._id, value)}
             />
           </Col>
         </Row>
         <hr />
-        <div className='d-flex flex-column flex-md-row'>
+        <div className="d-flex flex-column flex-md-row">
           <Button
-            type='submit'
-            text='Save'
-            className='mb-3 mb-md-0 mr-0 mr-md-3'
+            type="submit"
+            text="Save"
+            className="mb-3 mb-md-0 mr-0 mr-md-3"
           />
           <Button
-            variant='danger'
-            text='Delete'
+            variant="danger"
+            text="Delete"
             onClick={() => deleteBrand(brand._id)}
           />
         </div>

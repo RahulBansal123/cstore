@@ -1,15 +1,9 @@
-/**
- *
- * Table
- *
- */
-
 import React from 'react';
 
 import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider, {
   CSVExport,
-  Search
+  Search,
 } from 'react-bootstrap-table2-toolkit';
 
 const indication = () => {
@@ -19,7 +13,7 @@ const indication = () => {
 const { ExportCSVButton } = CSVExport;
 const { SearchBar } = Search;
 
-const Table = props => {
+const Table = (props) => {
   const {
     data,
     columns,
@@ -29,29 +23,29 @@ const Table = props => {
     csv,
     search,
     clickAction,
-    isRowEvents
+    isRowEvents,
   } = props;
 
   const rowEvents = {
     onClick: (e, row, rowIndex) => {
       clickAction(row._id, rowIndex);
-    }
+    },
   };
 
   return (
     <ToolkitProvider
-      keyField='_id'
+      keyField="_id"
       data={data}
       columns={columns}
       exportCSV={csv}
       search={search}
     >
-      {props => (
-        <div className='table-section'>
+      {(props) => (
+        <div className="table-section">
           {csv && (
-            <div className='csv'>
+            <div className="csv">
               <ExportCSVButton
-                className='input-btn custom-btn-secondary md'
+                className="input-btn custom-btn-secondary md"
                 {...props.csvProps}
               >
                 Export CSV
@@ -59,13 +53,13 @@ const Table = props => {
             </div>
           )}
           {search && (
-            <div className='search'>
+            <div className="search">
               <SearchBar {...props.searchProps} />
             </div>
           )}
           <BootstrapTable
             {...props.baseProps}
-            keyField='_id'
+            keyField="_id"
             data={data}
             columns={columns}
             striped={striped}

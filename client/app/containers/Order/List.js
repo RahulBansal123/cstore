@@ -14,14 +14,14 @@ import SubPage from '../../components/Manager/SubPage';
 import OrderList from '../../components/Manager/OrderList';
 import OrderSearch from '../../components/Manager/OrderSearch';
 import NotFound from '../../components/Common/NotFound';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import Loading from '../../components/Common/Loading';
 
 class List extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      search: ''
+      search: '',
     };
   }
 
@@ -29,14 +29,14 @@ class List extends React.PureComponent {
     this.props.fetchOrders();
   }
 
-  handleOrderSearch = e => {
+  handleOrderSearch = (e) => {
     if (e.value.length >= 2) {
       this.setState({
-        search: e.value
+        search: e.value,
       });
     } else {
       this.setState({
-        search: ''
+        search: '',
       });
     }
   };
@@ -46,13 +46,13 @@ class List extends React.PureComponent {
     const { search } = this.state;
 
     const filteredOrders = search
-      ? orders.filter(o => o._id.includes(search))
+      ? orders.filter((o) => o._id.includes(search))
       : orders;
 
     return (
-      <div className='order-dashboard'>
+      <div className="order-dashboard">
         <SubPage
-          title='Your Orders'
+          title="Your Orders"
           actionTitle={user.role === 'ROLE_ADMIN' && 'Customer Orders'}
           handleAction={() =>
             user.role === 'ROLE_ADMIN' &&
@@ -65,11 +65,11 @@ class List extends React.PureComponent {
             onSearchSubmit={this.handleOrderSearch}
           />
           {isLoading ? (
-            <LoadingIndicator inline />
+            <Loading inline />
           ) : orders.length > 0 ? (
             <OrderList orders={filteredOrders} />
           ) : (
-            <NotFound message='you have no orders yet!' />
+            <NotFound message="you have no orders yet!" />
           )}
         </SubPage>
       </div>
@@ -77,12 +77,12 @@ class List extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.account.user,
     orders: state.order.orders,
     isLoading: state.order.isLoading,
-    isOrderAddOpen: state.order.isOrderAddOpen
+    isOrderAddOpen: state.order.isOrderAddOpen,
   };
 };
 

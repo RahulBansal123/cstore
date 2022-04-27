@@ -1,21 +1,11 @@
-// Import core styles
 @import 'variables';
 @import 'mixins';
 
-// layout
 @import 'layout';
 @import 'utils';
 
-// overrides
 @import 'overrides';
 
-// bug fixes
-@import 'fixes';
-
-// Right-to-left
-@import 'rtl';
-
-// components
 @import 'components';
 @import 'footer';
 @import 'header';
@@ -40,7 +30,6 @@
 @import 'shop';
 @import 'checkout';
 @import 'merchant';
-@import 'contact';
 @import 'coming-soon';
 @import 'order';
 @import 'review';

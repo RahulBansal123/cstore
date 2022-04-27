@@ -14,20 +14,19 @@ import {
   REMOVE_FROM_CART,
   HANDLE_CART_TOTAL,
   SET_CART_ID,
-  CLEAR_CART
+  CLEAR_CART,
 } from './constants';
 
 import {
   SET_PRODUCT_SHOP_FORM_ERRORS,
-  RESET_PRODUCT_SHOP
+  RESET_PRODUCT_SHOP,
 } from '../Product/constants';
 
-import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
 import { toggleCart } from '../Navigation/actions';
 
 // Handle Add To Cart
-export const handleAddToCart = product => {
+export const handleAddToCart = (product) => {
   return (dispatch, getState) => {
     product.quantity = Number(getState().product.productShopData.quantity);
     product.totalPrice = product.quantity * product.price;
@@ -37,12 +36,12 @@ export const handleAddToCart = product => {
     const result = calculatePurchaseQuantity(inventory);
 
     const rules = {
-      quantity: `min:1|max:${result}`
+      quantity: `min:1|max:${result}`,
     };
 
     const { isValid, errors } = allFieldsValidation(product, rules, {
       'min.quantity': 'Quantity must be at least 1.',
-      'max.quantity': `Quantity may not be greater than ${result}.`
+      'max.quantity': `Quantity may not be greater than ${result}.`,
     });
 
     if (!isValid) {
@@ -50,12 +49,12 @@ export const handleAddToCart = product => {
     }
 
     dispatch({
-      type: RESET_PRODUCT_SHOP
+      type: RESET_PRODUCT_SHOP,
     });
 
     dispatch({
       type: ADD_TO_CART,
-      payload: product
+      payload: product,
     });
     dispatch(calculateCartTotal());
     dispatch(toggleCart());
@@ -63,11 +62,11 @@ export const handleAddToCart = product => {
 };
 
 // Handle Remove From Cart
-export const handleRemoveFromCart = product => {
+export const handleRemoveFromCart = (product) => {
   return (dispatch, getState) => {
     dispatch({
       type: REMOVE_FROM_CART,
-      payload: product
+      payload: product,
     });
     dispatch(calculateCartTotal());
     // dispatch(toggleCart());
@@ -80,7 +79,7 @@ export const calculateCartTotal = () => {
 
     let total = 0;
 
-    cartItems.map(item => {
+    cartItems.map((item) => {
       total += item.price * item.quantity;
     });
 
@@ -88,7 +87,7 @@ export const calculateCartTotal = () => {
 
     dispatch({
       type: HANDLE_CART_TOTAL,
-      payload: total
+      payload: total,
     });
   };
 };
@@ -99,14 +98,14 @@ export const handleCart = () => {
     cartItems: JSON.parse(localStorage.getItem('cart_items')),
     itemsInCart: JSON.parse(localStorage.getItem('items_in_cart')),
     cartTotal: localStorage.getItem('cart_total'),
-    cartId: localStorage.getItem('cart_id')
+    cartId: localStorage.getItem('cart_id'),
   };
 
   return (dispatch, getState) => {
     if (cart.cartItems != undefined || cart.itemsInCart != undefined) {
       dispatch({
         type: HANDLE_CART,
-        payload: cart
+        payload: cart,
       });
     }
   };
@@ -117,7 +116,7 @@ export const handleCheckout = () => {
     const successfulOptions = {
       title: `Please Login to proceed to checkout`,
       position: 'tr',
-      autoDismiss: 1
+      autoDismiss: 1,
     };
 
     dispatch(toggleCart());
@@ -149,16 +148,16 @@ export const getCartId = () => {
         dispatch(setCartId(response.data.cartId));
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
 
-export const setCartId = cartId => {
+export const setCartId = (cartId) => {
   return (dispatch, getState) => {
     dispatch({
       type: SET_CART_ID,
-      payload: cartId
+      payload: cartId,
     });
   };
 };
@@ -171,14 +170,14 @@ export const clearCart = () => {
     localStorage.removeItem('cart_id');
 
     dispatch({
-      type: CLEAR_CART
+      type: CLEAR_CART,
     });
   };
 };
 
-const getCartItems = cartItems => {
+const getCartItems = (cartItems) => {
   const newCartItems = [];
-  cartItems.map(item => {
+  cartItems.map((item) => {
     const newItem = {};
     newItem.quantity = item.quantity;
     newItem.price = item.price;
@@ -190,7 +189,7 @@ const getCartItems = cartItems => {
   return newCartItems;
 };
 
-const calculatePurchaseQuantity = inventory => {
+const calculatePurchaseQuantity = (inventory) => {
   if (inventory <= 25) {
     return 1;
   } else if (inventory > 25 && inventory <= 100) {

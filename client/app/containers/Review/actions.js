@@ -17,7 +17,6 @@ import {
   RESET_REVIEW,
   SET_REVIEW_FORM_ERRORS,
 } from './constants';
-import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
 
 export const reviewChange = (name, value) => {
@@ -39,7 +38,7 @@ export const fetchReviews = () => {
 
       dispatch({ type: FETCH_REVIEWS, payload: response.data.reviews });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     } finally {
       dispatch({ type: SET_REVIEWS_LOADING, payload: false });
     }
@@ -53,7 +52,7 @@ export const approveReview = (review) => {
 
       dispatch(fetchReviews());
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -65,7 +64,7 @@ export const rejectReview = (review) => {
 
       dispatch(fetchReviews());
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -90,7 +89,7 @@ export const deleteReview = (id) => {
         });
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -117,7 +116,7 @@ export const fetchProductReviews = (slug) => {
         },
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -168,7 +167,7 @@ export const addProductReview = () => {
         dispatch({ type: RESET_REVIEW });
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };

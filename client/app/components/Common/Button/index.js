@@ -1,9 +1,3 @@
-/**
- *
- * Button
- *
- */
-
 import React from 'react';
 
 const variants = {
@@ -13,32 +7,28 @@ const variants = {
   link: 'custom-btn-link',
   dark: 'custom-btn-dark',
   none: 'custom-btn-none',
-  empty: ''
+  empty: '',
 };
 
-const Button = props => {
+const Button = (props) => {
   const {
     id,
     size,
     variant,
     tabIndex,
-    ariaLabel,
-    ariaExpanded,
     type,
     disabled,
     className,
     text,
-    role,
     icon,
     iconDirection,
     iconClassName,
     borderless,
-    onClick
+    onClick,
   } = props;
 
   const v = variant ? variants[variant] : '';
 
-  // const btnVariant = icon && text ? v : icon && !text ? '' : v;
   const btnVariant = v;
 
   const btn =
@@ -56,9 +46,6 @@ const Button = props => {
     <button
       id={id}
       tabIndex={tabIndex}
-      aria-label={ariaLabel}
-      aria-expanded={ariaExpanded}
-      role={role}
       disabled={disabled}
       className={classNames}
       type={type}
@@ -67,11 +54,11 @@ const Button = props => {
       {iconDirection === 'left' ? (
         <>
           {icon && <div className={iconClassNames}>{icon}</div>}
-          {text && <span className='btn-text'>{text}</span>}
+          {text && <span className="btn-text">{text}</span>}
         </>
       ) : (
         <>
-          {text && <span className='btn-text'>{text}</span>}
+          {text && <span className="btn-text">{text}</span>}
           {icon && <div className={iconClassNames}>{icon}</div>}
         </>
       )}
@@ -86,7 +73,7 @@ Button.defaultProps = {
   className: '',
   iconDirection: 'left',
   iconClassName: '',
-  borderless: false
+  borderless: false,
 };
 
 export default Button;

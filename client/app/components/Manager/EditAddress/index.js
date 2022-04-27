@@ -8,30 +8,29 @@ import React from 'react';
 
 import { Row, Col } from 'reactstrap';
 
-import Checkbox from '../../Common/Checkbox';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 
-const EditAddress = props => {
+const EditAddress = (props) => {
   const {
     address,
     addressChange,
     defaultChange,
     formErrors,
     updateAddress,
-    deleteAddress
+    deleteAddress,
   } = props;
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     updateAddress();
   };
 
   return (
-    <div className='edit-address'>
+    <div className="edit-address">
       <form onSubmit={handleSubmit} noValidate>
         <Row>
-          <Col xs='12' md='12'>
+          <Col xs="12" md="12">
             <Input
               type={'text'}
               error={formErrors['address']}
@@ -44,7 +43,7 @@ const EditAddress = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12'>
+          <Col xs="12" md="12">
             <Input
               type={'text'}
               error={formErrors['city']}
@@ -57,7 +56,7 @@ const EditAddress = props => {
               }}
             />
           </Col>
-          <Col xs='12' lg='6'>
+          <Col xs="12" lg="6">
             <Input
               type={'text'}
               error={formErrors['state']}
@@ -70,7 +69,7 @@ const EditAddress = props => {
               }}
             />
           </Col>
-          <Col xs='12' lg='6'>
+          <Col xs="12" lg="6">
             <Input
               type={'text'}
               error={formErrors['country']}
@@ -83,7 +82,7 @@ const EditAddress = props => {
               }}
             />
           </Col>
-          <Col xs='12' lg='6'>
+          <Col xs="12" lg="6">
             <Input
               type={'text'}
               error={formErrors['zipCode']}
@@ -96,8 +95,8 @@ const EditAddress = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12'>
-            <Checkbox
+          <Col xs="12" md="12">
+            {/* <Checkbox
               id={'default'}
               label={'As the Default'}
               name={'isDefault'}
@@ -106,19 +105,19 @@ const EditAddress = props => {
               toggleCheckboxChange={(name, value) => {
                 addressChange(name, value);
               }}
-            />
+            /> */}
           </Col>
         </Row>
         <hr />
-        <div className='d-flex flex-column flex-md-row'>
+        <div className="d-flex flex-column flex-md-row">
           <Button
-            type='submit'
-            text='Save'
-            className='mb-3 mb-md-0 mr-0 mr-md-3'
+            type="submit"
+            text="Save"
+            className="mb-3 mb-md-0 mr-0 mr-md-3"
           />
           <Button
-            variant='danger'
-            text='Delete'
+            variant="danger"
+            text="Delete"
             onClick={() => deleteAddress(address._id)}
           />
         </div>

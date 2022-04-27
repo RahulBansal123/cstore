@@ -1,9 +1,3 @@
-/*
- *
- * Add
- *
- */
-
 import React from 'react';
 
 import { connect } from 'react-redux';
@@ -15,18 +9,13 @@ import SubPage from '../../components/Manager/SubPage';
 
 class Add extends React.PureComponent {
   render() {
-    const {
-      history,
-      addressFormData,
-      formErrors,
-      addressChange,
-      addAddress
-    } = this.props;
+    const { history, addressFormData, formErrors, addressChange, addAddress } =
+      this.props;
 
     return (
       <SubPage
-        title='Add Address'
-        actionTitle='Cancel'
+        title="Add Address"
+        actionTitle="Cancel"
         handleAction={() => history.goBack()}
       >
         <AddAddress
@@ -40,10 +29,10 @@ class Add extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     addressFormData: state.address.addressFormData,
-    formErrors: state.address.formErrors
+    formErrors: state.address.formErrors,
   };
 };
 

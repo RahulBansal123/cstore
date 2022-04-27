@@ -27,11 +27,7 @@ import {
   RESET_ADVANCED_FILTERS,
 } from './constants';
 
-import handleError from '../../utils/error';
-import {
-  formatSelectOptions,
-  unformatSelectOptions,
-} from '../../helpers/select';
+import { selectOptionsFormat, selectOptionsUnFormat } from '../../helpers';
 import { allFieldsValidation } from '../../utils/validation';
 
 export const productChange = (name, value) => {
@@ -81,7 +77,7 @@ export const fetchProducts = () => {
         payload: response.data.products,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     } finally {
       dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
     }
@@ -119,7 +115,7 @@ export const filterProducts = (n, v) => {
         payload: response.data.products,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     } finally {
       dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
     }
@@ -136,7 +132,7 @@ export const fetchProduct = (id) => {
 
       const brand = response.data.product.brand;
       const isBrand = brand ? true : false;
-      const brandData = formatSelectOptions(
+      const brandData = selectOptionsFormat(
         isBrand && [brand],
         !isBrand,
         'fetchProduct'
@@ -151,7 +147,7 @@ export const fetchProduct = (id) => {
         payload: product,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -172,7 +168,7 @@ export const fetchStoreProduct = (slug) => {
         payload: product,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     } finally {
       dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
     }
@@ -200,7 +196,7 @@ export const fetchBrandProducts = (slug) => {
         payload: response.data.products,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     } finally {
       dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
     }
@@ -212,14 +208,14 @@ export const fetchProductsSelect = () => {
     try {
       const response = await axios.get(`/api/product/list/select`);
 
-      const formattedProducts = formatSelectOptions(response.data.products);
+      const formattedProducts = selectOptionsFormat(response.data.products);
 
       dispatch({
         type: FETCH_PRODUCTS_SELECT,
         payload: formattedProducts,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -241,7 +237,7 @@ export const addProduct = () => {
       const user = getState().account.user;
       const brands = getState().brand.brandsSelect;
 
-      const brand = unformatSelectOptions([product.brand]);
+      const brand = selectOptionsUnFormat([product.brand]);
 
       const newProduct = {
         name: product.name,
@@ -306,7 +302,7 @@ export const addProduct = () => {
         dispatch(goBack());
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -325,7 +321,7 @@ export const updateProduct = () => {
 
       const product = getState().product.product;
 
-      const brand = unformatSelectOptions([product.brand]);
+      const brand = selectOptionsUnFormat([product.brand]);
 
       const newProduct = {
         name: product.name,
@@ -369,7 +365,7 @@ export const updateProduct = () => {
         //dispatch(goBack());
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -394,7 +390,7 @@ export const activateProduct = (id, value) => {
         dispatch(success(successfulOptions));
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -420,7 +416,7 @@ export const deleteProduct = (id) => {
         dispatch(goBack());
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };

@@ -20,11 +20,10 @@ import {
   REMOVE_BRAND,
   FETCH_BRANDS_SELECT,
   SET_BRANDS_LOADING,
-  RESET_BRAND
+  RESET_BRAND,
 } from './constants';
 
-import handleError from '../../utils/error';
-import { formatSelectOptions } from '../../helpers/select';
+import { selectOptionsFormat } from '../../helpers';
 import { allFieldsValidation } from '../../utils/validation';
 
 export const brandChange = (name, value) => {
@@ -33,7 +32,7 @@ export const brandChange = (name, value) => {
 
   return {
     type: BRAND_CHANGE,
-    payload: formData
+    payload: formData,
   };
 };
 
@@ -43,7 +42,7 @@ export const brandEditChange = (name, value) => {
 
   return {
     type: BRAND_EDIT_CHANGE,
-    payload: formData
+    payload: formData,
   };
 };
 
@@ -55,10 +54,10 @@ export const fetchStoreBrands = () => {
 
       dispatch({
         type: FETCH_STORE_BRANDS,
-        payload: response.data.brands
+        payload: response.data.brands,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -73,10 +72,10 @@ export const fetchBrands = () => {
 
       dispatch({
         type: FETCH_BRANDS,
-        payload: response.data.brands
+        payload: response.data.brands,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     } finally {
       dispatch({ type: SET_BRANDS_LOADING, payload: false });
     }
@@ -84,17 +83,17 @@ export const fetchBrands = () => {
 };
 
 // fetch brand api
-export const fetchBrand = brandId => {
+export const fetchBrand = (brandId) => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.get(`/api/brand/${brandId}`);
 
       dispatch({
         type: FETCH_BRAND,
-        payload: response.data.brand
+        payload: response.data.brand,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -105,14 +104,14 @@ export const fetchBrandsSelect = () => {
     try {
       const response = await axios.get(`/api/brand/list/select`);
 
-      const formattedBrands = formatSelectOptions(response.data.brands, true);
+      const formattedBrands = selectOptionsFormat(response.data.brands, true);
 
       dispatch({
         type: FETCH_BRANDS_SELECT,
-        payload: formattedBrands
+        payload: formattedBrands,
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -123,7 +122,7 @@ export const addBrand = () => {
     try {
       const rules = {
         name: 'required',
-        description: 'required|max:200'
+        description: 'required|max:200',
       };
 
       const brand = getState().brand.brandFormData;
@@ -131,7 +130,8 @@ export const addBrand = () => {
       const { isValid, errors } = allFieldsValidation(brand, rules, {
         'required.name': 'Name is required.',
         'required.description': 'Description is required.',
-        'max.description': 'Description may not be greater than 200 characters.'
+        'max.description':
+          'Description may not be greater than 200 characters.',
       });
 
       if (!isValid) {
@@ -143,21 +143,21 @@ export const addBrand = () => {
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
-        autoDismiss: 1
+        autoDismiss: 1,
       };
 
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
         dispatch({
           type: ADD_BRAND,
-          payload: response.data.brand
+          payload: response.data.brand,
         });
 
         dispatch(goBack());
         dispatch({ type: RESET_BRAND });
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -168,20 +168,21 @@ export const updateBrand = () => {
     try {
       const rules = {
         name: 'required',
-        description: 'required|max:200'
+        description: 'required|max:200',
       };
 
       const brand = getState().brand.brand;
 
       const newBrand = {
         name: brand.name,
-        description: brand.description
+        description: brand.description,
       };
 
       const { isValid, errors } = allFieldsValidation(newBrand, rules, {
         'required.name': 'Name is required.',
         'required.description': 'Description is required.',
-        'max.description': 'Description may not be greater than 200 characters.'
+        'max.description':
+          'Description may not be greater than 200 characters.',
       });
 
       if (!isValid) {
@@ -189,13 +190,13 @@ export const updateBrand = () => {
       }
 
       const response = await axios.put(`/api/brand/${brand._id}`, {
-        brand: newBrand
+        brand: newBrand,
       });
 
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
-        autoDismiss: 1
+        autoDismiss: 1,
       };
 
       if (response.data.success === true) {
@@ -204,7 +205,7 @@ export const updateBrand = () => {
         dispatch(goBack());
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
@@ -215,27 +216,27 @@ export const activateBrand = (id, value) => {
     try {
       const response = await axios.put(`/api/brand/${id}/active`, {
         brand: {
-          isActive: value
-        }
+          isActive: value,
+        },
       });
 
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
-        autoDismiss: 1
+        autoDismiss: 1,
       };
 
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };
 
 // delete brand api
-export const deleteBrand = id => {
+export const deleteBrand = (id) => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.delete(`/api/brand/delete/${id}`);
@@ -243,19 +244,19 @@ export const deleteBrand = id => {
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
-        autoDismiss: 1
+        autoDismiss: 1,
       };
 
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
         dispatch({
           type: REMOVE_BRAND,
-          payload: id
+          payload: id,
         });
         dispatch(goBack());
       }
     } catch (error) {
-      handleError(error, dispatch);
+      console.log('error');
     }
   };
 };

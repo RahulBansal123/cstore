@@ -1,9 +1,3 @@
-/*
- *
- * Address constants
- *
- */
-
 export const FETCH_ADDRESS = 'src/Address/FETCH_ADDRESS';
 export const FETCH_ADDRESSES = 'src/Address/FETCH_ADDRESSES';
 export const ADDRESS_CHANGE = 'src/Address/ADDRESS_CHANGE';

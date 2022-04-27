@@ -13,11 +13,10 @@ import {
   LOGIN_RESET,
   SET_LOGIN_LOADING,
   SET_LOGIN_FORM_ERRORS,
-  SET_LOGIN_SUBMITTING
+  SET_LOGIN_SUBMITTING,
 } from './constants';
 import { setAuth, clearAuth } from '../Authentication/actions';
 import setToken from '../../utils/token';
-import handleError from '../../utils/error';
 import { clearCart } from '../Cart/actions';
 import { clearAccount } from '../Account/actions';
 import { allFieldsValidation } from '../../utils/validation';
@@ -28,7 +27,7 @@ export const loginChange = (name, value) => {
 
   return {
     type: LOGIN_CHANGE,
-    payload: formData
+    payload: formData,
   };
 };
 
@@ -36,7 +35,7 @@ export const login = () => {
   return async (dispatch, getState) => {
     const rules = {
       email: 'required|email',
-      password: 'required|min:6'
+      password: 'required|min:6',
     };
 
     const user = getState().login.loginFormData;
@@ -45,7 +44,7 @@ export const login = () => {
       'required.email': 'Email is required.',
       'email.email': 'Email format is invalid.',
       'required.password': 'Password is required.',
-      'min.password': 'Password must be at least 6 characters.'
+      'min.password': 'Password must be at least 6 characters.',
     });
 
     if (!isValid) {
@@ -63,7 +62,7 @@ export const login = () => {
       const successfulOptions = {
         title: `Hey${firstName ? ` ${firstName}` : ''}, Welcome Back!`,
         position: 'tr',
-        autoDismiss: 1
+        autoDismiss: 1,
       };
 
       localStorage.setItem('token', response.data.token);
@@ -75,8 +74,7 @@ export const login = () => {
 
       dispatch({ type: LOGIN_RESET });
     } catch (error) {
-      const title = `Please try to login again!`;
-      handleError(error, dispatch, title);
+      console.log('error');
     } finally {
       dispatch({ type: SET_LOGIN_SUBMITTING, payload: false });
       dispatch({ type: SET_LOGIN_LOADING, payload: false });
@@ -89,7 +87,7 @@ export const signOut = () => {
     const successfulOptions = {
       title: `You have signed out!`,
       position: 'tr',
-      autoDismiss: 1
+      autoDismiss: 1,
     };
 
     dispatch(clearAuth());

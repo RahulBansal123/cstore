@@ -20,7 +20,7 @@ import {
 import actions from '../../actions';
 
 import Button from '../../components/Common/Button';
-import CartIcon from '../../components/Common/CartIcon';
+import Cart from '../../components/Common/Cart';
 import { BarsIcon } from '../../components/Common/Icon';
 
 class Navigation extends React.PureComponent {
@@ -99,13 +99,9 @@ class Navigation extends React.PureComponent {
       history,
       authenticated,
       user,
-      cartItems,
       categories,
       signOut,
-      isMenuOpen,
-      isCartOpen,
       toggleCart,
-      toggleMenu,
       searchValue,
       suggestions,
       onSearch,
@@ -183,7 +179,7 @@ class Navigation extends React.PureComponent {
                   icon={<BarsIcon />}
                   onClick={() => this.toggleMenu()}
                 />
-                <CartIcon cartItems={cartItems} onClick={toggleCart} />
+                <Cart onClick={toggleCart} />
               </div>
             </Col>
             <Col
@@ -193,11 +189,7 @@ class Navigation extends React.PureComponent {
               lg={{ size: 4, order: 3 }}
             >
               <Navbar color="light" light expand="md" className="mt-1 mt-md-0">
-                <CartIcon
-                  className="d-none d-md-block"
-                  cartItems={cartItems}
-                  onClick={toggleCart}
-                />
+                <Cart className="d-none d-md-block" onClick={toggleCart} />
                 <Nav navbar>
                   {authenticated ? (
                     <UncontrolledDropdown nav inNavbar>

@@ -13,7 +13,7 @@ import Button from '../../Common/Button';
 import SelectOption from '../../Common/SelectOption';
 import Switch from '../../Common/Switch';
 
-const EditCategory = props => {
+const EditCategory = (props) => {
   const {
     products,
     category,
@@ -21,19 +21,19 @@ const EditCategory = props => {
     formErrors,
     updateCategory,
     deleteCategory,
-    activateCategory
+    activateCategory,
   } = props;
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     updateCategory();
   };
 
   return (
-    <div className='edit-category'>
+    <div className="edit-category">
       <form onSubmit={handleSubmit} noValidate>
         <Row>
-          <Col xs='12'>
+          <Col xs="12">
             <Input
               type={'text'}
               error={formErrors['name']}
@@ -46,7 +46,7 @@ const EditCategory = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12'>
+          <Col xs="12" md="12">
             <Input
               type={'textarea'}
               error={formErrors['description']}
@@ -59,43 +59,41 @@ const EditCategory = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12'>
+          <Col xs="12" md="12">
             <SelectOption
               error={formErrors['products']}
               label={'Select Products'}
               multi={true}
               defaultValue={category.products}
               options={products}
-              handleSelectChange={value => {
+              handleSelectChange={(value) => {
                 categoryChange('products', value);
               }}
             />
           </Col>
-          <Col xs='12' md='12' className='mt-3 mb-2'>
+          <Col xs="12" md="12" className="mt-3 mb-2">
             <Switch
               style={{ width: 100 }}
-              tooltip={category.isActive}
-              tooltipContent={`Disabling ${category.name} will also disable all ${category.name} products.`}
               id={`enable-category-${category._id}`}
               name={'isActive'}
               label={'Active?'}
               checked={category.isActive}
-              toggleCheckboxChange={value =>
+              toggleCheckboxChange={(value) =>
                 activateCategory(category._id, value)
               }
             />
           </Col>
         </Row>
         <hr />
-        <div className='d-flex flex-column flex-md-row'>
+        <div className="d-flex flex-column flex-md-row">
           <Button
-            type='submit'
-            text='Save'
-            className='mb-3 mb-md-0 mr-0 mr-md-3'
+            type="submit"
+            text="Save"
+            className="mb-3 mb-md-0 mr-0 mr-md-3"
           />
           <Button
-            variant='danger'
-            text='Delete'
+            variant="danger"
+            text="Delete"
             onClick={() => deleteCategory(category._id)}
           />
         </div>

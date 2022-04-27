@@ -14,7 +14,7 @@ import Admin from '../../components/Manager/Dashboard/Admin';
 import Merchant from '../../components/Manager/Dashboard/Merchant';
 import Customer from '../../components/Manager/Dashboard/Customer';
 
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import Loading from '../../components/Common/Loading';
 
 import dashboardLinks from './links.json';
 
@@ -29,7 +29,7 @@ class Dashboard extends React.PureComponent {
     return (
       <>
         {isLoading ? (
-          <LoadingIndicator inline />
+          <Loading inline />
         ) : user.role === 'ROLE_ADMIN' ? (
           <Admin
             isMenuOpen={isMenuOpen}
@@ -54,11 +54,11 @@ class Dashboard extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.account.user,
     isLoading: state.account.isLoading,
-    isMenuOpen: state.dashboard.isMenuOpen
+    isMenuOpen: state.dashboard.isMenuOpen,
   };
 };
 

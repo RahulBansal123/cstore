@@ -11,7 +11,7 @@ import { Redirect } from 'react-router-dom';
 
 import actions from '../../actions';
 import setToken from '../../utils/token';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import Loading from '../../components/Common/Loading';
 
 class AuthSuccess extends React.PureComponent {
   componentDidMount() {
@@ -22,15 +22,15 @@ class AuthSuccess extends React.PureComponent {
   render() {
     const { authenticated } = this.props;
 
-    if (authenticated) return <Redirect to='/dashboard' />;
+    if (authenticated) return <Redirect to="/dashboard" />;
 
-    return <LoadingIndicator />;
+    return <Loading />;
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    authenticated: state.authentication.authenticated
+    authenticated: state.authentication.authenticated,
   };
 };
 

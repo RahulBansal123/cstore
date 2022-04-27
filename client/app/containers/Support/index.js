@@ -22,15 +22,15 @@ class Helpcenter extends React.PureComponent {
     const { user } = this.props;
 
     return (
-      <div className='account'>
-        <SubPage title={user.role == 'ROLE_ADMIN'?'Admin Support':'Support'} isMenuOpen={null}>
-          {user.role == 'ROLE_ADMIN'?
-          (<SupportScreen
-            user={user}
-          />):(
-          <ChatBox
-            user={user}
-          />
+      <div className="account">
+        <SubPage
+          title={user.role == 'ROLE_ADMIN' ? 'Admin Support' : 'Support'}
+          isMenuOpen={null}
+        >
+          {user.role == 'ROLE_ADMIN' ? (
+            <SupportScreen user={user} />
+          ) : (
+            <ChatBox user={user} />
           )}
         </SubPage>
       </div>
@@ -38,11 +38,9 @@ class Helpcenter extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.account.user,
-    resetFormData: state.resetPassword.resetFormData,
-    formErrors: state.resetPassword.formErrors
   };
 };
 
