@@ -1,5 +1,5 @@
 {
-  "ROLE_ADMIN": [
+  "ADMIN": [
     { "to": "", "name": "Account Details" },
     { "to": "/security", "name": "Account Security" },
     { "to": "/address", "name": "Address" },
@@ -7,12 +7,12 @@
     { "to": "/category", "name": "Categories" },
     { "to": "/brand", "name": "Brands" },
     { "to": "/users", "name": "Users" },
-    { "to": "/merchants", "name": "Merchants" },
+    { "to": "/sellers", "name": "Sellers" },
     { "to": "/orders", "name": "Orders" },
     { "to": "/review", "name": "Reviews" },
     { "to": "/support", "name": "Support" }
   ],
-  "ROLE_MERCHANT": [
+  "SELLER": [
     { "to": "", "name": "Account Details" },
     { "to": "/security", "name": "Account Security" },
     { "to": "/address", "name": "Address" },
@@ -21,7 +21,7 @@
     { "to": "/orders", "name": "Orders" },
     { "to": "/support", "name": "Support" }
   ],
-  "ROLE_MEMBER": [
+  "MEMBER": [
     { "to": "", "name": "Account Details" },
     { "to": "/security", "name": "Account Security" },
     { "to": "/address", "name": "Address" },

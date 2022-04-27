@@ -107,15 +107,11 @@ const AddProduct = (props) => {
           </Col>
           <Col xs="12" md="12">
             <SelectOption
-              disabled={user.role === 'ROLE_MERCHANT'}
+              disabled={user.role === 'SELLER'}
               error={formErrors['brand']}
               name={'brand'}
               label={'Select Brand'}
-              value={
-                user.role === 'ROLE_MERCHANT'
-                  ? brands[1]
-                  : productFormData.brand
-              }
+              value={user.role === 'SELLER' ? brands[1] : productFormData.brand}
               options={brands}
               handleSelectChange={(value) => {
                 productChange('brand', value);

@@ -8,7 +8,7 @@ import actions from '../../actions';
 
 import Login from '../Login';
 import Signup from '../Signup';
-import MerchantSignup from '../MerchantSignup';
+import SellerSignup from '../SellerSignup';
 import Dashboard from '../Dashboard';
 import Navigation from '../Navigation';
 import Authentication from '../Authentication';
@@ -55,10 +55,7 @@ class Application extends React.PureComponent {
                 <Route path="/order/:id" component={OrderPage} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Signup} />
-                <Route
-                  path="/merchant-signup/:token"
-                  component={MerchantSignup}
-                />
+                <Route path="/seller-signup/:token" component={SellerSignup} />
                 <Route path="/auth/success" component={AuthSuccess} />
                 <Route
                   path="/dashboard"

@@ -8,56 +8,51 @@ const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const store = require('../../helpers/store');
 
-router.post(
-  '/add',
-  auth,
-  role.checkRole(role.ROLES.Admin),
-  async (req, res) => {
-    try {
-      const name = req.body.name;
-      const description = req.body.description;
-      const isActive = req.body.isActive;
+router.post('/add', auth, role.findRole(role.ROLES.Admin), async (req, res) => {
+  try {
+    const name = req.body.name;
+    const description = req.body.description;
+    const isActive = req.body.isActive;
 
-      if (!description || !name) {
-        return res
-          .status(400)
-          .json({ error: 'You must enter description & name.' });
-      }
-
-      const brand = new Brand({
-        name,
-        description,
-        isActive
-      });
-
-      const brandDoc = await brand.save();
-
-      res.status(200).json({
-        success: true,
-        message: `Brand has been added successfully!`,
-        brand: brandDoc
-      });
-    } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
+    if (!description || !name) {
+      return res
+        .status(400)
+        .json({ error: 'You must enter description & name.' });
     }
+
+    const brand = new Brand({
+      name,
+      description,
+      isActive,
+    });
+
+    const brandDoc = await brand.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Brand has been added successfully!`,
+      brand: brandDoc,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.',
+    });
   }
-);
+});
 
 // fetch store brands api
 router.get('/list', async (req, res) => {
   try {
     const brands = await Brand.find({
-      isActive: true
-    }).populate('merchant', 'name');
+      isActive: true,
+    }).populate('seller', 'name');
 
     res.status(200).json({
-      brands
+      brands,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: 'Your request could not be processed. Please try again.',
     });
   }
 });
@@ -66,25 +61,25 @@ router.get('/list', async (req, res) => {
 router.get(
   '/',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.findRole(role.ROLES.Admin, role.ROLES.Seller),
   async (req, res) => {
     try {
       let brands = null;
 
-      if (req.user.merchant) {
+      if (req.user.seller) {
         brands = await Brand.find({
-          merchant: req.user.merchant
-        }).populate('merchant', 'name');
+          seller: req.user.seller,
+        }).populate('seller', 'name');
       } else {
-        brands = await Brand.find({}).populate('merchant', 'name');
+        brands = await Brand.find({}).populate('seller', 'name');
       }
 
       res.status(200).json({
-        brands
+        brands,
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
+        error: 'Your request could not be processed. Please try again.',
       });
     }
   }
@@ -98,16 +93,16 @@ router.get('/:id', async (req, res) => {
 
     if (!brandDoc) {
       res.status(404).json({
-        message: `Cannot find brand with the id: ${brandId}.`
+        message: `Cannot find brand with the id: ${brandId}.`,
       });
     }
 
     res.status(200).json({
-      brand: brandDoc
+      brand: brandDoc,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: 'Your request could not be processed. Please try again.',
     });
   }
 });
@@ -115,15 +110,15 @@ router.get('/:id', async (req, res) => {
 router.get(
   '/list/select',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.findRole(role.ROLES.Admin, role.ROLES.Seller),
   async (req, res) => {
     try {
       let brands = null;
 
-      if (req.user.merchant) {
+      if (req.user.seller) {
         brands = await Brand.find(
           {
-            merchant: req.user.merchant
+            seller: req.user.seller,
           },
           'name'
         );
@@ -132,11 +127,11 @@ router.get(
       }
 
       res.status(200).json({
-        brands
+        brands,
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
+        error: 'Your request could not be processed. Please try again.',
       });
     }
   }
@@ -145,7 +140,7 @@ router.get(
 router.put(
   '/:id',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.findRole(role.ROLES.Admin, role.ROLES.Seller),
   async (req, res) => {
     try {
       const brandId = req.params.id;
@@ -153,16 +148,16 @@ router.put(
       const query = { _id: brandId };
 
       await Brand.findOneAndUpdate(query, update, {
-        new: true
+        new: true,
       });
 
       res.status(200).json({
         success: true,
-        message: 'Brand has been updated successfully!'
+        message: 'Brand has been updated successfully!',
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
+        error: 'Your request could not be processed. Please try again.',
       });
     }
   }
@@ -171,7 +166,7 @@ router.put(
 router.put(
   '/:id/active',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.findRole(role.ROLES.Admin, role.ROLES.Seller),
   async (req, res) => {
     try {
       const brandId = req.params.id;
@@ -185,16 +180,16 @@ router.put(
       }
 
       await Brand.findOneAndUpdate(query, update, {
-        new: true
+        new: true,
       });
 
       res.status(200).json({
         success: true,
-        message: 'Brand has been updated successfully!'
+        message: 'Brand has been updated successfully!',
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
+        error: 'Your request could not be processed. Please try again.',
       });
     }
   }
@@ -203,7 +198,7 @@ router.put(
 router.delete(
   '/delete/:id',
   auth,
-  role.checkRole(role.ROLES.Admin),
+  role.findRole(role.ROLES.Admin),
   async (req, res) => {
     try {
       const brand = await Brand.deleteOne({ _id: req.params.id });
@@ -211,11 +206,11 @@ router.delete(
       res.status(200).json({
         success: true,
         message: `Brand has been deleted successfully!`,
-        brand
+        brand,
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
+        error: 'Your request could not be processed. Please try again.',
       });
     }
   }

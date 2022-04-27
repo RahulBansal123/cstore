@@ -23,8 +23,6 @@ const UserList = (props) => {
           </p>
           <label className="text-black">Email</label>
           <p>{user?.email}</p>
-          <label className="text-black">Provider</label>
-          <p>{user?.provider}</p>
           <label className="text-black">Account Created</label>
           <p>{dateFormat(user?.created)}</p>
           <label className="text-black">Role</label>

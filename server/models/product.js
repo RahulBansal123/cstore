@@ -10,7 +10,6 @@ const options = {
 
 Mongoose.plugin(slug, options);
 
-// Product Schema
 const ProductSchema = new Schema({
   name: {
     type: String,
@@ -33,14 +32,6 @@ const ProductSchema = new Schema({
   },
   price: {
     type: Number,
-  },
-  taxable: {
-    type: Boolean,
-    default: false,
-  },
-  isActive: {
-    type: Boolean,
-    default: true,
   },
   brand: {
     type: Schema.Types.ObjectId,

@@ -19,7 +19,7 @@ import Users from '../../../containers/Users';
 import Category from '../../../containers/Category';
 import Product from '../../../containers/Product';
 import Brand from '../../../containers/Brand';
-import Merchant from '../../../containers/Merchant';
+import Seller from '../../../containers/Seller';
 import Review from '../../../containers/Review';
 import Support from '../../../containers/Support';
 
@@ -39,7 +39,7 @@ const Admin = (props) => {
               <Route path="/dashboard/category" component={Category} />
               <Route path="/dashboard/brand" component={Brand} />
               <Route path="/dashboard/users" component={Users} />
-              <Route path="/dashboard/merchants" component={Merchant} />
+              <Route path="/dashboard/sellers" component={Seller} />
               <Route path="/dashboard/orders" component={Order} />
               <Route path="/dashboard/review" component={Review} />
               <Route path="/dashboard/support" component={Support} />

@@ -5,44 +5,35 @@ const { Schema } = Mongoose;
 const options = {
   separator: '-',
   lang: 'en',
-  truncate: 120
+  truncate: 120,
 };
 
 Mongoose.plugin(slug, options);
 
-// Brand Schema
 const BrandSchema = new Schema({
   name: {
     type: String,
-    trim: true
+    trim: true,
   },
   slug: {
     type: String,
     slug: 'name',
-    unique: true
-  },
-  image: {
-    data: Buffer,
-    contentType: String
+    unique: true,
   },
   description: {
     type: String,
-    trim: true
+    trim: true,
   },
-  isActive: {
-    type: Boolean,
-    default: true
-  },
-  merchant: {
+  seller: {
     type: Schema.Types.ObjectId,
-    ref: 'Merchant',
-    default: null
+    ref: 'Seller',
+    default: null,
   },
   updated: Date,
   created: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = Mongoose.model('Brand', BrandSchema);

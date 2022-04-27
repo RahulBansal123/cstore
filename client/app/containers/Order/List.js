@@ -53,10 +53,9 @@ class List extends React.PureComponent {
       <div className="order-dashboard">
         <SubPage
           title="Your Orders"
-          actionTitle={user.role === 'ROLE_ADMIN' && 'Customer Orders'}
+          actionTitle={user.role === 'ADMIN' && 'Customer Orders'}
           handleAction={() =>
-            user.role === 'ROLE_ADMIN' &&
-            history.push('/dashboard/orders/customers')
+            user.role === 'ADMIN' && history.push('/dashboard/orders/customers')
           }
         >
           <OrderSearch

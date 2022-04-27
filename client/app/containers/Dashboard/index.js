@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import Admin from '../../components/Manager/Dashboard/Admin';
-import Merchant from '../../components/Manager/Dashboard/Merchant';
+import Seller from '../../components/Manager/Dashboard/Seller';
 import Customer from '../../components/Manager/Dashboard/Customer';
 
 import Loading from '../../components/Common/Loading';
@@ -30,22 +30,22 @@ class Dashboard extends React.PureComponent {
       <>
         {isLoading ? (
           <Loading inline />
-        ) : user.role === 'ROLE_ADMIN' ? (
+        ) : user.role === 'ADMIN' ? (
           <Admin
             isMenuOpen={isMenuOpen}
-            links={dashboardLinks['ROLE_ADMIN']}
+            links={dashboardLinks['ADMIN']}
             toggleMenu={toggleDashboardMenu}
           />
-        ) : user.role === 'ROLE_MERCHANT' && user.merchant ? (
-          <Merchant
+        ) : user.role === 'SELLER' && user.seller ? (
+          <Seller
             isMenuOpen={isMenuOpen}
-            links={dashboardLinks['ROLE_MERCHANT']}
+            links={dashboardLinks['SELLER']}
             toggleMenu={toggleDashboardMenu}
           />
         ) : (
           <Customer
             isMenuOpen={isMenuOpen}
-            links={dashboardLinks['ROLE_MEMBER']}
+            links={dashboardLinks['MEMBER']}
             toggleMenu={toggleDashboardMenu}
           />
         )}

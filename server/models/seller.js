@@ -1,26 +1,24 @@
 const Mongoose = require('mongoose');
 const { Schema } = Mongoose;
 
-// Address Schema
-const AddressSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+const SellerSchema = new Schema({
+  name: {
+    type: String,
+    trim: true,
   },
-  address: {
+  email: {
     type: String,
   },
-  city: {
+  phoneNumber: {
     type: String,
   },
-  state: {
+  brand: {
     type: String,
   },
-  country: {
+  business: {
+    // Business description
     type: String,
-  },
-  zipCode: {
-    type: String,
+    trim: true,
   },
   updated: Date,
   created: {
@@ -29,4 +27,4 @@ const AddressSchema = new Schema({
   },
 });
 
-module.exports = Mongoose.model('Address', AddressSchema);
+module.exports = Mongoose.model('Seller', SellerSchema);

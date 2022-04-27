@@ -1,22 +1,23 @@
 const ROLES = {
-  Admin: 'ROLE_ADMIN',
-  Customer: 'ROLE_MEMBER',
-  Merchant: 'ROLE_MERCHANT'
+  Admin: 'ADMIN',
+  Customer: 'MEMBER',
+  Seller: 'SELLER',
 };
 
-const checkRole = (...roles) => (req, res, next) => {
-  if (!req.user) {
-    return res.status(401).send('Unauthorized');
-  }
+const findRole =
+  (...roles) =>
+  (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).send('Not authorized to access');
+    }
 
-  const hasRole = roles.find(role => req.user.role === role);
-  if (!hasRole) {
-    return res.status(403).send('You are not allowed to make this request.');
-  }
+    const isAuthorized = roles.find((role) => req.user.role === role);
+    if (!isAuthorized) {
+      return res.status(403).send('You are not allowed');
+    }
+    return next();
+  };
 
-  return next();
-};
-
-const role = { ROLES, checkRole };
+const role = { ROLES, findRole };
 
 module.exports = role;

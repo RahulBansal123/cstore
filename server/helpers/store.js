@@ -1,13 +1,13 @@
 const Product = require('../models/product');
 const taxConfig = require('../config/tax');
 
-exports.disableProducts = products => {
-  let bulkOptions = products.map(item => {
+exports.disableProducts = (products) => {
+  let bulkOptions = products.map((item) => {
     return {
       updateOne: {
         filter: { _id: item._id },
-        update: { isActive: false }
-      }
+        update: { isActive: false },
+      },
     };
   });
 
@@ -15,12 +15,12 @@ exports.disableProducts = products => {
 };
 
 // calculate order tax amount
-exports.caculateTaxAmount = order => {
-  const taxRate = taxConfig.stateTaxRate;
+exports.caculateTaxAmount = (order) => {
+  const taxRate = 0.05;
 
   order.totalTax = 0;
   if (order.products && order.products.length > 0) {
-    order.products.map(item => {
+    order.products.map((item) => {
       const price = item.purchasePrice || item.product.price;
       const quantity = item.quantity;
       item.totalPrice = price * quantity;
@@ -44,7 +44,7 @@ exports.caculateTaxAmount = order => {
   }
 
   const hasCancelledItems = order.products.filter(
-    item => item.status === 'Cancelled'
+    (item) => item.status === 'Cancelled'
   );
 
   if (hasCancelledItems.length > 0) {
@@ -66,19 +66,19 @@ exports.caculateTaxAmount = order => {
   return order;
 };
 
-exports.caculateOrderTotal = order => {
+exports.caculateOrderTotal = (order) => {
   const total = order.products
-    .filter(item => item.status !== 'Cancelled')
+    .filter((item) => item.status !== 'Cancelled')
     .reduce((sum, current) => sum + current.totalPrice, 0);
 
   return total;
 };
 
 // calculate order tax amount
-exports.caculateItemsSalesTax = items => {
-  const taxRate = taxConfig.stateTaxRate;
+exports.caculateItemsSalesTax = (items) => {
+  const taxRate = 0.05;
 
-  const products = items.map(item => {
+  const products = items.map((item) => {
     item.priceWithTax = 0;
     item.totalPrice = 0;
     item.totalTax = 0;

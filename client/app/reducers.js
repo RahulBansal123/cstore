@@ -15,7 +15,7 @@ import category from './containers/Category/reducer';
 import brand from './containers/Brand/reducer';
 import menu from './containers/NavigationMenu/reducer';
 import shop from './containers/Shop/reducer';
-import merchant from './containers/Merchant/reducer';
+import seller from './containers/Seller/reducer';
 import order from './containers/Order/reducer';
 import review from './containers/Review/reducer';
 
@@ -37,7 +37,7 @@ const createReducer = (history) =>
     brand,
     menu: menu,
     shop,
-    merchant,
+    seller,
     order,
     review,
   });

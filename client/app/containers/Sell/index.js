@@ -142,10 +142,10 @@ class Sell extends React.PureComponent {
 
 const mapStateToProps = (state) => {
   return {
-    sellFormData: state.merchant.sellFormData,
-    formErrors: state.merchant.formErrors,
-    isSubmitting: state.merchant.isSellSubmitting,
-    isLoading: state.merchant.isSellLoading,
+    sellFormData: state.seller.sellFormData,
+    formErrors: state.seller.formErrors,
+    isSubmitting: state.seller.isSellSubmitting,
+    isLoading: state.seller.isSellLoading,
   };
 };
 

@@ -1,70 +1,70 @@
 /*
  *
- * Merchant reducer
+ * Seller reducer
  *
  */
 
 import {
-  FETCH_MERCHANTS,
-  REMOVE_MERCHANT,
+  FETCH_SELLERS,
+  REMOVE_SELLER,
   SELL_FORM_CHANGE,
   SET_SELL_FORM_ERRORS,
   SELL_FORM_RESET,
   SIGNUP_CHANGE,
   SET_SIGNUP_FORM_ERRORS,
-  SET_MERCHANTS_LOADING,
+  SET_SELLERS_LOADING,
   SET_SELL_SUBMITTING,
   SET_SELL_LOADING,
-  SIGNUP_RESET
+  SIGNUP_RESET,
 } from './constants';
 
 const initialState = {
-  merchants: [],
+  sellers: [],
   sellFormData: {
     name: '',
     email: '',
     phoneNumber: '',
     brand: '',
-    business: ''
+    business: '',
   },
   formErrors: {},
   signupFormData: {
     email: '',
     firstName: '',
     lastName: '',
-    password: ''
+    password: '',
   },
   signupFormErrors: {},
   isLoading: false,
   isSellSubmitting: false,
-  isSellLoading: false
+  isSellLoading: false,
 };
 
-const merchantReducer = (state = initialState, action) => {
+const sellerReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_MERCHANTS:
+    case FETCH_SELLERS:
       return {
         ...state,
-        merchants: action.payload
+        sellers: action.payload,
       };
-    case REMOVE_MERCHANT:
-      const index = state.merchants.findIndex(b => b._id === action.payload);
+    case REMOVE_SELLER:
+      const index = state.sellers.findIndex((b) => b._id === action.payload);
       return {
         ...state,
-        merchants: [
-          ...state.merchants.slice(0, index),
-          ...state.merchants.slice(index + 1)
-        ]
+        sellers: [
+          ...state.sellers.slice(0, index),
+          ...state.sellers.slice(index + 1),
+        ],
       };
     case SELL_FORM_CHANGE:
       return {
         ...state,
-        sellFormData: { ...state.sellFormData, ...action.payload }
+        sellFormData: { ...state.sellFormData, ...action.payload },
       };
     case SET_SELL_FORM_ERRORS:
       return {
         ...state,
-        formErrors: action.payload
+        formErrors: action.payload,
       };
     case SELL_FORM_RESET:
       return {
@@ -74,34 +74,34 @@ const merchantReducer = (state = initialState, action) => {
           email: '',
           phoneNumber: '',
           brand: '',
-          business: ''
+          business: '',
         },
-        formErrors: {}
+        formErrors: {},
       };
     case SIGNUP_CHANGE:
       return {
         ...state,
-        signupFormData: { ...state.signupFormData, ...action.payload }
+        signupFormData: { ...state.signupFormData, ...action.payload },
       };
     case SET_SIGNUP_FORM_ERRORS:
       return {
         ...state,
-        signupFormErrors: action.payload
+        signupFormErrors: action.payload,
       };
-    case SET_MERCHANTS_LOADING:
+    case SET_SELLERS_LOADING:
       return {
         ...state,
-        isLoading: action.payload
+        isLoading: action.payload,
       };
     case SET_SELL_SUBMITTING:
       return {
         ...state,
-        isSellSubmitting: action.payload
+        isSellSubmitting: action.payload,
       };
     case SET_SELL_LOADING:
       return {
         ...state,
-        isSellLoading: action.payload
+        isSellLoading: action.payload,
       };
     case SIGNUP_RESET:
       return {
@@ -110,12 +110,12 @@ const merchantReducer = (state = initialState, action) => {
           email: '',
           firstName: '',
           lastName: '',
-          password: ''
-        }
+          password: '',
+        },
       };
     default:
       return state;
   }
 };
 
-export default merchantReducer;
+export default sellerReducer;

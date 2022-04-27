@@ -367,7 +367,7 @@ router.get('/list/select', auth, async (req, res) => {
 router.post(
   '/add',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.findRole(role.ROLES.Admin, role.ROLES.Seller),
   async (req, res) => {
     try {
       const name = req.body.name;
@@ -434,15 +434,15 @@ router.post(
 router.get(
   '/',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.findRole(role.ROLES.Admin, role.ROLES.Seller),
   async (req, res) => {
     try {
       let products = [];
 
-      if (req.user.merchant) {
+      if (req.user.seller) {
         const brands = await Brand.find({
-          merchant: req.user.merchant,
-        }).populate('merchant', '_id');
+          seller: req.user.seller,
+        }).populate('seller', '_id');
 
         const brandId = brands[0]['_id'];
 
@@ -450,8 +450,8 @@ router.get(
           .populate({
             path: 'brand',
             populate: {
-              path: 'merchant',
-              model: 'Merchant',
+              path: 'seller',
+              model: 'Seller',
             },
           })
           .where('brand', brandId);
@@ -459,8 +459,8 @@ router.get(
         products = await Product.find({}).populate({
           path: 'brand',
           populate: {
-            path: 'merchant',
-            model: 'Merchant',
+            path: 'seller',
+            model: 'Seller',
           },
         });
       }
@@ -480,17 +480,17 @@ router.get(
 router.get(
   '/:id',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.findRole(role.ROLES.Admin, role.ROLES.Seller),
   async (req, res) => {
     try {
       const productId = req.params.id;
 
       let productDoc = null;
 
-      if (req.user.merchant) {
+      if (req.user.seller) {
         const brands = await Brand.find({
-          merchant: req.user.merchant,
-        }).populate('merchant', '_id');
+          seller: req.user.seller,
+        }).populate('seller', '_id');
 
         const brandId = brands[0]['_id'];
 
@@ -527,7 +527,7 @@ router.get(
 router.put(
   '/:id',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.findRole(role.ROLES.Admin, role.ROLES.Seller),
   async (req, res) => {
     try {
       const productId = req.params.id;
@@ -553,7 +553,7 @@ router.put(
 router.put(
   '/:id/active',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.findRole(role.ROLES.Admin, role.ROLES.Seller),
   async (req, res) => {
     try {
       const productId = req.params.id;
@@ -579,7 +579,7 @@ router.put(
 router.delete(
   '/delete/:id',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.findRole(role.ROLES.Admin, role.ROLES.Seller),
   async (req, res) => {
     try {
       const product = await Product.deleteOne({ _id: req.params.id });

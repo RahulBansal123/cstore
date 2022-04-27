@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
 // Bring in Models & Helpers
-const Merchant = require('../../models/merchant');
+const Seller = require('../../models/seller');
 const User = require('../../models/user');
 const Brand = require('../../models/brand');
 const auth = require('../../middleware/auth');
@@ -36,15 +36,15 @@ router.post('/seller-request', async (req, res) => {
         .json({ error: 'You must enter a phone number and an email address.' });
     }
 
-    const existingMerchant = await Merchant.findOne({ email });
+    const existingSeller = await Seller.findOne({ email });
 
-    if (existingMerchant) {
+    if (existingSeller) {
       return res
         .status(400)
         .json({ error: 'That email address is already in use.' });
     }
 
-    const merchant = new Merchant({
+    const seller = new Seller({
       name,
       email,
       business,
@@ -52,12 +52,12 @@ router.post('/seller-request', async (req, res) => {
       brand,
     });
 
-    const merchantDoc = await merchant.save();
+    const sellerDoc = await seller.save();
 
     res.status(200).json({
       success: true,
       message: `We received your request! we will reach you on your phone number ${phoneNumber}!`,
-      merchant: merchantDoc,
+      seller: sellerDoc,
     });
   } catch (error) {
     return res.status(400).json({
@@ -66,45 +66,40 @@ router.post('/seller-request', async (req, res) => {
   }
 });
 
-// fetch all merchants api
-router.get(
-  '/list',
-  auth,
-  role.checkRole(role.ROLES.Admin),
-  async (req, res) => {
-    try {
-      const merchants = await Merchant.find({}).sort('-created');
-
-      res.status(200).json({
-        merchants,
-      });
-    } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
-      });
-    }
-  }
-);
-
-// approve merchant
-router.put('/approve/:merchantId', auth, async (req, res) => {
+// fetch all sellers api
+router.get('/list', auth, role.findRole(role.ROLES.Admin), async (req, res) => {
   try {
-    const merchantId = req.params.merchantId;
+    const sellers = await Seller.find({}).sort('-created');
 
-    const query = { _id: merchantId };
+    res.status(200).json({
+      sellers,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.',
+    });
+  }
+});
+
+// approve seller
+router.put('/approve/:sellerId', auth, async (req, res) => {
+  try {
+    const sellerId = req.params.sellerId;
+
+    const query = { _id: sellerId };
     const update = {
       status: 'Approved',
       isActive: true,
     };
 
-    const merchantDoc = await Merchant.findOneAndUpdate(query, update, {
+    const sellerDoc = await Seller.findOneAndUpdate(query, update, {
       new: true,
     });
 
-    await createMerchantUser(
-      merchantDoc.email,
-      merchantDoc.name,
-      merchantId,
+    await createSellerUser(
+      sellerDoc.email,
+      sellerDoc.name,
+      sellerId,
       req.headers.host
     );
 
@@ -118,17 +113,17 @@ router.put('/approve/:merchantId', auth, async (req, res) => {
   }
 });
 
-// reject merchant
-router.put('/reject/:merchantId', auth, async (req, res) => {
+// reject seller
+router.put('/reject/:sellerId', auth, async (req, res) => {
   try {
-    const merchantId = req.params.merchantId;
+    const sellerId = req.params.sellerId;
 
-    const query = { _id: merchantId };
+    const query = { _id: sellerId };
     const update = {
       status: 'Rejected',
     };
 
-    await Merchant.findOneAndUpdate(query, update, {
+    await Seller.findOneAndUpdate(query, update, {
       new: true,
     });
 
@@ -181,11 +176,11 @@ router.post('/signup/:token', async (req, res) => {
       new: true,
     });
 
-    const merchantDoc = await Merchant.findOne({
+    const sellerDoc = await Seller.findOne({
       email,
     });
 
-    await createMerchantBrand(merchantDoc);
+    await createSellerBrand(sellerDoc);
 
     res.status(200).json({
       success: true,
@@ -200,15 +195,15 @@ router.post('/signup/:token', async (req, res) => {
 router.delete(
   '/delete/:id',
   auth,
-  role.checkRole(role.ROLES.Admin),
+  role.findRole(role.ROLES.Admin),
   async (req, res) => {
     try {
-      const merchant = await Merchant.deleteOne({ _id: req.params.id });
+      const seller = await Seller.deleteOne({ _id: req.params.id });
 
       res.status(200).json({
         success: true,
-        message: `Merchant has been deleted successfully!`,
-        merchant,
+        message: `Seller has been deleted successfully!`,
+        seller,
       });
     } catch (error) {
       res.status(400).json({
@@ -218,18 +213,18 @@ router.delete(
   }
 );
 
-const createMerchantBrand = async ({ _id, brand, business }) => {
+const createSellerBrand = async ({ _id, brand, business }) => {
   const newBrand = new Brand({
     name: brand,
     description: business,
-    merchant: _id,
+    seller: _id,
     isActive: false,
   });
 
   return await newBrand.save();
 };
 
-const createMerchantUser = async (email, name, merchant, host) => {
+const createSellerUser = async (email, name, seller, host) => {
   const firstName = name;
   const lastName = '';
 
@@ -238,15 +233,15 @@ const createMerchantUser = async (email, name, merchant, host) => {
   if (existingUser) {
     const query = { _id: existingUser._id };
     const update = {
-      merchant,
-      role: role.ROLES.Merchant,
+      seller,
+      role: role.ROLES.Seller,
     };
 
-    const merchantDoc = await Merchant.findOne({
+    const sellerDoc = await Seller.findOne({
       email,
     });
 
-    await createMerchantBrand(merchantDoc);
+    await createSellerBrand(sellerDoc);
 
     return await User.findOneAndUpdate(query, update, {
       new: true,
@@ -261,8 +256,8 @@ const createMerchantUser = async (email, name, merchant, host) => {
       firstName,
       lastName,
       resetPasswordToken,
-      merchant,
-      role: role.ROLES.Merchant,
+      seller,
+      role: role.ROLES.Seller,
     });
 
     return await user.save();

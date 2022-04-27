@@ -2,13 +2,9 @@ const Mongoose = require('mongoose');
 
 const { Schema } = Mongoose;
 
-// User Schema
 const UserSchema = new Schema({
   email: {
     type: String,
-    required: () => {
-      return this.provider !== 'email' ? false : true;
-    },
   },
   phoneNumber: {
     type: String,
@@ -22,26 +18,16 @@ const UserSchema = new Schema({
   password: {
     type: String,
   },
-  merchant: {
+  seller: {
     type: Schema.Types.ObjectId,
-    ref: 'Merchant',
+    ref: 'Seller',
     default: null,
-  },
-  provider: {
-    type: String,
-    required: true,
-    default: 'email',
-  },
-  avatar: {
-    type: String,
   },
   role: {
     type: String,
-    default: 'ROLE_MEMBER',
-    enum: ['ROLE_MEMBER', 'ROLE_ADMIN', 'ROLE_MERCHANT'],
+    default: 'MEMBER',
+    enum: ['MEMBER', 'ADMIN', 'SELLER'],
   },
-  resetPasswordToken: { type: String },
-  resetPasswordExpires: { type: Date },
   updated: Date,
   created: {
     type: Date,

@@ -30,7 +30,7 @@ class Customer extends React.PureComponent {
           title="Customer Orders"
           actionTitle="My Orders"
           handleAction={() =>
-            user.role === 'ROLE_ADMIN' && history.push('/dashboard/orders')
+            user.role === 'ADMIN' && history.push('/dashboard/orders')
           }
         >
           <OrderSearch onSearchSubmit={searchOrders} />

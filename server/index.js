@@ -15,7 +15,6 @@ const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 const webpackConfig = require('../webpack.config');
 const routes = require('./routes');
-const socket = require('./socket');
 
 const { database, port } = keys;
 const app = express();
@@ -82,8 +81,6 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-const server = app.listen(port, () => {
+app.listen(port, () => {
   console.log(`${chalk.green('✓')} ${chalk.blue(`Listening on port ${port}`)}`);
 });
-
-socket(server);

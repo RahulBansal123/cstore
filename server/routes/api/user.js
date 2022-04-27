@@ -11,7 +11,7 @@ const role = require('../../middleware/role');
 router.get(
   '/search',
   auth,
-  role.checkRole(role.ROLES.Admin),
+  role.findRole(role.ROLES.Admin),
   async (req, res) => {
     try {
       const { search } = req.query;
@@ -23,18 +23,18 @@ router.get(
           $or: [
             { firstName: { $regex: regex } },
             { lastName: { $regex: regex } },
-            { email: { $regex: regex } }
-          ]
+            { email: { $regex: regex } },
+          ],
         },
         { password: 0, _id: 0 }
-      ).populate('merchant', 'name');
+      ).populate('seller', 'name');
 
       res.status(200).json({
-        users
+        users,
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
+        error: 'Your request could not be processed. Please try again.',
       });
     }
   }
@@ -42,16 +42,15 @@ router.get(
 
 router.get('/', auth, async (req, res) => {
   try {
-    
     const user = req.user._id;
     const userDoc = await User.findById(user, { password: 0 });
 
     res.status(200).json({
-      user: userDoc
+      user: userDoc,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: 'Your request could not be processed. Please try again.',
     });
   }
 });
@@ -63,17 +62,17 @@ router.put('/', auth, async (req, res) => {
     const query = { _id: user };
 
     const userDoc = await User.findOneAndUpdate(query, update, {
-      new: true
+      new: true,
     });
 
     res.status(200).json({
       success: true,
       message: 'Your profile is successfully updated!',
-      user: userDoc
+      user: userDoc,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: 'Your request could not be processed. Please try again.',
     });
   }
 });

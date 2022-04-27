@@ -21,7 +21,7 @@ import Support from '../../../containers/Support';
 
 const Customer = (props) => {
   return (
-    <div className="merchant">
+    <div className="seller">
       <Row>
         <Col xs="12" md="5" xl="3">
           <AccountMenu {...props} />

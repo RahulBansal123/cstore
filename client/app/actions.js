@@ -14,7 +14,7 @@ import * as categoryAction from './containers/Category/actions';
 import * as brandAction from './containers/Brand/actions';
 import * as menuAction from './containers/NavigationMenu/actions';
 import * as shopAction from './containers/Shop/actions';
-import * as merchantAction from './containers/Merchant/actions';
+import * as sellerAction from './containers/Seller/actions';
 import * as orderAction from './containers/Order/actions';
 import * as reviewAction from './containers/Review/actions';
 
@@ -35,7 +35,7 @@ export default function mapDispatchToProps(dispatch) {
       ...brandAction,
       ...menuAction,
       ...shopAction,
-      ...merchantAction,
+      ...sellerAction,
       ...orderAction,
       ...reviewAction,
     },

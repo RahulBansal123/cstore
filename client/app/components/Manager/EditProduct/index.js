@@ -15,10 +15,10 @@ import SelectOption from '../../Common/SelectOption';
 
 const taxableSelect = [
   { value: 1, label: 'Yes' },
-  { value: 0, label: 'No' }
+  { value: 0, label: 'No' },
 ];
 
-const EditProduct = props => {
+const EditProduct = (props) => {
   const {
     user,
     product,
@@ -27,19 +27,19 @@ const EditProduct = props => {
     brands,
     updateProduct,
     deleteProduct,
-    activateProduct
+    activateProduct,
   } = props;
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     updateProduct();
   };
 
   return (
-    <div className='edit-product'>
+    <div className="edit-product">
       <form onSubmit={handleSubmit} noValidate>
         <Row>
-          <Col xs='12'>
+          <Col xs="12">
             <Input
               type={'text'}
               error={formErrors['name']}
@@ -52,7 +52,7 @@ const EditProduct = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12'>
+          <Col xs="12" md="12">
             <Input
               type={'textarea'}
               error={formErrors['description']}
@@ -65,7 +65,7 @@ const EditProduct = props => {
               }}
             />
           </Col>
-          <Col xs='12' lg='6'>
+          <Col xs="12" lg="6">
             <Input
               type={'number'}
               error={formErrors['quantity']}
@@ -79,7 +79,7 @@ const EditProduct = props => {
               }}
             />
           </Col>
-          <Col xs='12' lg='6'>
+          <Col xs="12" lg="6">
             <Input
               type={'number'}
               error={formErrors['price']}
@@ -93,7 +93,7 @@ const EditProduct = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12'>
+          <Col xs="12" md="12">
             <SelectOption
               error={formErrors['taxable']}
               label={'Taxable'}
@@ -101,32 +101,32 @@ const EditProduct = props => {
               name={'taxable'}
               value={[product.taxable ? taxableSelect[0] : taxableSelect[1]]}
               options={taxableSelect}
-              handleSelectChange={value => {
+              handleSelectChange={(value) => {
                 productChange('taxable', value.value);
               }}
             />
           </Col>
-          {user.role === 'ROLE_ADMIN' && (
-            <Col xs='12' md='12'>
+          {user.role === 'ADMIN' && (
+            <Col xs="12" md="12">
               <SelectOption
                 error={formErrors['brand']}
                 label={'Select Brand'}
                 multi={false}
                 value={product.brand}
                 options={brands}
-                handleSelectChange={value => {
+                handleSelectChange={(value) => {
                   productChange('brand', value);
                 }}
               />
             </Col>
           )}
-          <Col xs='12' md='12' className='mt-3 mb-2'>
+          <Col xs="12" md="12" className="mt-3 mb-2">
             <Switch
               id={`enable-product-${product._id}`}
               name={'isActive'}
               label={'Active?'}
               checked={product?.isActive}
-              toggleCheckboxChange={value => {
+              toggleCheckboxChange={(value) => {
                 productChange('isActive', value);
                 activateProduct(product._id, value);
               }}
@@ -134,15 +134,15 @@ const EditProduct = props => {
           </Col>
         </Row>
         <hr />
-        <div className='d-flex flex-column flex-md-row'>
+        <div className="d-flex flex-column flex-md-row">
           <Button
-            type='submit'
-            text='Save'
-            className='mb-3 mb-md-0 mr-0 mr-md-3'
+            type="submit"
+            text="Save"
+            className="mb-3 mb-md-0 mr-0 mr-md-3"
           />
           <Button
-            variant='danger'
-            text='Delete'
+            variant="danger"
+            text="Delete"
             onClick={() => deleteProduct(product._id)}
           />
         </div>

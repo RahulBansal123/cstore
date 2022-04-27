@@ -248,7 +248,7 @@ export const addProduct = () => {
         isActive: product.isActive,
         taxable: product.taxable.value,
         brand:
-          user.role !== 'ROLE_MERCHANT'
+          user.role !== 'SELLER'
             ? brand != 0
               ? brand
               : null

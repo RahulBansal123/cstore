@@ -1,6 +1,6 @@
 /*
  *
- * Merchant actions
+ * Seller actions
  *
  */
 
@@ -9,14 +9,14 @@ import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 
 import {
-  FETCH_MERCHANTS,
-  REMOVE_MERCHANT,
+  FETCH_SELLERS,
+  REMOVE_SELLER,
   SELL_FORM_CHANGE,
   SET_SELL_FORM_ERRORS,
   SELL_FORM_RESET,
   SIGNUP_CHANGE,
   SET_SIGNUP_FORM_ERRORS,
-  SET_MERCHANTS_LOADING,
+  SET_SELLERS_LOADING,
   SET_SELL_SUBMITTING,
   SET_SELL_LOADING,
   SIGNUP_RESET,
@@ -35,7 +35,7 @@ export const sellFormChange = (name, value) => {
   };
 };
 
-export const merchantSignupChange = (name, value) => {
+export const sellerSignupChange = (name, value) => {
   let formData = {};
   formData[name] = value;
 
@@ -58,9 +58,9 @@ export const sellWithUs = () => {
         business: 'required|min:10',
       };
 
-      const merchant = getState().merchant.sellFormData;
+      const seller = getState().seller.sellFormData;
 
-      const { isValid, errors } = allFieldsValidation(merchant, rules, {
+      const { isValid, errors } = allFieldsValidation(seller, rules, {
         'required.name': 'Name is required.',
         'required.email': 'Email is required.',
         'email.email': 'Email format is invalid.',
@@ -78,10 +78,7 @@ export const sellWithUs = () => {
       dispatch({ type: SET_SELL_SUBMITTING, payload: true });
       dispatch({ type: SET_SELL_LOADING, payload: true });
 
-      const response = await axios.post(
-        '/api/merchant/seller-request',
-        merchant
-      );
+      const response = await axios.post('/api/seller/seller-request', seller);
 
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -100,50 +97,50 @@ export const sellWithUs = () => {
   };
 };
 
-export const fetchMerchants = () => {
+export const fetchSellers = () => {
   return async (dispatch, getState) => {
     try {
-      dispatch({ type: SET_MERCHANTS_LOADING, payload: true });
+      dispatch({ type: SET_SELLERS_LOADING, payload: true });
 
-      const response = await axios.get(`/api/merchant/list`);
+      const response = await axios.get(`/api/seller/list`);
 
       dispatch({
-        type: FETCH_MERCHANTS,
-        payload: response.data.merchants,
+        type: FETCH_SELLERS,
+        payload: response.data.sellers,
       });
     } catch (error) {
       console.log('error');
     } finally {
-      dispatch({ type: SET_MERCHANTS_LOADING, payload: false });
+      dispatch({ type: SET_SELLERS_LOADING, payload: false });
     }
   };
 };
 
-export const approveMerchant = (merchant) => {
+export const approveSeller = (seller) => {
   return async (dispatch, getState) => {
     try {
-      await axios.put(`/api/merchant/approve/${merchant._id}`);
+      await axios.put(`/api/seller/approve/${seller._id}`);
 
-      dispatch(fetchMerchants());
+      dispatch(fetchSellers());
     } catch (error) {
       console.log('error');
     }
   };
 };
 
-export const rejectMerchant = (merchant) => {
+export const rejectSeller = (seller) => {
   return async (dispatch, getState) => {
     try {
-      await axios.put(`/api/merchant/reject/${merchant._id}`);
+      await axios.put(`/api/seller/reject/${seller._id}`);
 
-      dispatch(fetchMerchants());
+      dispatch(fetchSellers());
     } catch (error) {
       console.log('error');
     }
   };
 };
 
-export const merchantSignUp = (token) => {
+export const sellerSignUp = (token) => {
   return async (dispatch, getState) => {
     try {
       const rules = {
@@ -153,9 +150,9 @@ export const merchantSignUp = (token) => {
         lastName: 'required',
       };
 
-      const merchant = getState().merchant.signupFormData;
+      const seller = getState().seller.signupFormData;
 
-      const { isValid, errors } = allFieldsValidation(merchant, rules, {
+      const { isValid, errors } = allFieldsValidation(seller, rules, {
         'required.email': 'Email is required.',
         'required.password': 'Password is required.',
         'required.firstName': 'First Name is required.',
@@ -166,7 +163,7 @@ export const merchantSignUp = (token) => {
         return dispatch({ type: SET_SIGNUP_FORM_ERRORS, payload: errors });
       }
 
-      await axios.post(`/api/merchant/signup/${token}`, merchant);
+      await axios.post(`/api/seller/signup/${token}`, seller);
 
       const successfulOptions = {
         title: `You have signed up successfully! Please sign in with the email and password. Thank you!`,
@@ -184,11 +181,11 @@ export const merchantSignUp = (token) => {
   };
 };
 
-// delete merchant api
-export const deleteMerchant = (id) => {
+// delete seller api
+export const deleteSeller = (id) => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.delete(`/api/merchant/delete/${id}`);
+      const response = await axios.delete(`/api/seller/delete/${id}`);
 
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -199,7 +196,7 @@ export const deleteMerchant = (id) => {
       if (response.data.success == true) {
         dispatch(success(successfulOptions));
         dispatch({
-          type: REMOVE_MERCHANT,
+          type: REMOVE_SELLER,
           payload: id,
         });
       }
