@@ -69,6 +69,19 @@ class Sell extends React.PureComponent {
                 <Col xs="12">
                   <Input
                     type={'text'}
+                    error={formErrors['password']}
+                    label={'Password'}
+                    name={'email'}
+                    placeholder={'Password'}
+                    value={sellFormData.password}
+                    onInputChange={(name, value) => {
+                      sellFormChange(name, value);
+                    }}
+                  />
+                </Col>
+                <Col xs="12">
+                  <Input
+                    type={'text'}
                     error={formErrors['phoneNumber']}
                     label={'Phone Number'}
                     name={'phoneNumber'}

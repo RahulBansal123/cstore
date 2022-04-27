@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 
 const auth = require('../../middleware/auth');
 
-// Bring in Models & Helpers
 const User = require('../../models/user');
 const keys = require('../../config/keys');
 
@@ -124,51 +123,6 @@ router.post('/register', async (req, res) => {
         email: registeredUser.email,
         role: registeredUser.role,
       },
-    });
-  } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
-    });
-  }
-});
-
-router.post('/reset', auth, async (req, res) => {
-  try {
-    const { password, confirmPassword } = req.body;
-    const email = req.user.email;
-
-    if (!email) {
-      return res.status(401).send('Unauthenticated');
-    }
-
-    if (!password) {
-      return res.status(400).json({ error: 'You must enter a password.' });
-    }
-
-    const existingUser = await User.findOne({ email });
-    if (!existingUser) {
-      return res
-        .status(400)
-        .json({ error: 'That email address is already in use.' });
-    }
-
-    const isMatch = await bcrypt.compare(password, existingUser.password);
-
-    if (!isMatch) {
-      return res
-        .status(400)
-        .json({ error: 'Please enter your correct old password.' });
-    }
-
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(confirmPassword, salt);
-    existingUser.password = hash;
-    existingUser.save();
-
-    res.status(200).json({
-      success: true,
-      message:
-        'Password changed successfully. Please login with your new password.',
     });
   } catch (error) {
     res.status(400).json({

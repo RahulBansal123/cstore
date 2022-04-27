@@ -26,6 +26,7 @@ const initialState = {
     phoneNumber: '',
     brand: '',
     business: '',
+    password: '',
   },
   formErrors: {},
   signupFormData: {

@@ -53,6 +53,7 @@ export const sellWithUs = () => {
       const rules = {
         name: 'required',
         email: 'required|email',
+        password: 'required|password',
         phoneNumber: ['required', `regex:${phoneno}`],
         brand: 'required',
         business: 'required|min:10',
@@ -63,6 +64,7 @@ export const sellWithUs = () => {
       const { isValid, errors } = allFieldsValidation(seller, rules, {
         'required.name': 'Name is required.',
         'required.email': 'Email is required.',
+        'required.password': 'Password is required.',
         'email.email': 'Email format is invalid.',
         'required.phoneNumber': 'Phone number is required.',
         'regex.phoneNumber': 'Phone number format is invalid.',

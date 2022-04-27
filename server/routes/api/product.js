@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Mongoose = require('mongoose');
-const path = require('path');
 
-// Bring in Models & Helpers
 const Product = require('../../models/product');
 const Brand = require('../../models/brand');
 const Category = require('../../models/category');
@@ -11,19 +8,15 @@ const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const checkAuth = require('../../helpers/auth');
 
-// fetch product slug api
 router.get('/item/:slug', async (req, res) => {
   try {
     const slug = req.params.slug;
 
-    const productDoc = await Product.findOne({ slug, isActive: true }).populate(
-      {
-        path: 'brand',
-        select: 'name isActive slug',
-      }
-    );
+    const productDoc = await Product.findOne({ slug }).populate({
+      path: 'brand',
+    });
 
-    if (!productDoc || (productDoc && productDoc?.brand?.isActive === false)) {
+    if (!productDoc) {
       return res.status(404).json({
         message: 'No product found.',
       });
@@ -39,13 +32,12 @@ router.get('/item/:slug', async (req, res) => {
   }
 });
 
-// fetch  product name search api
-router.get('/list/search/:name', async (req, res) => {
+router.get('/search/:name', async (req, res) => {
   try {
     const name = req.params.name;
 
     const productDoc = await Product.find(
-      { name: { $regex: new RegExp(name), $options: 'is' }, isActive: true },
+      { name: { $regex: new RegExp(name), $options: 'is' } },
       { name: 1, slug: 1, imageUrl: 1, price: 1, _id: 0 }
     );
 
@@ -65,7 +57,6 @@ router.get('/list/search/:name', async (req, res) => {
   }
 });
 
-// fetch store products by advancedFilters api
 router.post('/list', async (req, res) => {
   try {
     let {
@@ -103,12 +94,6 @@ router.post('/list', async (req, res) => {
         $addFields: {
           'brand.name': '$brands.name',
           'brand._id': '$brands._id',
-          'brand.isActive': '$brands.isActive',
-        },
-      },
-      {
-        $match: {
-          'brand.isActive': true,
         },
       },
       {
@@ -138,7 +123,6 @@ router.post('/list', async (req, res) => {
       },
       {
         $match: {
-          isActive: true,
           price: priceFilter.price,
           averageRating: ratingFilter.rating,
         },
@@ -153,14 +137,13 @@ router.post('/list', async (req, res) => {
 
     const userDoc = await checkAuth(req);
     const categoryDoc = await Category.findOne(
-      { slug: categoryFilter.category, isActive: true },
+      { slug: categoryFilter.category },
       'products -_id'
     );
 
     if (categoryDoc && categoryFilter !== category) {
       basicQuery.push({
         $match: {
-          isActive: true,
           _id: {
             $in: Array.from(categoryDoc.products),
           },
@@ -172,64 +155,14 @@ router.post('/list', async (req, res) => {
     let productsCount = 0;
 
     if (userDoc) {
-      productsCount = await Product.aggregate(
-        [
-          {
-            $lookup: {
-              from: 'wishlists',
-              let: { product: '$_id' },
-              pipeline: [
-                {
-                  $match: {
-                    $and: [
-                      { $expr: { $eq: ['$$product', '$product'] } },
-                      { user: new Mongoose.Types.ObjectId(userDoc.id) },
-                    ],
-                  },
-                },
-              ],
-              as: 'isLiked',
-            },
-          },
-          {
-            $addFields: {
-              isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] },
-            },
-          },
-        ].concat(basicQuery)
-      );
+      productsCount = await Product.aggregate([].concat(basicQuery));
       const paginateQuery = [
         { $sort: sortOrder },
         { $skip: pageSize * (productsCount.length > 8 ? page - 1 : 0) },
         { $limit: pageSize },
       ];
       products = await Product.aggregate(
-        [
-          {
-            $lookup: {
-              from: 'wishlists',
-              let: { product: '$_id' },
-              pipeline: [
-                {
-                  $match: {
-                    $and: [
-                      { $expr: { $eq: ['$$product', '$product'] } },
-                      { user: new Mongoose.Types.ObjectId(userDoc.id) },
-                    ],
-                  },
-                },
-              ],
-              as: 'isLiked',
-            },
-          },
-          {
-            $addFields: {
-              isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] },
-            },
-          },
-        ]
-          .concat(basicQuery)
-          .concat(paginateQuery)
+        [].concat(basicQuery).concat(paginateQuery)
       );
     } else {
       productsCount = await Product.aggregate(basicQuery);
@@ -262,7 +195,7 @@ router.get('/list/brand/:slug', async (req, res) => {
   try {
     const slug = req.params.slug;
 
-    const brand = await Brand.findOne({ slug, isActive: true });
+    const brand = await Brand.findOne({ slug });
 
     if (!brand) {
       return res.status(404).json({
@@ -276,25 +209,7 @@ router.get('/list/brand/:slug', async (req, res) => {
       const products = await Product.aggregate([
         {
           $match: {
-            isActive: true,
             brand: brand._id,
-          },
-        },
-        {
-          $lookup: {
-            from: 'wishlists',
-            let: { product: '$_id' },
-            pipeline: [
-              {
-                $match: {
-                  $and: [
-                    { $expr: { $eq: ['$$product', '$product'] } },
-                    { user: new Mongoose.Types.ObjectId(userDoc.id) },
-                  ],
-                },
-              },
-            ],
-            as: 'isLiked',
           },
         },
         {
@@ -306,39 +221,32 @@ router.get('/list/brand/:slug', async (req, res) => {
           },
         },
         {
-          $addFields: {
-            isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] },
-          },
-        },
-        {
           $unwind: '$brands',
         },
         {
           $addFields: {
             'brand.name': '$brands.name',
             'brand._id': '$brands._id',
-            'brand.isActive': '$brands.isActive',
           },
         },
         { $project: { brands: 0 } },
       ]);
 
       res.status(200).json({
-        products: products.reverse().slice(0, 8),
+        products: products.reverse(),
         page: 1,
-        pages: products.length > 0 ? Math.ceil(products.length / 8) : 0,
+        pages: products.length,
         totalProducts: products.length,
       });
     } else {
       const products = await Product.find({
         brand: brand._id,
-        isActive: true,
       }).populate('brand', 'name');
 
       res.status(200).json({
-        products: products.reverse().slice(0, 8),
+        products: products.reverse(),
         page: 1,
-        pages: products.length > 0 ? Math.ceil(products.length / 8) : 0,
+        pages: products.length,
         totalProducts: products.length,
       });
     }
@@ -349,6 +257,7 @@ router.get('/list/brand/:slug', async (req, res) => {
   }
 });
 
+// Returns only products name
 router.get('/list/select', auth, async (req, res) => {
   try {
     const products = await Product.find({}, 'name');
@@ -363,7 +272,6 @@ router.get('/list/select', auth, async (req, res) => {
   }
 });
 
-// add product api
 router.post(
   '/add',
   auth,
@@ -374,10 +282,8 @@ router.post(
       const description = req.body.description;
       const quantity = req.body.quantity;
       const price = req.body.price;
-      const taxable = req.body.taxable;
-      const isActive = req.body.isActive;
       const brand = req.body.brand;
-      const image = req.file;
+      const image = req.body.image;
 
       if (!description || !name) {
         return res
@@ -404,8 +310,6 @@ router.post(
         description,
         quantity,
         price,
-        taxable,
-        isActive,
         brand,
         image,
       });
@@ -420,17 +324,11 @@ router.post(
     } catch (error) {
       return res.status(400).json({
         error: 'Your request could not be processed. Please try again.',
-        message: error,
-        nameq:
-          req.file.originalname + (Math.random() + 1).toString(36).substring(7),
-        app: `${admin.storage().bucket()}`,
-        file: `${req.file.buffer}`,
       });
     }
   }
 );
 
-// fetch products api
 router.get(
   '/',
   auth,
@@ -476,7 +374,6 @@ router.get(
   }
 );
 
-// fetch product api
 router.get(
   '/:id',
   auth,
@@ -526,32 +423,6 @@ router.get(
 
 router.put(
   '/:id',
-  auth,
-  role.findRole(role.ROLES.Admin, role.ROLES.Seller),
-  async (req, res) => {
-    try {
-      const productId = req.params.id;
-      const update = req.body.product;
-      const query = { _id: productId };
-
-      await Product.findOneAndUpdate(query, update, {
-        new: true,
-      });
-
-      res.status(200).json({
-        success: true,
-        message: 'Product has been updated successfully!',
-      });
-    } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
-      });
-    }
-  }
-);
-
-router.put(
-  '/:id/active',
   auth,
   role.findRole(role.ROLES.Admin, role.ROLES.Seller),
   async (req, res) => {

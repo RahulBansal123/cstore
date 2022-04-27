@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// Bring in Models & Helpers
 const Brand = require('../../models/brand');
 const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
@@ -12,7 +11,6 @@ router.post('/add', auth, role.findRole(role.ROLES.Admin), async (req, res) => {
   try {
     const name = req.body.name;
     const description = req.body.description;
-    const isActive = req.body.isActive;
 
     if (!description || !name) {
       return res
@@ -23,7 +21,6 @@ router.post('/add', auth, role.findRole(role.ROLES.Admin), async (req, res) => {
     const brand = new Brand({
       name,
       description,
-      isActive,
     });
 
     const brandDoc = await brand.save();
@@ -40,12 +37,9 @@ router.post('/add', auth, role.findRole(role.ROLES.Admin), async (req, res) => {
   }
 });
 
-// fetch store brands api
 router.get('/list', async (req, res) => {
   try {
-    const brands = await Brand.find({
-      isActive: true,
-    }).populate('seller', 'name');
+    const brands = await Brand.find({}).populate('seller', 'name');
 
     res.status(200).json({
       brands,
@@ -57,7 +51,6 @@ router.get('/list', async (req, res) => {
   }
 });
 
-// fetch brands api
 router.get(
   '/',
   auth,
@@ -65,7 +58,6 @@ router.get(
   async (req, res) => {
     try {
       let brands = null;
-
       if (req.user.seller) {
         brands = await Brand.find({
           seller: req.user.seller,
@@ -146,38 +138,6 @@ router.put(
       const brandId = req.params.id;
       const update = req.body.brand;
       const query = { _id: brandId };
-
-      await Brand.findOneAndUpdate(query, update, {
-        new: true,
-      });
-
-      res.status(200).json({
-        success: true,
-        message: 'Brand has been updated successfully!',
-      });
-    } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
-      });
-    }
-  }
-);
-
-router.put(
-  '/:id/active',
-  auth,
-  role.findRole(role.ROLES.Admin, role.ROLES.Seller),
-  async (req, res) => {
-    try {
-      const brandId = req.params.id;
-      const update = req.body.brand;
-      const query = { _id: brandId };
-
-      // disable brand(brandId) products
-      if (!update.isActive) {
-        const products = await Product.find({ brand: brandId });
-        store.disableProducts(products);
-      }
 
       await Brand.findOneAndUpdate(query, update, {
         new: true,

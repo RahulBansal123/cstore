@@ -26,7 +26,7 @@ import { BarsIcon } from '../../components/Common/Icon';
 class Navigation extends React.PureComponent {
   componentDidMount() {
     this.props.fetchStoreBrands();
-    this.props.fetchStoreCategories();
+    this.props.fetchCategories();
   }
 
   toggleBrand() {
@@ -35,7 +35,7 @@ class Navigation extends React.PureComponent {
   }
 
   toggleMenu() {
-    this.props.fetchStoreCategories();
+    this.props.fetchCategories();
     this.props.toggleMenu();
   }
 

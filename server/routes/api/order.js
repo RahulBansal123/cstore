@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Mongoose = require('mongoose');
 
-// Bring in Models & Helpers
 const Order = require('../../models/order');
 const Cart = require('../../models/cart');
 const Product = require('../../models/product');
@@ -43,7 +42,6 @@ router.post('/add', auth, async (req, res) => {
   }
 });
 
-// search orders api
 router.get('/search', auth, async (req, res) => {
   try {
     const { search } = req.query;
@@ -113,7 +111,6 @@ router.get('/search', auth, async (req, res) => {
   }
 });
 
-// fetch orders api
 router.get('/', auth, async (req, res) => {
   try {
     const user = req.user._id;
@@ -157,7 +154,6 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// fetch order api
 router.get('/:orderId', auth, async (req, res) => {
   try {
     const orderId = req.params.orderId;
