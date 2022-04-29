@@ -26,7 +26,7 @@ const ProductList = (props) => {
                         src={`${
                           product.imageUrl
                             ? product.imageUrl
-                            : '/images/placeholder-image.png'
+                            : '/images/placeholder.png'
                         }`}
                         style={{ width: '100%' }}
                       />

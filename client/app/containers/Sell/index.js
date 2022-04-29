@@ -134,17 +134,6 @@ class Sell extends React.PureComponent {
                   <b>Apply Today</b>
                 </div>
               </Col>
-
-              <Col
-                xs="12"
-                className="order-1 order-md-2 text-center mb-3 mb-md-0"
-              >
-                <img
-                  className="agreement-banner"
-                  src={'/images/banners/agreement.svg'}
-                  alt="agreement banner"
-                />
-              </Col>
             </Row>
           </Col>
         </Row>
