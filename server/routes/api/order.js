@@ -7,8 +7,56 @@ const Cart = require('../../models/cart');
 const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
-const store = require('../../helpers/store');
+const calculateTaxAmount = (order) => {
+  const taxRate = taxConfig.stateTaxRate;
 
+  order.totalTax = 0;
+  if (order.products && order.products.length > 0) {
+    order.products.map((item) => {
+      const price = item.purchasePrice || item.product.price;
+      const quantity = item.quantity;
+      item.totalPrice = price * quantity;
+      item.purchasePrice = price;
+
+      if (item.status !== 'Cancelled') {
+        if (item.product?.taxable && item.priceWithTax === 0) {
+          const taxAmount = price * (taxRate / 100) * 100;
+          item.totalTax = parseFloat(Number((taxAmount * quantity).toFixed(2)));
+
+          order.totalTax += item.totalTax;
+        } else {
+          order.totalTax += item.totalTax;
+        }
+      }
+
+      item.priceWithTax = parseFloat(
+        Number((item.totalPrice + item.totalTax).toFixed(2))
+      );
+    });
+  }
+
+  const hasCancelledItems = order.products.filter(
+    (item) => item.status === 'Cancelled'
+  );
+
+  if (hasCancelledItems.length > 0) {
+    order.total = this.caculateOrderTotal(order);
+  }
+
+  const currentTotal = this.caculateOrderTotal(order);
+
+  if (currentTotal !== order.total) {
+    order.total = this.caculateOrderTotal(order);
+  }
+
+  order.totalWithTax = order.total + order.totalTax;
+  order.total = parseFloat(Number(order.total.toFixed(2)));
+  order.totalTax = parseFloat(
+    Number(order.totalTax && order.totalTax.toFixed(2))
+  );
+  order.totalWithTax = parseFloat(Number(order.totalWithTax.toFixed(2)));
+  return order;
+};
 router.post('/add', auth, async (req, res) => {
   try {
     const cart = req.body.cartId;
@@ -94,7 +142,7 @@ router.get('/search', auth, async (req, res) => {
         };
       });
 
-      let orders = newOrders.map((o) => store.caculateTaxAmount(o));
+      let orders = newOrders.map((o) => calculateTaxAmount(o));
       orders.sort((a, b) => b.created - a.created);
       res.status(200).json({
         orders,
@@ -137,7 +185,7 @@ router.get('/', auth, async (req, res) => {
         };
       });
 
-      let orders = newOrders.map((o) => store.caculateTaxAmount(o));
+      let orders = newOrders.map((o) => calculateTaxAmount(o));
       orders.sort((a, b) => b.created - a.created);
       res.status(200).json({
         orders,
@@ -198,7 +246,7 @@ router.get('/:orderId', auth, async (req, res) => {
       cartId: orderDoc.cart._id,
     };
 
-    order = store.caculateTaxAmount(order);
+    order = calculateTaxAmount(order);
 
     res.status(200).json({
       order,
