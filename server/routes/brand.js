@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const Brand = require('../../models/brand');
-const auth = require('../../middleware/auth');
-const role = require('../../middleware/role');
+const Brand = require('../models/brand');
+const auth = require('../middleware/auth');
+const role = require('../middleware/findRole');
 
 router.post('/add', auth, role.findRole(role.ROLES.Admin), async (req, res) => {
   try {

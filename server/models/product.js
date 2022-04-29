@@ -22,14 +22,14 @@ const ProductSchema = new Schema({
     unique: true,
     index: true,
   },
-  imageUrl: {
+  image: {
     type: String,
   },
   description: {
     type: String,
     trim: true,
   },
-  quantity: {
+  quota: {
     type: Number,
   },
   price: {
@@ -39,11 +39,6 @@ const ProductSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Brand',
     default: null,
-  },
-  updated: Date,
-  created: {
-    type: Date,
-    default: Date.now,
   },
 });
 

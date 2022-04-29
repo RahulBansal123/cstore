@@ -2,35 +2,35 @@ const express = require('express');
 const router = express.Router();
 const Mongoose = require('mongoose');
 
-const Order = require('../../models/order');
-const Cart = require('../../models/cart');
-const Product = require('../../models/product');
-const auth = require('../../middleware/auth');
-const role = require('../../middleware/role');
+const Order = require('../models/order');
+const Cart = require('../models/cart');
+const Product = require('../models/product');
+const auth = require('../middleware/auth');
+const role = require('../middleware/findRole');
 const calculateTaxAmount = (order) => {
   const taxRate = taxConfig.stateTaxRate;
 
-  order.totalTax = 0;
+  order.netTax = 0;
   if (order.products && order.products.length > 0) {
     order.products.map((item) => {
-      const price = item.purchasePrice || item.product.price;
-      const quantity = item.quantity;
-      item.totalPrice = price * quantity;
-      item.purchasePrice = price;
+      const price = item.priceBeforeTax || item.product.price;
+      const quota = item.quota;
+      item.netPrice = price * quota;
+      item.priceBeforeTax = price;
 
       if (item.status !== 'Cancelled') {
-        if (item.product?.taxable && item.priceWithTax === 0) {
+        if (item.product?.taxable && item.priceAfterTax === 0) {
           const taxAmount = price * (taxRate / 100) * 100;
-          item.totalTax = parseFloat(Number((taxAmount * quantity).toFixed(2)));
+          item.netTax = parseFloat(Number((taxAmount * quota).toFixed(2)));
 
-          order.totalTax += item.totalTax;
+          order.netTax += item.netTax;
         } else {
-          order.totalTax += item.totalTax;
+          order.netTax += item.netTax;
         }
       }
 
-      item.priceWithTax = parseFloat(
-        Number((item.totalPrice + item.totalTax).toFixed(2))
+      item.priceAfterTax = parseFloat(
+        Number((item.netPrice + item.netTax).toFixed(2))
       );
     });
   }
@@ -49,11 +49,9 @@ const calculateTaxAmount = (order) => {
     order.total = this.caculateOrderTotal(order);
   }
 
-  order.totalWithTax = order.total + order.totalTax;
+  order.totalWithTax = order.total + order.netTax;
   order.total = parseFloat(Number(order.total.toFixed(2)));
-  order.totalTax = parseFloat(
-    Number(order.totalTax && order.totalTax.toFixed(2))
-  );
+  order.netTax = parseFloat(Number(order.netTax && order.netTax.toFixed(2)));
   order.totalWithTax = parseFloat(Number(order.totalWithTax.toFixed(2)));
   return order;
 };
@@ -241,7 +239,7 @@ router.get('/:orderId', auth, async (req, res) => {
       _id: orderDoc._id,
       total: orderDoc.total,
       created: orderDoc.created,
-      totalTax: 0,
+      netTax: 0,
       products: orderDoc?.cart?.products,
       cartId: orderDoc.cart._id,
     };
@@ -300,7 +298,7 @@ router.put('/status/item/:itemId', auth, async (req, res) => {
     if (status === 'Cancelled') {
       await Product.updateOne(
         { _id: foundCartProduct.product },
-        { $inc: { quantity: foundCartProduct.quantity } }
+        { $inc: { quota: foundCartProduct.quota } }
       );
 
       const cart = await Cart.findOne({ _id: cartId });
@@ -342,7 +340,7 @@ const increaseQuantity = (products) => {
     return {
       updateOne: {
         filter: { _id: item.product },
-        update: { $inc: { quantity: item.quantity } },
+        update: { $inc: { quota: item.quota } },
       },
     };
   });

@@ -5,11 +5,9 @@ const checkAuth = async (req) => {
     if (!req.headers.authorization) {
       return null;
     }
-
     const token =
       (await jwt.decode(req.headers.authorization.split(' ')[1])) ||
       req.headers.authorization;
-
     if (token) {
       return token;
     }

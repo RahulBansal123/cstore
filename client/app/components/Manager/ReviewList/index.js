@@ -38,9 +38,7 @@ const ReviewList = (props) => {
         <div className="d-flex flex-column justify-content-center align-items-center">
           <img
             className="item-image"
-            src={`${
-              product.imageUrl ? product.imageUrl : '/images/placeholder.png'
-            }`}
+            src={`${product.image ? product.image : '/images/placeholder.png'}`}
           />
         </div>
       );
@@ -81,7 +79,7 @@ const ReviewList = (props) => {
                   emptyIcon={<i className="fa fa-star" />}
                   halfIcon={<i className="fa fa-star-half-alt" />}
                   filledIcon={<i className="fa fa-star" />}
-                  value={review.rating}
+                  value={review.stars}
                 />
               </div>
               {getProduct(review)}

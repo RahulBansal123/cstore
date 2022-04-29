@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const User = require('../../models/user');
-const Brand = require('../../models/brand');
-const auth = require('../../middleware/auth');
-const role = require('../../middleware/role');
+const User = require('../models/user');
+const auth = require('../middleware/auth');
+const role = require('../middleware/findRole');
 
 router.get(
   '/search',

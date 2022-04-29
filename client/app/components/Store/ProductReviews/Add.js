@@ -37,10 +37,10 @@ const Add = (props) => {
           <Col xs="12" md="12">
             <Input
               type={'stars'}
-              error={reviewFormErrors['rating']}
+              error={reviewFormErrors['stars']}
               label={'Rating'}
-              name={'rating'}
-              value={reviewFormData.rating}
+              name={'stars'}
+              value={reviewFormData.stars}
               onInputChange={(name, value) => {
                 reviewChange(name, value);
               }}

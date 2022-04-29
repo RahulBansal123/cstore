@@ -59,9 +59,7 @@ class ProductPage extends React.PureComponent {
                   <img
                     className="item-image"
                     src={`${
-                      product.imageUrl
-                        ? product.imageUrl
-                        : '/images/placeholder.png'
+                      product.image ? product.image : '/images/placeholder.png'
                     }`}
                     style={{ borderRadius: '12px' }}
                   />
@@ -82,17 +80,17 @@ class ProductPage extends React.PureComponent {
                     <div className="item-customize">
                       <Input
                         type={'number'}
-                        error={shopFormErrors['quantity']}
+                        error={shopFormErrors['quota']}
                         label={'Quantity'}
-                        name={'quantity'}
+                        name={'quota'}
                         decimals={false}
                         min={1}
                         max={product.inventory}
                         placeholder={'Product Quantity'}
                         disabled={
-                          product.inventory <= 0 && !shopFormErrors['quantity']
+                          product.inventory <= 0 && !shopFormErrors['quota']
                         }
-                        value={productShopData.quantity}
+                        value={productShopData.quota}
                         onInputChange={(name, value) => {
                           productShopChange(name, value);
                         }}
@@ -103,8 +101,7 @@ class ProductPage extends React.PureComponent {
                         <Button
                           variant="primary"
                           disabled={
-                            product.inventory <= 0 &&
-                            !shopFormErrors['quantity']
+                            product.inventory <= 0 && !shopFormErrors['quota']
                           }
                           text="Remove From Basket"
                           className="bag-btn"
@@ -114,7 +111,7 @@ class ProductPage extends React.PureComponent {
                         <Button
                           variant="primary"
                           disabled={
-                            product.quantity <= 0 && !shopFormErrors['quantity']
+                            product.quota <= 0 && !shopFormErrors['quota']
                           }
                           text="Add To Basket"
                           className="bag-btn"

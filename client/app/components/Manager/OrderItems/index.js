@@ -89,8 +89,8 @@ const OrderItems = (props) => {
                   <img
                     className="item-image"
                     src={`${
-                      item.product && item.product.imageUrl
-                        ? item.product.imageUrl
+                      item.product && item.product.image
+                        ? item.product.image
                         : '/images/placeholder.png'
                     }`}
                   />
@@ -108,7 +108,7 @@ const OrderItems = (props) => {
                           </Link>
                           <div className="d-flex align-items-center justify-content-between">
                             <span className="price">
-                              ${item.purchasePrice || item.product.price}
+                              ${item.priceBeforeTax || item.product.price}
                             </span>
                           </div>
                         </>
@@ -123,11 +123,11 @@ const OrderItems = (props) => {
                       </p>
                       <p className="mb-1 mr-4">
                         Quantity
-                        <span className="order-label">{` ${item.quantity}`}</span>
+                        <span className="order-label">{` ${item.quota}`}</span>
                       </p>
                       <p>
                         Total Price
-                        <span className="order-label">{` $${item.totalPrice}`}</span>
+                        <span className="order-label">{` $${item.netPrice}`}</span>
                       </p>
                     </div>
                   </div>
@@ -140,12 +140,12 @@ const OrderItems = (props) => {
                   </div>
 
                   <div className="text-center">
-                    <p className="order-label">{` ${item.quantity}`}</p>
+                    <p className="order-label">{` ${item.quota}`}</p>
                     <p>Quantity</p>
                   </div>
 
                   <div className="text-center">
-                    <p className="order-label">{` $${item.totalPrice}`}</p>
+                    <p className="order-label">{` $${item.netPrice}`}</p>
 
                     <p>Total Price</p>
                   </div>

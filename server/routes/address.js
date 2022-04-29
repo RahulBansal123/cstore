@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Address = require('../../models/address');
-const auth = require('../../middleware/auth');
+const Address = require('../models/address');
+const auth = require('../middleware/auth');
 
 router.post('/add', auth, (req, res) => {
   const user = req.user;

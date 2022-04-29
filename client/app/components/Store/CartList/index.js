@@ -24,9 +24,7 @@ const CartList = (props) => {
                     <img
                       className="item-image mr-2"
                       src={`${
-                        item.imageUrl
-                          ? item.imageUrl
-                          : '/images/placeholder.png'
+                        item.image ? item.image : '/images/placeholder.png'
                       }`}
                     />
 
@@ -56,15 +54,15 @@ const CartList = (props) => {
                   <p className="item-label">price</p>
                 </Col>
                 <Col xs="3" className="text-right">
-                  <p className="value price">{` $${item?.totalPrice}`}</p>
+                  <p className="value price">{` $${item?.netPrice}`}</p>
                 </Col>
               </Row>
               <Row className="mb-2 align-items-center">
                 <Col xs="9">
-                  <p className="item-label">quantity</p>
+                  <p className="item-label">quota</p>
                 </Col>
                 <Col xs="3" className="text-right">
-                  <p className="value quantity">{` ${item.quantity}`}</p>
+                  <p className="value quota">{` ${item.quota}`}</p>
                 </Col>
               </Row>
             </Container>

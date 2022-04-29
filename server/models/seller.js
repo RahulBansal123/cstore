@@ -10,7 +10,7 @@ const SellerSchema = new Schema({
   email: {
     type: String,
   },
-  phoneNumber: {
+  phone: {
     type: String,
   },
   brand: {

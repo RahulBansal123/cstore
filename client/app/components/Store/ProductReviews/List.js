@@ -41,7 +41,7 @@ const List = (props) => {
                 emptyIcon={<i className="fa fa-star" />}
                 halfIcon={<i className="fa fa-star-half-alt" />}
                 filledIcon={<i className="fa fa-star" />}
-                value={review.rating}
+                value={review.stars}
               />
             </div>
             <p className="mb-2 fs-12">{dateFormat(`${review?.created}`)}</p>

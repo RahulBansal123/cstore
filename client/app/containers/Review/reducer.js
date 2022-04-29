@@ -27,7 +27,7 @@ const initialState = {
   },
   reviewFormData: {
     title: '',
-    rating: 0,
+    stars: 0,
   },
   reviewFormErrors: {},
 };
@@ -77,7 +77,7 @@ const reviewReducer = (state = initialState, action) => {
         ...state,
         reviewFormData: {
           title: '',
-          rating: 0,
+          stars: 0,
         },
         reviewFormErrors: {},
       };

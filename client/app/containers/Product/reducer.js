@@ -36,7 +36,7 @@ const initialState = {
   productFormData: {
     name: '',
     description: '',
-    quantity: 1,
+    quota: 1,
     price: 1,
     image: {},
     isActive: true,
@@ -48,7 +48,7 @@ const initialState = {
   },
   isLoading: false,
   productShopData: {
-    quantity: 1,
+    quota: 1,
   },
   formErrors: {},
   editFormErrors: {},
@@ -59,7 +59,7 @@ const initialState = {
     brand: 'all',
     min: 1,
     max: 5000,
-    rating: 0,
+    stars: 0,
     order: 0,
     pageNumber: 1,
     pages: 1,
@@ -90,7 +90,7 @@ const productReducer = (state = initialState, action) => {
         ...state,
         storeProduct: action.payload,
         productShopData: {
-          quantity: 1,
+          quota: 1,
         },
         shopFormErrors: {},
       };
@@ -160,7 +160,7 @@ const productReducer = (state = initialState, action) => {
         productFormData: {
           name: '',
           description: '',
-          quantity: 1,
+          quota: 1,
           price: 1,
           image: {},
           isActive: true,
@@ -179,7 +179,7 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         productShopData: {
-          quantity: 1,
+          quota: 1,
         },
         shopFormErrors: {},
       };
@@ -200,7 +200,7 @@ const productReducer = (state = initialState, action) => {
           brand: 'all',
           min: 1,
           max: 5000,
-          rating: 0,
+          stars: 0,
           order: 0,
           pageNumber: 1,
           pages: 1,

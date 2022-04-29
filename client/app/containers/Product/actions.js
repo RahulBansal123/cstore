@@ -128,7 +128,7 @@ export const fetchProduct = (id) => {
     try {
       const response = await axios.get(`/api/product/${id}`);
 
-      const inventory = response.data.product.quantity;
+      const inventory = response.data.product.quota;
 
       const brand = response.data.product.brand;
       const isBrand = brand ? true : false;
@@ -160,7 +160,7 @@ export const fetchStoreProduct = (slug) => {
     try {
       const response = await axios.get(`/api/product/item/${slug}`);
 
-      const inventory = response.data.product.quantity;
+      const inventory = response.data.product.quota;
       const product = { ...response.data.product, inventory };
 
       dispatch({
@@ -227,7 +227,7 @@ export const addProduct = () => {
       const rules = {
         name: 'required',
         description: 'required|max:200',
-        quantity: 'required|numeric',
+        quota: 'required|numeric',
         price: 'required|numeric',
         taxable: 'required',
         image: 'required',
@@ -243,7 +243,7 @@ export const addProduct = () => {
         name: product.name,
         description: product.description,
         price: product.price,
-        quantity: product.quantity,
+        quota: product.quota,
         image: product.image,
         isActive: product.isActive,
         taxable: product.taxable.value,
@@ -260,7 +260,7 @@ export const addProduct = () => {
         'required.description': 'Description is required.',
         'max.description':
           'Description may not be greater than 200 characters.',
-        'required.quantity': 'Quantity is required.',
+        'required.quota': 'Quantity is required.',
         'required.price': 'Price is required.',
         'required.taxable': 'Taxable is required.',
         'required.image': 'Please upload files with jpg, jpeg, png format.',
@@ -314,7 +314,7 @@ export const updateProduct = () => {
       const rules = {
         name: 'required',
         description: 'required|max:200',
-        quantity: 'required|numeric',
+        quota: 'required|numeric',
         price: 'required|numeric',
         taxable: 'required',
       };
@@ -326,7 +326,7 @@ export const updateProduct = () => {
       const newProduct = {
         name: product.name,
         description: product.description,
-        quantity: product.quantity,
+        quota: product.quota,
         price: product.price,
         taxable: product.taxable,
         brand: brand != 0 ? brand : null,
@@ -337,7 +337,7 @@ export const updateProduct = () => {
         'required.description': 'Description is required.',
         'max.description':
           'Description may not be greater than 200 characters.',
-        'required.quantity': 'Quantity is required.',
+        'required.quota': 'Quantity is required.',
         'required.price': 'Price is required.',
         'required.taxable': 'Taxable is required.',
       });
@@ -431,7 +431,7 @@ const productsFilterOrganizer = (n, v, s) => {
         brand: s.brand,
         min: s.min,
         max: s.max,
-        rating: s.rating,
+        stars: s.stars,
         order: s.order,
         pageNumber: 1, //s.pageNumber
       };
@@ -442,7 +442,7 @@ const productsFilterOrganizer = (n, v, s) => {
         brand: v,
         min: s.min,
         max: s.max,
-        rating: s.rating,
+        stars: s.stars,
         order: s.order,
         pageNumber: s.pageNumber,
       };
@@ -453,7 +453,7 @@ const productsFilterOrganizer = (n, v, s) => {
         brand: s.brand,
         min: s.min,
         max: s.max,
-        rating: s.rating,
+        stars: s.stars,
         order: v,
         pageNumber: s.pageNumber,
       };
@@ -464,18 +464,18 @@ const productsFilterOrganizer = (n, v, s) => {
         brand: s.brand,
         min: v[0],
         max: v[1],
-        rating: s.rating,
+        stars: s.stars,
         order: s.order,
         pageNumber: s.pageNumber,
       };
-    case 'rating':
+    case 'stars':
       return {
         name: s.name,
         category: s.category,
         brand: s.brand,
         min: s.min,
         max: s.max,
-        rating: v,
+        stars: v,
         order: s.order,
         pageNumber: s.pageNumber,
       };
@@ -486,7 +486,7 @@ const productsFilterOrganizer = (n, v, s) => {
         brand: s.brand,
         min: s.min,
         max: s.max,
-        rating: s.rating,
+        stars: s.stars,
         order: s.order,
         pageNumber: v,
       };
@@ -497,7 +497,7 @@ const productsFilterOrganizer = (n, v, s) => {
         brand: s.brand,
         min: s.min,
         max: s.max,
-        rating: s.rating,
+        stars: s.stars,
         order: s.order,
         pageNumber: s.pageNumber,
       };

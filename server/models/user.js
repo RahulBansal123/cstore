@@ -7,7 +7,7 @@ const UserSchema = new Schema({
     type: String,
     index: true,
   },
-  phoneNumber: {
+  phone: {
     type: String,
   },
   firstName: {

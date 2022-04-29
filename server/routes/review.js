@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 // Bring in Models & Helpers
-const Review = require('../../models/review');
-const Product = require('../../models/product');
-const auth = require('../../middleware/auth');
+const Review = require('../models/review');
+const Product = require('../models/product');
+const auth = require('../middleware/auth');
 
 router.post('/add', auth, (req, res) => {
   const user = req.user;
@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
       })
       .populate({
         path: 'product',
-        select: 'name slug imageUrl',
+        select: 'name slug image',
       })
       .sort('-created');
 

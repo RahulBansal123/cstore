@@ -68,12 +68,12 @@ const EditProduct = (props) => {
           <Col xs="12" lg="6">
             <Input
               type={'number'}
-              error={formErrors['quantity']}
+              error={formErrors['quota']}
               label={'Quantity'}
-              name={'quantity'}
+              name={'quota'}
               decimals={false}
               placeholder={'Product Quantity'}
-              value={product.quantity}
+              value={product.quota}
               onInputChange={(name, value) => {
                 productChange(name, value);
               }}

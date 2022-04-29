@@ -126,7 +126,7 @@ export const addProductReview = () => {
     try {
       const rules = {
         title: 'required',
-        rating: 'required|numeric|min:1',
+        stars: 'required|numeric|min:1',
       };
 
       const review = getState().review.reviewFormData;
@@ -134,14 +134,14 @@ export const addProductReview = () => {
 
       const newReview = {
         product: product._id,
-        rating: review.rating,
+        stars: review.stars,
         title: review.title,
       };
 
       const { isValid, errors } = allFieldsValidation(newReview, rules, {
         'required.title': 'Title is required.',
-        'required.rating': 'Rating is required.',
-        'min.rating': 'Rating is required.',
+        'required.stars': 'Rating is required.',
+        'min.stars': 'Rating is required.',
       });
 
       if (!isValid) {
@@ -180,10 +180,10 @@ export const getProductReviewsSummary = (reviews) => {
 
   if (reviews.length > 0) {
     reviews.map((item, i) => {
-      totalRatings += item.rating;
+      totalRatings += item.stars;
       totalReviews += 1;
 
-      switch (Math.round(item.rating)) {
+      switch (Math.round(item.stars)) {
         case 5:
           ratingSummary[0][5] += 1;
           totalSummary += 1;

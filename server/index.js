@@ -12,11 +12,11 @@ const path = require('path');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 
-const keys = require('./config/keys');
+const secrets = require('./secrets');
 const webpackConfig = require('../webpack.config');
 const routes = require('./routes');
 
-const { database, port } = keys;
+const { database, port } = secrets;
 const app = express();
 
 // app.use(express.urlencoded({ extended: true }));
@@ -44,8 +44,8 @@ mongoose
   )
   .catch((err) => console.log(err));
 
-require('./config/passport')(app);
-app.use(routes);
+require('./passport')(app);
+app.use(`/api`, routes);
 
 if (process.env.NODE_ENV !== 'production') {
   const compiler = webpack(webpackConfig);

@@ -1,19 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
 
-const Seller = require('../../models/seller');
-const User = require('../../models/user');
-const Brand = require('../../models/brand');
-const auth = require('../../middleware/auth');
-const role = require('../../middleware/role');
+const Seller = require('../models/seller');
+const User = require('../models/user');
+const Brand = require('../models/brand');
+const auth = require('../middleware/auth');
+const role = require('../middleware/findRole');
 
 router.post('/seller-request', async (req, res) => {
   try {
     const name = req.body.name;
     const business = req.body.business;
-    const phoneNumber = req.body.phoneNumber;
+    const phone = req.body.phone;
     const email = req.body.email;
     const brand = req.body.brand;
     const password = req.body.password;
@@ -30,7 +29,7 @@ router.post('/seller-request', async (req, res) => {
         .json({ error: 'You must enter a business description.' });
     }
 
-    if (!phoneNumber || !email || !password) {
+    if (!phone || !email || !password) {
       return res.status(400).json({
         error: 'You must enter a phone number, password an email address.',
       });
@@ -48,7 +47,7 @@ router.post('/seller-request', async (req, res) => {
       name,
       email,
       business,
-      phoneNumber,
+      phone,
       brand,
     });
 
@@ -65,7 +64,7 @@ router.post('/seller-request', async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: `We received your request! we will reach you on your phone number ${phoneNumber}!`,
+      message: `We received your request! we will reach you on your phone number ${phone}!`,
       seller: sellerDoc,
     });
   } catch (error) {

@@ -28,20 +28,20 @@ import { toggleCart } from '../Navigation/actions';
 // Handle Add To Cart
 export const handleAddToCart = (product) => {
   return (dispatch, getState) => {
-    product.quantity = Number(getState().product.productShopData.quantity);
-    product.totalPrice = product.quantity * product.price;
-    product.totalPrice = parseFloat(product.totalPrice.toFixed(2));
+    product.quota = Number(getState().product.productShopData.quota);
+    product.netPrice = product.quota * product.price;
+    product.netPrice = parseFloat(product.netPrice.toFixed(2));
     const inventory = getState().product.storeProduct.inventory;
 
     const result = calculatePurchaseQuantity(inventory);
 
     const rules = {
-      quantity: `min:1|max:${result}`,
+      quota: `min:1|max:${result}`,
     };
 
     const { isValid, errors } = allFieldsValidation(product, rules, {
-      'min.quantity': 'Quantity must be at least 1.',
-      'max.quantity': `Quantity may not be greater than ${result}.`,
+      'min.quota': 'Quantity must be at least 1.',
+      'max.quota': `Quantity may not be greater than ${result}.`,
     });
 
     if (!isValid) {
@@ -80,7 +80,7 @@ export const calculateCartTotal = () => {
     let total = 0;
 
     cartItems.map((item) => {
-      total += item.price * item.quantity;
+      total += item.price * item.quota;
     });
 
     total = parseFloat(total.toFixed(2));
@@ -179,7 +179,7 @@ const getCartItems = (cartItems) => {
   const newCartItems = [];
   cartItems.map((item) => {
     const newItem = {};
-    newItem.quantity = item.quantity;
+    newItem.quota = item.quota;
     newItem.price = item.price;
     newItem.taxable = item.taxable;
     newItem.product = item._id;

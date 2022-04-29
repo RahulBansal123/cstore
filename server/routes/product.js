@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const Product = require('../../models/product');
-const Brand = require('../../models/brand');
-const auth = require('../../middleware/auth');
-const role = require('../../middleware/role');
-const checkAuth = require('../../helpers/auth');
+const Product = require('../models/product');
+const Brand = require('../models/brand');
+const auth = require('../middleware/auth');
+const role = require('../middleware/findRole');
+const checkAuth = require('../checkAuth');
 
 router.get('/item/:slug', async (req, res) => {
   try {
@@ -37,7 +37,7 @@ router.get('/search/:name', async (req, res) => {
 
     const productDoc = await Product.find(
       { name: { $regex: new RegExp(name), $options: 'is' } },
-      { name: 1, slug: 1, imageUrl: 1, price: 1, _id: 0 }
+      { name: 1, slug: 1, image: 1, price: 1, _id: 0 }
     );
 
     if (productDoc.length < 0) {
@@ -58,13 +58,13 @@ router.get('/search/:name', async (req, res) => {
 
 router.post('/list', async (req, res) => {
   try {
-    let { sortOrder, rating, max, min, pageNumber: page = 1 } = req.body;
+    let { sortOrder, stars, max, min, pageNumber: page = 1 } = req.body;
 
     const pageSize = 8;
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
-    const ratingFilter = rating
-      ? { rating: { $gte: rating } }
-      : { rating: { $gte: rating } };
+    const ratingFilter = stars
+      ? { stars: { $gte: stars } }
+      : { stars: { $gte: stars } };
 
     const basicQuery = [
       {
@@ -97,7 +97,7 @@ router.post('/list', async (req, res) => {
       },
       {
         $addFields: {
-          totalRatings: { $sum: '$reviews.rating' },
+          totalRatings: { $sum: '$reviews.stars' },
           totalReviews: { $size: '$reviews' },
         },
       },
@@ -115,7 +115,7 @@ router.post('/list', async (req, res) => {
       {
         $match: {
           price: priceFilter.price,
-          averageRating: ratingFilter.rating,
+          averageRating: ratingFilter.stars,
         },
       },
       {
@@ -257,7 +257,7 @@ router.post(
     try {
       const name = req.body.name;
       const description = req.body.description;
-      const quantity = req.body.quantity;
+      const quota = req.body.quota;
       const price = req.body.price;
       const brand = req.body.brand;
       const image = req.body.image;
@@ -268,8 +268,8 @@ router.post(
           .json({ error: 'You must enter description & name.' });
       }
 
-      if (!quantity) {
-        return res.status(400).json({ error: 'You must enter a quantity.' });
+      if (!quota) {
+        return res.status(400).json({ error: 'You must enter a quota.' });
       }
 
       if (!price) {
@@ -285,7 +285,7 @@ router.post(
       const product = new Product({
         name,
         description,
-        quantity,
+        quota,
         price,
         brand,
         image,

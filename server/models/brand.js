@@ -2,13 +2,11 @@ const Mongoose = require('mongoose');
 const slug = require('mongoose-slug-generator');
 const { Schema } = Mongoose;
 
-const options = {
+Mongoose.plugin(slug, {
   separator: '-',
   lang: 'en',
-  truncate: 120,
-};
-
-Mongoose.plugin(slug, options);
+  truncate: 80,
+});
 
 const BrandSchema = new Schema({
   name: {
@@ -24,17 +22,11 @@ const BrandSchema = new Schema({
   },
   description: {
     type: String,
-    trim: true,
   },
   seller: {
     type: Schema.Types.ObjectId,
     ref: 'Seller',
     default: null,
-  },
-  updated: Date,
-  created: {
-    type: Date,
-    default: Date.now,
   },
 });
 

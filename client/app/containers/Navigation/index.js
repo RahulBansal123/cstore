@@ -70,9 +70,7 @@ class Navigation extends React.PureComponent {
           <img
             className="item-image"
             src={`${
-              suggestion.imageUrl
-                ? suggestion.imageUrl
-                : '/images/placeholder.png'
+              suggestion.image ? suggestion.image : '/images/placeholder.png'
             }`}
           />
           <div>

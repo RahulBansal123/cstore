@@ -3,10 +3,9 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const mongoose = require('mongoose');
 
-const keys = require('./keys');
+const secrets = require('./secrets');
 
-const User = mongoose.model('User');
-const secret = keys.jwt.secret;
+const secret = secrets.jwt.secret;
 
 passport.use(
   new JwtStrategy(
@@ -15,13 +14,14 @@ passport.use(
       secretOrKey: secret,
     },
     (payload, done) => {
-      User.findById(payload.id)
+      mongoose
+        .model('User')
+        .findById(payload.id)
         .then((user) => {
-          if (user) {
-            return done(null, user);
+          if (!user) {
+            return done(null, false);
           }
-
-          return done(null, false);
+          return done(null, user);
         })
         .catch((err) => {
           return done(err, false);

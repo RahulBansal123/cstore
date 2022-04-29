@@ -3,12 +3,10 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const auth = require('../../middleware/auth');
+const User = require('../models/user');
+const secrets = require('../secrets');
 
-const User = require('../../models/user');
-const keys = require('../../config/keys');
-
-const { secret, tokenLife } = keys.jwt;
+const { secret, tokenLife } = secrets.jwt;
 
 router.post('/login', async (req, res) => {
   try {

@@ -82,11 +82,11 @@ class Sell extends React.PureComponent {
                 <Col xs="12">
                   <Input
                     type={'text'}
-                    error={formErrors['phoneNumber']}
+                    error={formErrors['phone']}
                     label={'Phone Number'}
-                    name={'phoneNumber'}
+                    name={'phone'}
                     placeholder={'Your Phone Number'}
-                    value={sellFormData.phoneNumber}
+                    value={sellFormData.phone}
                     onInputChange={(name, value) => {
                       sellFormChange(name, value);
                     }}

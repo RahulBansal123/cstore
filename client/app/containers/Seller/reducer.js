@@ -23,7 +23,7 @@ const initialState = {
   sellFormData: {
     name: '',
     email: '',
-    phoneNumber: '',
+    phone: '',
     brand: '',
     business: '',
     password: '',
@@ -73,7 +73,7 @@ const sellerReducer = (state = initialState, action) => {
         sellFormData: {
           name: '',
           email: '',
-          phoneNumber: '',
+          phone: '',
           brand: '',
           business: '',
         },

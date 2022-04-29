@@ -29,7 +29,7 @@ const SellerList = (props) => {
               {seller.email ? seller.email : 'N/A'}
             </p>
             <label className="text-black">Phone Number</label>
-            <p>{seller.phoneNumber}</p>
+            <p>{seller.phone}</p>
             <label className="text-black">Request date</label>
             <p>{dateFormat(seller.created)}</p>
 
@@ -100,12 +100,9 @@ const SellerList = (props) => {
               <>
                 <p className="text-truncate">
                   Seller doesn't have email. Call at
-                  <a
-                    href={`tel:${seller.phoneNumber}`}
-                    className="text-primary"
-                  >
+                  <a href={`tel:${seller.phone}`} className="text-primary">
                     {' '}
-                    {seller.phoneNumber}
+                    {seller.phone}
                   </a>
                 </p>
                 <Button

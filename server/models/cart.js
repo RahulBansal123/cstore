@@ -6,20 +6,20 @@ const CartItemSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Product',
   },
-  quantity: Number,
-  purchasePrice: {
+  quota: Number,
+  priceBeforeTax: {
     type: Number,
     default: 0,
   },
-  totalPrice: {
+  netPrice: {
     type: Number,
     default: 0,
   },
-  priceWithTax: {
+  priceAfterTax: {
     type: Number,
     default: 0,
   },
-  totalTax: {
+  netTax: {
     type: Number,
     default: 0,
   },
