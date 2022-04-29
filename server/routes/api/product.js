@@ -3,7 +3,6 @@ const router = express.Router();
 
 const Product = require('../../models/product');
 const Brand = require('../../models/brand');
-const Category = require('../../models/category');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const checkAuth = require('../../helpers/auth');
@@ -59,17 +58,9 @@ router.get('/search/:name', async (req, res) => {
 
 router.post('/list', async (req, res) => {
   try {
-    let {
-      sortOrder,
-      rating,
-      max,
-      min,
-      category,
-      pageNumber: page = 1,
-    } = req.body;
+    let { sortOrder, rating, max, min, pageNumber: page = 1 } = req.body;
 
     const pageSize = 8;
-    const categoryFilter = category ? { category } : {};
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
     const ratingFilter = rating
       ? { rating: { $gte: rating } }
@@ -136,20 +127,6 @@ router.post('/list', async (req, res) => {
     ];
 
     const userDoc = await checkAuth(req);
-    const categoryDoc = await Category.findOne(
-      { slug: categoryFilter.category },
-      'products -_id'
-    );
-
-    if (categoryDoc && categoryFilter !== category) {
-      basicQuery.push({
-        $match: {
-          _id: {
-            $in: Array.from(categoryDoc.products),
-          },
-        },
-      });
-    }
 
     let products = null;
     let productsCount = 0;

@@ -15,7 +15,6 @@ import Page404 from '../../Common/Page404';
 import Account from '../../../containers/Account';
 import Address from '../../../containers/Address';
 import Order from '../../../containers/Order';
-import Support from '../../../containers/Support';
 
 const Customer = (props) => {
   return (
@@ -30,7 +29,6 @@ const Customer = (props) => {
               <Route exact path="/dashboard" component={Account} />
               <Route path="/dashboard/address" component={Address} />
               <Route path="/dashboard/orders" component={Order} />
-              <Route path="/dashboard/support" component={Support} />
               <Route path="*" component={Page404} />
             </Switch>
           </div>

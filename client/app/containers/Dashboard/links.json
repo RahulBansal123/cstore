@@ -9,8 +9,7 @@
     { "to": "/users", "name": "Users" },
     { "to": "/sellers", "name": "Sellers" },
     { "to": "/orders", "name": "Orders" },
-    { "to": "/review", "name": "Reviews" },
-    { "to": "/support", "name": "Support" }
+    { "to": "/review", "name": "Reviews" }
   ],
   "SELLER": [
     { "to": "", "name": "Account Details" },
@@ -18,14 +17,12 @@
     { "to": "/address", "name": "Address" },
     { "to": "/brand", "name": "Brand" },
     { "to": "/product", "name": "Products" },
-    { "to": "/orders", "name": "Orders" },
-    { "to": "/support", "name": "Support" }
+    { "to": "/orders", "name": "Orders" }
   ],
   "MEMBER": [
     { "to": "", "name": "Account Details" },
     { "to": "/security", "name": "Account Security" },
     { "to": "/address", "name": "Address" },
-    { "to": "/orders", "name": "Orders" },
-    { "to": "/support", "name": "Support" }
+    { "to": "/orders", "name": "Orders" }
   ]
 }
