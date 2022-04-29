@@ -14,11 +14,13 @@ const BrandSchema = new Schema({
   name: {
     type: String,
     trim: true,
+    index: true,
   },
   slug: {
     type: String,
     slug: 'name',
     unique: true,
+    index: true,
   },
   description: {
     type: String,

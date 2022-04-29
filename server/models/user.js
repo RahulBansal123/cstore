@@ -5,6 +5,7 @@ const { Schema } = Mongoose;
 const UserSchema = new Schema({
   email: {
     type: String,
+    index: true,
   },
   phoneNumber: {
     type: String,
@@ -27,12 +28,17 @@ const UserSchema = new Schema({
     type: String,
     default: 'MEMBER',
     enum: ['MEMBER', 'ADMIN', 'SELLER'],
+    index: true,
   },
   updated: Date,
   created: {
     type: Date,
     default: Date.now,
   },
+});
+
+UserSchema.virtual('fullName').get(function () {
+  return this.firstName + ' ' + this.lastName;
 });
 
 module.exports = Mongoose.model('User', UserSchema);
