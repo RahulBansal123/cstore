@@ -19,6 +19,7 @@ router.get(
         {
           $or: [{ name: { $regex: regex } }, { email: { $regex: regex } }],
         },
+        // Suppresses password and _id field in output
         { password: 0, _id: 0 }
       ).populate('seller', 'name');
 
@@ -37,6 +38,7 @@ router.get(
 router.get('/', auth, async (req, res) => {
   try {
     const user = req.user._id;
+    // Suppresses password field in output
     const userDoc = await User.findById(user, { password: 0 });
 
     res.status(200).json({

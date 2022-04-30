@@ -39,9 +39,7 @@ mongoose
     useUnifiedTopology: true,
     useFindAndModify: false,
   })
-  .then(() =>
-    console.log(`${chalk.green('✓')} ${chalk.blue('MongoDB Connected!')}`)
-  )
+  .then(() => console.log(`${chalk.blue('MongoDB Connected!')}`))
   .catch((err) => console.log(err));
 
 require('./passport')(app);
@@ -82,5 +80,5 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.listen(port, () => {
-  console.log(`${chalk.green('✓')} ${chalk.blue(`Listening on port ${port}`)}`);
+  console.log(`${chalk.blue(`Listening on port ${port}`)}`);
 });

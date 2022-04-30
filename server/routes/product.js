@@ -39,6 +39,7 @@ router.get('/search/:name', async (req, res) => {
 
     const pDoc = await Product.find(
       { name: { $regex: new RegExp(name), $options: 'is' } },
+      // Suppresses _id field and inclide name, slug, image, price field in output
       { name: 1, slug: 1, image: 1, price: 1, _id: 0 }
     );
 
@@ -179,7 +180,7 @@ router.get('/list/brand/:slug', async (req, res) => {
             'brand._id': '$brands._id',
           },
         },
-        // Include this field
+        // Exclude this field
         { $project: { brands: 0 } },
       ]);
 
