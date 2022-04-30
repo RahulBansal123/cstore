@@ -14,7 +14,9 @@ const ProductSchema = new Schema({
   name: {
     type: String,
     trim: true,
+    unique: true,
     index: true,
+    required: true,
   },
   slug: {
     type: String,
@@ -24,16 +26,20 @@ const ProductSchema = new Schema({
   },
   image: {
     type: String,
+    required: true,
   },
   description: {
     type: String,
     trim: true,
+    required: true,
   },
   quota: {
     type: Number,
+    required: true,
   },
   price: {
     type: Number,
+    required: true,
   },
   brand: {
     type: Schema.Types.ObjectId,

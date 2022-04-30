@@ -13,15 +13,16 @@ const BrandSchema = new Schema({
     type: String,
     trim: true,
     index: true,
+    required: true,
   },
   slug: {
     type: String,
     slug: 'name',
     unique: true,
-    index: true,
   },
   description: {
     type: String,
+    required: true,
   },
   seller: {
     type: Schema.Types.ObjectId,

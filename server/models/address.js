@@ -9,12 +9,15 @@ const AddressSchema = new Schema({
   address: {
     type: String,
     index: true,
+    required: true,
   },
   state: {
     type: String,
+    required: true,
   },
   country: {
     type: String,
+    required: true,
   },
 });
 
