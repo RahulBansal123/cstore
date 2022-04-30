@@ -6,18 +6,11 @@
 
 import axios from 'axios';
 import {
-  TOGGLE_MENU,
   TOGGLE_CART,
   SEARCH_CHANGE,
   SUGGESTIONS_FETCH_REQUEST,
   SUGGESTIONS_CLEAR_REQUEST,
 } from './constants';
-
-export const toggleMenu = () => {
-  return {
-    type: TOGGLE_MENU,
-  };
-};
 
 export const toggleCart = () => {
   return {

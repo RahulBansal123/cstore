@@ -5,7 +5,6 @@
  */
 
 import {
-  TOGGLE_MENU,
   TOGGLE_CART,
   SEARCH_CHANGE,
   SUGGESTIONS_FETCH_REQUEST,
@@ -21,17 +20,10 @@ const initialState = {
 
 const navigationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TOGGLE_MENU:
-      return {
-        ...state,
-        isMenuOpen: !state.isMenuOpen,
-        isCartOpen: false,
-      };
     case TOGGLE_CART:
       return {
         ...state,
         isCartOpen: !state.isCartOpen,
-        isMenuOpen: false,
       };
     case SEARCH_CHANGE:
       return {

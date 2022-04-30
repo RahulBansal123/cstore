@@ -7,7 +7,6 @@ const Footer = () => {
   const infoLinks = [
     { id: 0, name: 'Become a seller', to: '/sell' },
     { id: 1, name: 'Shop by brand', to: '/brands' },
-    { id: 2, name: 'Contact Us', to: '/contact' },
   ];
 
   return (

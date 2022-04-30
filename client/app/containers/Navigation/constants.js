@@ -4,7 +4,6 @@
  *
  */
 
-export const TOGGLE_MENU = 'src/Navigation/TOGGLE_MENU';
 export const TOGGLE_CART = 'src/Navigation/TOGGLE_CART';
 export const SEARCH_CHANGE = 'src/Navigation/SEARCH_CHANGE';
 export const SUGGESTIONS_FETCH_REQUEST =

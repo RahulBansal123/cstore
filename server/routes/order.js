@@ -10,7 +10,7 @@ const role = require('../middleware/findRole');
 
 // Calculate Tax
 const calTax = (order) => {
-  const taxRate = taxConfig.stateTaxRate;
+  const taxRate = 0.02;
 
   order.netTax = 0;
   if (order.products && order.products.length > 0) {
@@ -35,20 +35,6 @@ const calTax = (order) => {
         Number((item.netPrice + item.netTax).toFixed(2))
       );
     });
-  }
-
-  const hasCancelledItems = order.products.filter(
-    (item) => item.status === 'Cancelled'
-  );
-
-  if (hasCancelledItems.length > 0) {
-    order.total = this.caculateOrderTotal(order);
-  }
-
-  const currentTotal = this.caculateOrderTotal(order);
-
-  if (currentTotal !== order.total) {
-    order.total = this.caculateOrderTotal(order);
   }
 
   order.totalWithTax = order.total + order.netTax;
@@ -248,14 +234,16 @@ router.get('/:orderId', auth, async (req, res) => {
       cartId: oDoc.cart._id,
     };
 
+    console.log(order.products);
     order = calTax(order);
+    console.log(order);
 
     res.status(200).json({
       order,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'try again.',
+      error,
     });
   }
 });

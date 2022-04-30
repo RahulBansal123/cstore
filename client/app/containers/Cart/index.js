@@ -1,3 +1,9 @@
+/*
+ *
+ * Cart
+ *
+ */
+
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -22,8 +28,6 @@ class Cart extends React.PureComponent {
       placeOrder,
       authenticated,
     } = this.props;
-
-    console.log(isCartOpen);
 
     return (
       <div className="cart">
