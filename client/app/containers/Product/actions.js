@@ -408,7 +408,7 @@ const productsFilterOrganizer = (n, v, s) => {
         order: s.order,
         pageNumber: s.pageNumber,
       };
-    case 'stars':
+    case 'rating':
       return {
         name: s.name,
         brand: s.brand,

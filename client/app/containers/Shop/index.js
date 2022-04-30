@@ -9,6 +9,7 @@ import actions from '../../actions';
 import ProductsShop from '../ProductsShop';
 import BrandsShop from '../BrandsShop';
 
+import ProductFilter from '../../components/Store/ProductFilter';
 import Page404 from '../../components/Common/Page404';
 import Pagination from '../../components/Common/Pagination';
 
@@ -29,10 +30,22 @@ class Shop extends React.PureComponent {
       <div className="shop">
         <Row xs="12">
           <Col
+            xs="3"
+            sm={{ size: 12, order: 1 }}
+            md={{ size: 3, order: 1 }}
+            lg={{ size: 3, order: 1 }}
+          >
+            <ProductFilter
+              totalProducts={totalProducts}
+              pageNumber={pageNumber}
+              filterProducts={filterProducts}
+            />
+          </Col>
+          <Col
             xs="9"
             sm={{ size: 12, order: 2 }}
-            md={{ size: 12, order: 2 }}
-            lg={{ size: 12, order: 2 }}
+            md={{ size: 9, order: 2 }}
+            lg={{ size: 9, order: 2 }}
           >
             <Switch>
               <Route exact path="/shop" component={ProductsShop} />
