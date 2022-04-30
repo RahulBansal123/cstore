@@ -12,12 +12,7 @@
     "start": "cross-env NODE_ENV=development nodemon server",
     "start:production": "cross-env NODE_ENV=production node server"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mohamedsamara/mern-ecommerce.git"
-  },
   "author": "IIITD",
-  "homepage": "https://github.com/mohamedsamara/mern-ecommerce#readme",
   "dependencies": {
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.21.1",
