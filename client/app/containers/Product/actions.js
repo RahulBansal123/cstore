@@ -158,7 +158,7 @@ export const fetchStoreProduct = (slug) => {
     dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
 
     try {
-      const response = await axios.get(`/api/product/item/${slug}`);
+      const response = await axios.get(`/api/product/search/${slug}`);
 
       const inventory = response.data.product.quota;
       const product = { ...response.data.product, inventory };
@@ -206,7 +206,7 @@ export const fetchBrandProducts = (slug) => {
 export const fetchProductsSelect = () => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.get(`/api/product/list/select`);
+      const response = await axios.get(`/api/product/all`);
 
       const formattedProducts = selectOptionsFormat(response.data.products);
 
@@ -229,7 +229,6 @@ export const addProduct = () => {
         description: 'required|max:200',
         quota: 'required|numeric',
         price: 'required|numeric',
-        taxable: 'required',
         image: 'required',
       };
 
@@ -246,7 +245,6 @@ export const addProduct = () => {
         quota: product.quota,
         image: product.image,
         isActive: product.isActive,
-        taxable: product.taxable.value,
         brand:
           user.role !== 'SELLER'
             ? brand != 0
@@ -262,7 +260,6 @@ export const addProduct = () => {
           'Description may not be greater than 200 characters.',
         'required.quota': 'Quantity is required.',
         'required.price': 'Price is required.',
-        'required.taxable': 'Taxable is required.',
         'required.image': 'Please upload files with jpg, jpeg, png format.',
       });
 
@@ -316,7 +313,6 @@ export const updateProduct = () => {
         description: 'required|max:200',
         quota: 'required|numeric',
         price: 'required|numeric',
-        taxable: 'required',
       };
 
       const product = getState().product.product;
@@ -328,7 +324,6 @@ export const updateProduct = () => {
         description: product.description,
         quota: product.quota,
         price: product.price,
-        taxable: product.taxable,
         brand: brand != 0 ? brand : null,
       };
 
@@ -339,7 +334,6 @@ export const updateProduct = () => {
           'Description may not be greater than 200 characters.',
         'required.quota': 'Quantity is required.',
         'required.price': 'Price is required.',
-        'required.taxable': 'Taxable is required.',
       });
 
       if (!isValid) {

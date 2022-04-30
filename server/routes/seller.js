@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-
+const Brand = require('../models/brand');
 const Seller = require('../models/seller');
 const User = require('../models/user');
-const Brand = require('../models/brand');
 const auth = require('../middleware/auth');
 const role = require('../middleware/findRole');
 
-router.post('/seller-request', async (req, res) => {
+// Add a new seller
+router.post('/new', async (req, res) => {
   try {
     const name = req.body.name;
     const business = req.body.business;
@@ -17,22 +17,8 @@ router.post('/seller-request', async (req, res) => {
     const brand = req.body.brand;
     const password = req.body.password;
 
-    if (!name || !email) {
-      return res
-        .status(400)
-        .json({ error: 'You must enter your name and email.' });
-    }
-
-    if (!business) {
-      return res
-        .status(400)
-        .json({ error: 'You must enter a business description.' });
-    }
-
-    if (!phone || !email || !password) {
-      return res.status(400).json({
-        error: 'You must enter a phone number, password an email address.',
-      });
+    if (!name || !email || !password || !brand || !business || !phone) {
+      return res.status(400).json({ error: 'Please enter all fields' });
     }
 
     const existingSeller = await Seller.findOne({ email });
@@ -51,29 +37,56 @@ router.post('/seller-request', async (req, res) => {
       brand,
     });
 
-    const sellerDoc = await seller.save();
+    const sDoc = await seller.save();
 
-    await createSellerUser(
-      sellerDoc.email,
-      sellerDoc.name,
-      sellerDoc.sellerId,
-      password
-    );
+    const existingUser = await User.findOne({ email: sDoc.email });
 
-    await createSellerBrand(sellerDoc);
+    if (existingUser) {
+      const sDoc = await Seller.findOne({
+        email: sDoc.email,
+      });
+
+      await createBrand(sDoc);
+      return await User.findOneAndUpdate(
+        { _id: existingUser._id },
+        {
+          seller: sDoc.sellerId,
+          role: role.ROLES.Seller,
+        },
+        {
+          new: true,
+        }
+      );
+    } else {
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(password, salt);
+
+      const user = new User({
+        email: sDoc.email,
+        name: sDoc.name,
+        password: hash,
+        seller: sDoc.sellerId,
+        role: role.ROLES.Seller,
+      });
+
+      await user.save();
+    }
+
+    await createBrand(sDoc);
 
     res.status(200).json({
       success: true,
-      message: `We received your request! we will reach you on your phone number ${phone}!`,
-      seller: sellerDoc,
+      message: `Welcome aboard!`,
+      seller: sDoc,
     });
   } catch (error) {
     return res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
 
+// Get all sellers sort by created at
 router.get('/list', auth, role.findRole(role.ROLES.Admin), async (req, res) => {
   try {
     const sellers = await Seller.find({}).sort('-created');
@@ -83,11 +96,12 @@ router.get('/list', auth, role.findRole(role.ROLES.Admin), async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
 
+// Delete a seller by id by admin
 router.delete(
   '/delete/:id',
   auth,
@@ -98,64 +112,26 @@ router.delete(
 
       res.status(200).json({
         success: true,
-        message: `Seller has been deleted successfully!`,
+        message: `Seller deleted!`,
         seller,
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'try again.',
       });
     }
   }
 );
 
-const createSellerBrand = async ({ _id, brand, business }) => {
-  const newBrand = new Brand({
+// Create a brand of the seller
+const createBrand = async ({ _id, brand, business }) => {
+  const nBrand = new Brand({
+    seller: _id,
     name: brand,
     description: business,
-    seller: _id,
   });
 
-  return await newBrand.save();
-};
-
-const createSellerUser = async (email, name, seller, password) => {
-  const firstName = name;
-  const lastName = '';
-
-  const existingUser = await User.findOne({ email });
-
-  if (existingUser) {
-    const query = { _id: existingUser._id };
-    const update = {
-      seller,
-      role: role.ROLES.Seller,
-    };
-
-    const sellerDoc = await Seller.findOne({
-      email,
-    });
-
-    await createSellerBrand(sellerDoc);
-
-    return await User.findOneAndUpdate(query, update, {
-      new: true,
-    });
-  } else {
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
-
-    const user = new User({
-      email,
-      firstName,
-      lastName,
-      password: hash,
-      seller,
-      role: role.ROLES.Seller,
-    });
-
-    return await user.save();
-  }
+  return await nBrand.save();
 };
 
 module.exports = router;

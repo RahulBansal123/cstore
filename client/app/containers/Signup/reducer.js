@@ -16,8 +16,7 @@ import {
 const initialState = {
   signupFormData: {
     email: '',
-    firstName: '',
-    lastName: '',
+    name: '',
     password: '',
   },
   formErrors: {},
@@ -52,8 +51,7 @@ const signupReducer = (state = initialState, action) => {
         ...state,
         signupFormData: {
           email: '',
-          firstName: '',
-          lastName: '',
+          name: '',
           password: '',
         },
         formErrors: {},

@@ -31,8 +31,7 @@ const initialState = {
   formErrors: {},
   signupFormData: {
     email: '',
-    firstName: '',
-    lastName: '',
+    name: '',
     password: '',
   },
   signupFormErrors: {},
@@ -109,8 +108,7 @@ const sellerReducer = (state = initialState, action) => {
         ...state,
         signupFormData: {
           email: '',
-          firstName: '',
-          lastName: '',
+          name: '',
           password: '',
         },
       };

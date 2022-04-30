@@ -5,56 +5,49 @@ const Cart = require('../models/cart');
 const Product = require('../models/product');
 const auth = require('../middleware/auth');
 
-const caculateItemsSalesTax = (items) => {
-  const taxRate = taxConfig.stateTaxRate;
-
+// Calculate Tax on items
+const calTax = (items) => {
   const products = items.map((item) => {
-    item.priceAfterTax = 0;
-    item.netPrice = 0;
-    item.netTax = 0;
     item.priceBeforeTax = item.price;
 
-    const price = item.priceBeforeTax;
-    const quota = item.quota;
-    item.netPrice = parseFloat(Number((price * quota).toFixed(2)));
+    item.netPrice = parseFloat(
+      Number((item.priceBeforeTax * item.quota).toFixed(2))
+    );
 
-    if (item.taxable) {
-      const taxAmount = price * (taxRate / 100) * 100;
-
-      item.netTax = parseFloat(Number((taxAmount * quota).toFixed(2)));
-      item.priceAfterTax = parseFloat(
-        Number((item.netPrice + item.netTax).toFixed(2))
-      );
-    }
+    item.netTax = parseFloat(
+      Number((item.priceBeforeTax * (0.02 / 100) * 100 * item.quota).toFixed(2))
+    );
+    item.priceAfterTax = parseFloat(
+      Number((item.netPrice + item.netTax).toFixed(2))
+    );
 
     return item;
   });
 
   return products;
 };
+
 router.post('/add', auth, async (req, res) => {
   try {
     const user = req.user._id;
-    const items = req.body.products;
-
-    const products = caculateItemsSalesTax(items);
+    const products = calTax(req.body.products);
 
     const cart = new Cart({
       user,
       products,
     });
 
-    const cartDoc = await cart.save();
+    const cDoc = await cart.save();
 
     decreaseQuantity(products);
 
     res.status(200).json({
       success: true,
-      cartId: cartDoc.id,
+      cartId: cDoc.id,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
@@ -68,7 +61,7 @@ router.delete('/delete/:cartId', auth, async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
@@ -85,7 +78,7 @@ router.post('/add/:cartId', auth, async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
@@ -102,7 +95,7 @@ router.delete('/delete/:cartId/:productId', auth, async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });

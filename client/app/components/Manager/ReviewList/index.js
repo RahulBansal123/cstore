@@ -19,13 +19,13 @@ const ReviewList = (props) => {
 
   const getAvatar = (review) => {
     const color = getColors();
-    if (review.user.firstName) {
+    if (review.user.name) {
       return (
         <div
           className="d-flex flex-column justify-content-center align-items-center fw-1 text-white avatar"
           style={{ backgroundColor: color ? color : 'red' }}
         >
-          {review.user.firstName.charAt(0)}
+          {review.user.name.charAt(0)}
         </div>
       );
     }

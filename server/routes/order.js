@@ -7,7 +7,9 @@ const Cart = require('../models/cart');
 const Product = require('../models/product');
 const auth = require('../middleware/auth');
 const role = require('../middleware/findRole');
-const calculateTaxAmount = (order) => {
+
+// Calculate Tax
+const calTax = (order) => {
   const taxRate = taxConfig.stateTaxRate;
 
   order.netTax = 0;
@@ -19,7 +21,7 @@ const calculateTaxAmount = (order) => {
       item.priceBeforeTax = price;
 
       if (item.status !== 'Cancelled') {
-        if (item.product?.taxable && item.priceAfterTax === 0) {
+        if (item.priceAfterTax === 0) {
           const taxAmount = price * (taxRate / 100) * 100;
           item.netTax = parseFloat(Number((taxAmount * quota).toFixed(2)));
 
@@ -55,6 +57,7 @@ const calculateTaxAmount = (order) => {
   order.totalWithTax = parseFloat(Number(order.totalWithTax.toFixed(2)));
   return order;
 };
+
 router.post('/add', auth, async (req, res) => {
   try {
     const cart = req.body.cartId;
@@ -67,9 +70,9 @@ router.post('/add', auth, async (req, res) => {
       total,
     });
 
-    const orderDoc = await order.save();
+    const oDoc = await order.save();
 
-    await Cart.findById(orderDoc.cart._id).populate({
+    await Cart.findById(oDoc.cart._id).populate({
       path: 'products.product',
       populate: {
         path: 'brand',
@@ -78,12 +81,12 @@ router.post('/add', auth, async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: `Your order has been placed successfully!`,
-      order: { _id: orderDoc._id },
+      message: `Order placed!`,
+      order: { _id: oDoc._id },
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
@@ -98,10 +101,11 @@ router.get('/search', auth, async (req, res) => {
       });
     }
 
-    let ordersDoc = null;
+    let osDoc = null;
+    const isAdmin = req.user.role === role.ROLES.Admin;
 
-    if (req.user.role === role.ROLES.Admin) {
-      ordersDoc = await Order.find({
+    if (isAdmin) {
+      osDoc = await Order.find({
         _id: Mongoose.Types.ObjectId(search),
       }).populate({
         path: 'cart',
@@ -114,7 +118,7 @@ router.get('/search', auth, async (req, res) => {
       });
     } else {
       const user = req.user._id;
-      ordersDoc = await Order.find({
+      osDoc = await Order.find({
         _id: Mongoose.Types.ObjectId(search),
         user,
       }).populate({
@@ -128,10 +132,10 @@ router.get('/search', auth, async (req, res) => {
       });
     }
 
-    ordersDoc = ordersDoc.filter((order) => order.cart);
+    osDoc = osDoc.filter((order) => order.cart);
 
-    if (ordersDoc.length > 0) {
-      const newOrders = ordersDoc.map((o) => {
+    if (osDoc.length > 0) {
+      const newOrders = osDoc.map((o) => {
         return {
           _id: o._id,
           total: parseFloat(Number(o.total.toFixed(2))),
@@ -140,7 +144,7 @@ router.get('/search', auth, async (req, res) => {
         };
       });
 
-      let orders = newOrders.map((o) => calculateTaxAmount(o));
+      let orders = newOrders.map((o) => calTax(o));
       orders.sort((a, b) => b.created - a.created);
       res.status(200).json({
         orders,
@@ -152,7 +156,7 @@ router.get('/search', auth, async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
@@ -161,7 +165,7 @@ router.get('/', auth, async (req, res) => {
   try {
     const user = req.user._id;
 
-    let ordersDoc = await Order.find({ user }).populate({
+    let osDoc = await Order.find({ user }).populate({
       path: 'cart',
       populate: {
         path: 'products.product',
@@ -171,10 +175,10 @@ router.get('/', auth, async (req, res) => {
       },
     });
 
-    ordersDoc = ordersDoc.filter((order) => order.cart);
+    osDoc = osDoc.filter((order) => order.cart);
 
-    if (ordersDoc.length > 0) {
-      const newOrders = ordersDoc.map((o) => {
+    if (osDoc.length > 0) {
+      const newOrders = osDoc.map((o) => {
         return {
           _id: o._id,
           total: parseFloat(Number(o.total.toFixed(2))),
@@ -183,7 +187,7 @@ router.get('/', auth, async (req, res) => {
         };
       });
 
-      let orders = newOrders.map((o) => calculateTaxAmount(o));
+      let orders = newOrders.map((o) => calTax(o));
       orders.sort((a, b) => b.created - a.created);
       res.status(200).json({
         orders,
@@ -195,7 +199,7 @@ router.get('/', auth, async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
@@ -204,10 +208,10 @@ router.get('/:orderId', auth, async (req, res) => {
   try {
     const orderId = req.params.orderId;
 
-    let orderDoc = null;
+    let oDoc = null;
 
     if (req.user.role === role.ROLES.Admin) {
-      orderDoc = await Order.findOne({ _id: orderId }).populate({
+      oDoc = await Order.findOne({ _id: orderId }).populate({
         path: 'cart',
         populate: {
           path: 'products.product',
@@ -218,7 +222,7 @@ router.get('/:orderId', auth, async (req, res) => {
       });
     } else {
       const user = req.user._id;
-      orderDoc = await Order.findOne({ _id: orderId, user }).populate({
+      oDoc = await Order.findOne({ _id: orderId, user }).populate({
         path: 'cart',
         populate: {
           path: 'products.product',
@@ -229,29 +233,29 @@ router.get('/:orderId', auth, async (req, res) => {
       });
     }
 
-    if (!orderDoc || !orderDoc.cart) {
+    if (!oDoc || !oDoc.cart) {
       return res.status(404).json({
         message: `Cannot find order with the id: ${orderId}.`,
       });
     }
 
     let order = {
-      _id: orderDoc._id,
-      total: orderDoc.total,
-      created: orderDoc.created,
+      _id: oDoc._id,
+      total: oDoc.total,
+      created: oDoc.created,
       netTax: 0,
-      products: orderDoc?.cart?.products,
-      cartId: orderDoc.cart._id,
+      products: oDoc?.cart?.products,
+      cartId: oDoc.cart._id,
     };
 
-    order = calculateTaxAmount(order);
+    order = calTax(order);
 
     res.status(200).json({
       order,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
@@ -273,7 +277,7 @@ router.delete('/cancel/:orderId', auth, async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
@@ -304,7 +308,7 @@ router.put('/status/item/:itemId', auth, async (req, res) => {
       const cart = await Cart.findOne({ _id: cartId });
       const items = cart.products.filter((item) => item.status === 'Cancelled');
 
-      // All items are cancelled => Cancel order
+      // Cancel order after cancelling all items
       if (cart.products.length === items.length) {
         await Order.deleteOne({ _id: orderId });
         await Cart.deleteOne({ _id: cartId });
@@ -314,23 +318,23 @@ router.put('/status/item/:itemId', auth, async (req, res) => {
           orderCancelled: true,
           message: `${
             req.user.role === role.ROLES.Admin ? 'Order' : 'Your order'
-          } has been cancelled successfully`,
+          } is cancelled`,
         });
       }
 
       return res.status(200).json({
         success: true,
-        message: 'Item has been cancelled successfully!',
+        message: 'Item cancelled!',
       });
     }
 
     res.status(200).json({
       success: true,
-      message: 'Item status has been updated successfully!',
+      message: 'Item status updated!',
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });

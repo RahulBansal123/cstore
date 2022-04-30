@@ -80,7 +80,7 @@ export const sellWithUs = () => {
       dispatch({ type: SET_SELL_SUBMITTING, payload: true });
       dispatch({ type: SET_SELL_LOADING, payload: true });
 
-      const response = await axios.post('/api/seller/seller-request', seller);
+      const response = await axios.post('/api/seller/new', seller);
 
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -148,8 +148,7 @@ export const sellerSignUp = (token) => {
       const rules = {
         email: 'required|email',
         password: 'required|min:6',
-        firstName: 'required',
-        lastName: 'required',
+        name: 'required',
       };
 
       const seller = getState().seller.signupFormData;
@@ -157,8 +156,7 @@ export const sellerSignUp = (token) => {
       const { isValid, errors } = allFieldsValidation(seller, rules, {
         'required.email': 'Email is required.',
         'required.password': 'Password is required.',
-        'required.firstName': 'First Name is required.',
-        'required.lastName': 'Last Name is required.',
+        'required.name': 'First Name is required.',
       });
 
       if (!isValid) {

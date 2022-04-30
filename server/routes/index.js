@@ -1,23 +1,13 @@
 const router = require('express').Router();
 
-const authRoutes = require('./auth');
-const userRoutes = require('./user');
-const addressRoutes = require('./address');
-const productRoutes = require('./product');
-const brandRoutes = require('./brand');
-const sellerRoutes = require('./seller');
-const cartRoutes = require('./cart');
-const orderRoutes = require('./order');
-const reviewRoutes = require('./review');
-
-router.use('/auth', authRoutes);
-router.use('/user', userRoutes);
-router.use('/address', addressRoutes);
-router.use('/product', productRoutes);
-router.use('/brand', brandRoutes);
-router.use('/seller', sellerRoutes);
-router.use('/cart', cartRoutes);
-router.use('/order', orderRoutes);
-router.use('/review', reviewRoutes);
+router.use('/auth', require('./auth'));
+router.use('/user', require('./user'));
+router.use('/address', require('./address'));
+router.use('/product', require('./product'));
+router.use('/brand', require('./brand'));
+router.use('/seller', require('./seller'));
+router.use('/cart', require('./cart'));
+router.use('/order', require('./order'));
+router.use('/review', require('./review'));
 
 module.exports = router;

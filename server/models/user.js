@@ -10,10 +10,7 @@ const UserSchema = new Schema({
   phone: {
     type: String,
   },
-  firstName: {
-    type: String,
-  },
-  lastName: {
+  name: {
     type: String,
   },
   password: {
@@ -35,10 +32,6 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-});
-
-UserSchema.virtual('fullName').get(function () {
-  return this.firstName + ' ' + this.lastName;
 });
 
 module.exports = Mongoose.model('User', UserSchema);

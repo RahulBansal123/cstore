@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const Brand = require('../models/brand');
 const auth = require('../middleware/auth');
 const role = require('../middleware/findRole');
@@ -21,16 +20,16 @@ router.post('/add', auth, role.findRole(role.ROLES.Admin), async (req, res) => {
       description,
     });
 
-    const brandDoc = await brand.save();
+    const bDoc = await brand.save();
 
     res.status(200).json({
       success: true,
-      message: `Brand has been added successfully!`,
-      brand: brandDoc,
+      message: `added successfully!`,
+      brand: bDoc,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
@@ -38,13 +37,12 @@ router.post('/add', auth, role.findRole(role.ROLES.Admin), async (req, res) => {
 router.get('/list', async (req, res) => {
   try {
     const brands = await Brand.find({}).populate('seller', 'name');
-
     res.status(200).json({
       brands,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
@@ -69,46 +67,45 @@ router.get(
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'try again.',
       });
     }
   }
 );
 
-router.get('/:id', async (req, res) => {
+router.get('/:bId', async (req, res) => {
   try {
-    const brandId = req.params.id;
-
-    const brandDoc = await Brand.findOne({ _id: brandId });
-
-    if (!brandDoc) {
+    const bId = req.params.bId;
+    const bDoc = await Brand.findOne({ _id: bId });
+    if (!bDoc) {
       res.status(404).json({
-        message: `Cannot find brand with the id: ${brandId}.`,
+        message: `not found`,
       });
     }
-
     res.status(200).json({
-      brand: brandDoc,
+      brand: bDoc,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
 
+// Fetch brands of a seller
 router.get(
-  '/list/select',
+  '/all',
   auth,
   role.findRole(role.ROLES.Admin, role.ROLES.Seller),
   async (req, res) => {
     try {
       let brands = null;
+      const seller = req.user.seller;
 
       if (req.user.seller) {
         brands = await Brand.find(
           {
-            seller: req.user.seller,
+            seller,
           },
           'name'
         );
@@ -121,7 +118,7 @@ router.get(
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'try again.',
       });
     }
   }
@@ -133,42 +130,21 @@ router.put(
   role.findRole(role.ROLES.Admin, role.ROLES.Seller),
   async (req, res) => {
     try {
-      const brandId = req.params.id;
-      const update = req.body.brand;
-      const query = { _id: brandId };
+      const bId = req.params.id;
+      const updateQuery = req.body.brand;
+      const query = { _id: bId };
 
-      await Brand.findOneAndUpdate(query, update, {
+      await Brand.findOneAndUpdate(query, updateQuery, {
         new: true,
       });
 
       res.status(200).json({
         success: true,
-        message: 'Brand has been updated successfully!',
+        message: 'updated!',
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
-      });
-    }
-  }
-);
-
-router.delete(
-  '/delete/:id',
-  auth,
-  role.findRole(role.ROLES.Admin),
-  async (req, res) => {
-    try {
-      const brand = await Brand.deleteOne({ _id: req.params.id });
-
-      res.status(200).json({
-        success: true,
-        message: `Brand has been deleted successfully!`,
-        brand,
-      });
-    } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'try again.',
       });
     }
   }

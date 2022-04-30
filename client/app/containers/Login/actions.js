@@ -57,10 +57,10 @@ export const login = () => {
     try {
       const response = await axios.post('/api/auth/login', user);
 
-      const firstName = response.data.user.firstName;
+      const name = response.data.user.name;
 
       const successfulOptions = {
-        title: `Hey${firstName ? ` ${firstName}` : ''}, Welcome Back!`,
+        title: `Hey${name ? ` ${name}` : ''}, Welcome Back!`,
         position: 'tr',
         autoDismiss: 1,
       };

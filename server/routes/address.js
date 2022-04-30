@@ -5,19 +5,20 @@ const auth = require('../middleware/auth');
 
 router.post('/add', auth, (req, res) => {
   const user = req.user;
+  const values = Object.assign(req.body, { user: user._id });
 
-  const address = new Address(Object.assign(req.body, { user: user._id }));
+  const address = new Address(values);
 
   address.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'try again.',
       });
     }
 
     res.status(200).json({
       success: true,
-      message: `Address has been added successfully!`,
+      message: `added successfully!`,
       address: data,
     });
   });
@@ -27,7 +28,7 @@ router.get('/', auth, (req, res) => {
   Address.find({ user: req.user._id }, (err, data) => {
     if (err) {
       return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'try again.',
       });
     }
 
@@ -39,31 +40,30 @@ router.get('/', auth, (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const addressId = req.params.id;
+    const aId = req.params.id;
+    const aDoc = await Address.findOne({ _id: aId });
 
-    const addressDoc = await Address.findOne({ _id: addressId });
-
-    if (!addressDoc) {
+    if (!aDoc) {
       res.status(404).json({
-        message: `Cannot find Address with the id: ${addressId}.`,
+        message: `not available`,
       });
     }
 
     res.status(200).json({
-      address: addressDoc,
+      address: aDoc,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
 
 router.put('/:id', async (req, res) => {
   try {
-    const addressId = req.params.id;
+    const aId = req.params.id;
     const update = req.body;
-    const query = { _id: addressId };
+    const query = { _id: aId };
 
     await Address.findOneAndUpdate(query, update, {
       new: true,
@@ -75,7 +75,7 @@ router.put('/:id', async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
@@ -84,13 +84,13 @@ router.delete('/delete/:id', (req, res) => {
   Address.deleteOne({ _id: req.params.id }, (err, data) => {
     if (err) {
       return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'try again.',
       });
     }
 
     res.status(200).json({
       success: true,
-      message: `Address has been deleted successfully!`,
+      message: `deleted!`,
       address: data,
     });
   });

@@ -102,7 +102,7 @@ export const fetchBrand = (brandId) => {
 export const fetchBrandsSelect = () => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.get(`/api/brand/list/select`);
+      const response = await axios.get(`/api/brand/all`);
 
       const formattedBrands = selectOptionsFormat(response.data.brands, true);
 

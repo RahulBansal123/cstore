@@ -12,14 +12,10 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email) {
+    if (!email || !password) {
       return res
         .status(400)
-        .json({ error: 'You must enter an email address.' });
-    }
-
-    if (!password) {
-      return res.status(400).json({ error: 'You must enter a password.' });
+        .json({ error: 'enter password and email address.' });
     }
 
     const user = await User.findOne({ email });
@@ -38,11 +34,7 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    const payload = {
-      id: user.id,
-    };
-
-    const token = jwt.sign(payload, secret, { expiresIn: tokenLife });
+    const token = jwt.sign({ id: user.id }, secret, { expiresIn: tokenLife });
 
     if (!token) {
       throw new Error();
@@ -53,50 +45,35 @@ router.post('/login', async (req, res) => {
       token: `Bearer ${token}`,
       user: {
         id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        name: user.name,
         email: user.email,
         role: user.role,
       },
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
 
 router.post('/register', async (req, res) => {
   try {
-    const { email, firstName, lastName, password } = req.body;
+    const { email, name, password } = req.body;
 
-    if (!email) {
-      return res
-        .status(400)
-        .json({ error: 'You must enter an email address.' });
-    }
-
-    if (!firstName || !lastName) {
-      return res.status(400).json({ error: 'You must enter your full name.' });
-    }
-
-    if (!password) {
-      return res.status(400).json({ error: 'You must enter a password.' });
+    if (!email || !name || !password) {
+      return res.status(400).json({ error: 'You must enter all fields.' });
     }
 
     const existingUser = await User.findOne({ email });
-
     if (existingUser) {
-      return res
-        .status(400)
-        .json({ error: 'That email address is already in use.' });
+      return res.status(400).json({ error: 'Change email.' });
     }
 
     const user = new User({
       email,
       password,
-      firstName,
-      lastName,
+      name,
     });
 
     const salt = await bcrypt.genSalt(10);
@@ -116,15 +93,14 @@ router.post('/register', async (req, res) => {
       token: `Bearer ${token}`,
       user: {
         id: registeredUser.id,
-        firstName: registeredUser.firstName,
-        lastName: registeredUser.lastName,
+        name: registeredUser.name,
         email: registeredUser.email,
         role: registeredUser.role,
       },
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });

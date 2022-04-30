@@ -50,29 +50,17 @@ class Signup extends React.PureComponent {
               <Col xs="12" md="12">
                 <Input
                   type={'text'}
-                  error={formErrors['firstName']}
+                  error={formErrors['name']}
                   label={'First Name'}
-                  name={'firstName'}
+                  name={'name'}
                   placeholder={'Please Enter Your First Name'}
-                  value={signupFormData.firstName}
+                  value={signupFormData.name}
                   onInputChange={(name, value) => {
                     signupChange(name, value);
                   }}
                 />
               </Col>
-              <Col xs="12" md="12">
-                <Input
-                  type={'text'}
-                  error={formErrors['lastName']}
-                  label={'Last Name'}
-                  name={'lastName'}
-                  placeholder={'Please Enter Your Last Name'}
-                  value={signupFormData.lastName}
-                  onInputChange={(name, value) => {
-                    signupChange(name, value);
-                  }}
-                />
-              </Col>
+
               <Col xs="12" md="12">
                 <Input
                   type={'text'}

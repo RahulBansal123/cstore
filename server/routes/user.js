@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-
-const User = require('../models/user');
-const auth = require('../middleware/auth');
 const role = require('../middleware/findRole');
+const auth = require('../middleware/auth');
+const User = require('../models/user');
 
+// Search a user by admin
 router.get(
   '/search',
   auth,
@@ -17,11 +17,7 @@ router.get(
 
       const users = await User.find(
         {
-          $or: [
-            { firstName: { $regex: regex } },
-            { lastName: { $regex: regex } },
-            { email: { $regex: regex } },
-          ],
+          $or: [{ name: { $regex: regex } }, { email: { $regex: regex } }],
         },
         { password: 0, _id: 0 }
       ).populate('seller', 'name');
@@ -31,12 +27,13 @@ router.get(
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'try again.',
       });
     }
   }
 );
 
+// Get all users
 router.get('/', auth, async (req, res) => {
   try {
     const user = req.user._id;
@@ -47,29 +44,32 @@ router.get('/', auth, async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });
 
+// Update a user
 router.put('/', auth, async (req, res) => {
   try {
-    const user = req.user._id;
-    const update = req.body.profile;
-    const query = { _id: user };
+    const updateQuery = req.body.profile;
 
-    const userDoc = await User.findOneAndUpdate(query, update, {
-      new: true,
-    });
+    const userDoc = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      updateQuery,
+      {
+        new: true,
+      }
+    );
 
     res.status(200).json({
       success: true,
-      message: 'Your profile is successfully updated!',
+      message: 'Profile updated!',
       user: userDoc,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'try again.',
     });
   }
 });

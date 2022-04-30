@@ -13,11 +13,6 @@ import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
 import SelectOption from '../../Common/SelectOption';
 
-const taxableSelect = [
-  { value: 1, label: 'Yes' },
-  { value: 0, label: 'No' },
-];
-
 const AddProduct = (props) => {
   const {
     user,
@@ -90,18 +85,6 @@ const AddProduct = (props) => {
               value={productFormData.price}
               onInputChange={(name, value) => {
                 productChange(name, value);
-              }}
-            />
-          </Col>
-          <Col xs="12" md="12">
-            <SelectOption
-              error={formErrors['taxable']}
-              label={'Taxable'}
-              name={'taxable'}
-              options={taxableSelect}
-              value={productFormData.taxable}
-              handleSelectChange={(value) => {
-                productChange('taxable', value);
               }}
             />
           </Col>

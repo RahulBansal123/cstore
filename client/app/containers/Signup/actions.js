@@ -42,8 +42,7 @@ export const signUp = () => {
       const rules = {
         email: 'required|email',
         password: 'required|min:6',
-        firstName: 'required',
-        lastName: 'required',
+        name: 'required',
       };
 
       const newUser = getState().signup.signupFormData;
@@ -51,8 +50,7 @@ export const signUp = () => {
       const { isValid, errors } = allFieldsValidation(newUser, rules, {
         'required.email': 'Email is required.',
         'required.password': 'Password is required.',
-        'required.firstName': 'First Name is required.',
-        'required.lastName': 'Last Name is required.',
+        'required.name': 'First Name is required.',
       });
 
       if (!isValid) {
