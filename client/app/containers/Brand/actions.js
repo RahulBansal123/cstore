@@ -210,31 +210,6 @@ export const updateBrand = () => {
   };
 };
 
-// activate brand api
-export const activateBrand = (id, value) => {
-  return async (dispatch, getState) => {
-    try {
-      const response = await axios.put(`/api/brand/${id}/active`, {
-        brand: {
-          isActive: value,
-        },
-      });
-
-      const successfulOptions = {
-        title: `${response.data.message}`,
-        position: 'tr',
-        autoDismiss: 1,
-      };
-
-      if (response.data.success === true) {
-        dispatch(success(successfulOptions));
-      }
-    } catch (error) {
-      console.log('error');
-    }
-  };
-};
-
 // delete brand api
 export const deleteBrand = (id) => {
   return async (dispatch, getState) => {

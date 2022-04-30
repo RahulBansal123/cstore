@@ -11,7 +11,6 @@ import account from './containers/Account/reducer';
 import address from './containers/Address/reducer';
 import users from './containers/Users/reducer';
 import product from './containers/Product/reducer';
-import category from './containers/Category/reducer';
 import brand from './containers/Brand/reducer';
 import menu from './containers/NavigationMenu/reducer';
 import shop from './containers/Shop/reducer';
@@ -33,7 +32,6 @@ const createReducer = (history) =>
     address,
     users,
     product,
-    category,
     brand,
     menu: menu,
     shop,

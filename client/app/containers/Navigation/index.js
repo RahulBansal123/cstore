@@ -26,7 +26,6 @@ import { BarsIcon } from '../../components/Common/Icon';
 class Navigation extends React.PureComponent {
   componentDidMount() {
     this.props.fetchStoreBrands();
-    this.props.fetchCategories();
   }
 
   toggleBrand() {
@@ -35,7 +34,6 @@ class Navigation extends React.PureComponent {
   }
 
   toggleMenu() {
-    this.props.fetchCategories();
     this.props.toggleMenu();
   }
 
@@ -97,7 +95,6 @@ class Navigation extends React.PureComponent {
       history,
       authenticated,
       user,
-      categories,
       signOut,
       toggleCart,
       searchValue,
@@ -126,16 +123,6 @@ class Navigation extends React.PureComponent {
               lg={{ size: !authenticated ? 8 : 3, order: 1 }}
             >
               <div className="brand">
-                {categories && categories.length > 0 && (
-                  <Button
-                    borderless
-                    variant="empty"
-                    className="d-none d-md-block"
-                    ariaLabel="open the menu"
-                    icon={<BarsIcon />}
-                    onClick={() => this.toggleMenu()}
-                  />
-                )}
                 <Link to="/">
                   <h1 className="logo">CStore</h1>
                 </Link>
@@ -235,7 +222,6 @@ const mapStateToProps = (state) => {
     isMenuOpen: state.navigation.isMenuOpen,
     isCartOpen: state.navigation.isCartOpen,
     cartItems: state.cart.cartItems,
-    categories: state.category.storeCategories,
     authenticated: state.authentication.authenticated,
     user: state.account.user,
     searchValue: state.navigation.searchValue,

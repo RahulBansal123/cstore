@@ -142,19 +142,6 @@ module.exports = {
       theme_color: '#4a68aa',
       inject: true,
       ios: true,
-      icons: [
-        {
-          src: path.resolve('client/public/images/pwa.png'),
-          destination: 'images',
-          sizes: [72, 96, 128, 144, 192, 384, 512],
-        },
-        {
-          src: path.resolve('client/public/images/pwa.png'),
-          sizes: [120, 152, 167, 180],
-          destination: 'images',
-          ios: true,
-        },
-      ],
     }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css$/g,

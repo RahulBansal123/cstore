@@ -364,31 +364,6 @@ export const updateProduct = () => {
   };
 };
 
-// activate product api
-export const activateProduct = (id, value) => {
-  return async (dispatch, getState) => {
-    try {
-      const response = await axios.put(`/api/product/${id}/active`, {
-        product: {
-          isActive: value,
-        },
-      });
-
-      const successfulOptions = {
-        title: `${response.data.message}`,
-        position: 'tr',
-        autoDismiss: 1,
-      };
-
-      if (response.data.success === true) {
-        dispatch(success(successfulOptions));
-      }
-    } catch (error) {
-      console.log('error');
-    }
-  };
-};
-
 // delete product api
 export const deleteProduct = (id) => {
   return async (dispatch, getState) => {
@@ -418,21 +393,9 @@ export const deleteProduct = (id) => {
 // TODO: Need improvement
 const productsFilterOrganizer = (n, v, s) => {
   switch (n) {
-    case 'category':
-      return {
-        name: s.name,
-        category: v,
-        brand: s.brand,
-        min: s.min,
-        max: s.max,
-        stars: s.stars,
-        order: s.order,
-        pageNumber: 1, //s.pageNumber
-      };
     case 'brand':
       return {
         name: s.name,
-        category: s.category,
         brand: v,
         min: s.min,
         max: s.max,
@@ -443,7 +406,6 @@ const productsFilterOrganizer = (n, v, s) => {
     case 'sorting':
       return {
         name: s.name,
-        category: s.category,
         brand: s.brand,
         min: s.min,
         max: s.max,
@@ -454,7 +416,6 @@ const productsFilterOrganizer = (n, v, s) => {
     case 'price':
       return {
         name: s.name,
-        category: s.category,
         brand: s.brand,
         min: v[0],
         max: v[1],
@@ -465,7 +426,6 @@ const productsFilterOrganizer = (n, v, s) => {
     case 'stars':
       return {
         name: s.name,
-        category: s.category,
         brand: s.brand,
         min: s.min,
         max: s.max,
@@ -476,7 +436,6 @@ const productsFilterOrganizer = (n, v, s) => {
     case 'pagination':
       return {
         name: s.name,
-        category: s.category,
         brand: s.brand,
         min: s.min,
         max: s.max,
@@ -487,7 +446,6 @@ const productsFilterOrganizer = (n, v, s) => {
     default:
       return {
         name: s.name,
-        category: s.category,
         brand: s.brand,
         min: s.min,
         max: s.max,

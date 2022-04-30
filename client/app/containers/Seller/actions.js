@@ -53,13 +53,14 @@ export const sellWithUs = () => {
       const rules = {
         name: 'required',
         email: 'required|email',
-        password: 'required|password',
+        password: 'required',
         phone: ['required', `regex:${phoneno}`],
         brand: 'required',
         business: 'required|min:10',
       };
 
       const seller = getState().seller.sellFormData;
+      console.log(seller);
 
       const { isValid, errors } = allFieldsValidation(seller, rules, {
         'required.name': 'Name is required.',
@@ -91,7 +92,7 @@ export const sellWithUs = () => {
       dispatch({ type: SELL_FORM_RESET });
       dispatch(success(successfulOptions));
     } catch (error) {
-      console.log('error');
+      console.log('error', error);
     } finally {
       dispatch({ type: SET_SELL_SUBMITTING, payload: false });
       dispatch({ type: SET_SELL_LOADING, payload: false });

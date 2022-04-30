@@ -114,15 +114,6 @@ const AddProduct = (props) => {
               }}
             />
           </Col>
-          <Col xs="12" md="12" className="my-2">
-            <Switch
-              id={'active-product'}
-              name={'isActive'}
-              label={'Active?'}
-              checked={productFormData.isActive}
-              toggleCheckboxChange={(value) => productChange('isActive', value)}
-            />
-          </Col>
         </Row>
         <hr />
         <div className="add-product-actions">

@@ -54,7 +54,6 @@ const initialState = {
   shopFormErrors: {},
   advancedFilters: {
     name: 'all',
-    category: 'all',
     brand: 'all',
     min: 1,
     max: 5000,
@@ -194,7 +193,6 @@ const productReducer = (state = initialState, action) => {
         ...state,
         advancedFilters: {
           name: 'all',
-          category: 'all',
           brand: 'all',
           min: 1,
           max: 5000,

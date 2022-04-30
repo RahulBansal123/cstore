@@ -50,7 +50,7 @@ router.post('/new', async (req, res) => {
       return await User.findOneAndUpdate(
         { _id: existingUser._id },
         {
-          seller: sDoc.sellerId,
+          seller: sDoc._id,
           role: role.ROLES.Seller,
         },
         {
@@ -65,7 +65,7 @@ router.post('/new', async (req, res) => {
         email: sDoc.email,
         name: sDoc.name,
         password: hash,
-        seller: sDoc.sellerId,
+        seller: sDoc._id,
         role: role.ROLES.Seller,
       });
 

@@ -46,7 +46,7 @@ class Sell extends React.PureComponent {
                     error={formErrors['name']}
                     label={'Name'}
                     name={'name'}
-                    placeholder={'You Full Name'}
+                    placeholder={'Name'}
                     value={sellFormData.name}
                     onInputChange={(name, value) => {
                       sellFormChange(name, value);
@@ -59,7 +59,7 @@ class Sell extends React.PureComponent {
                     error={formErrors['email']}
                     label={'Email Address'}
                     name={'email'}
-                    placeholder={'Your Email Address'}
+                    placeholder={'Email'}
                     value={sellFormData.email}
                     onInputChange={(name, value) => {
                       sellFormChange(name, value);
@@ -68,10 +68,10 @@ class Sell extends React.PureComponent {
                 </Col>
                 <Col xs="12">
                   <Input
-                    type={'text'}
+                    type={'password'}
                     error={formErrors['password']}
-                    label={'Password'}
-                    name={'email'}
+                    label={'password'}
+                    name={'password'}
                     placeholder={'Password'}
                     value={sellFormData.password}
                     onInputChange={(name, value) => {
@@ -85,7 +85,7 @@ class Sell extends React.PureComponent {
                     error={formErrors['phone']}
                     label={'Phone Number'}
                     name={'phone'}
-                    placeholder={'Your Phone Number'}
+                    placeholder={'Phone Number'}
                     value={sellFormData.phone}
                     onInputChange={(name, value) => {
                       sellFormChange(name, value);
@@ -98,7 +98,7 @@ class Sell extends React.PureComponent {
                     error={formErrors['brand']}
                     label={'Brand'}
                     name={'brand'}
-                    placeholder={'Your Business Brand'}
+                    placeholder={'Brand'}
                     value={sellFormData.brand}
                     onInputChange={(name, value) => {
                       sellFormChange(name, value);
@@ -111,7 +111,7 @@ class Sell extends React.PureComponent {
                     error={formErrors['business']}
                     label={'Business'}
                     name={'business'}
-                    placeholder={'Please Describe Your Business'}
+                    placeholder={'Business Description'}
                     value={sellFormData.business}
                     onInputChange={(name, value) => {
                       sellFormChange(name, value);
@@ -128,10 +128,9 @@ class Sell extends React.PureComponent {
           <Col xs="12" md="6" className="order-1 order-md-2">
             <Row>
               <Col xs="12" className="order-2 order-md-1 text-md-center mb-3">
-                <div className="agreement-banner-text">
-                  <h3>Would you like to sell your products on CStore!</h3>
-                  <h4>Grow your business with CStore</h4>
-                  <b>Apply Today</b>
+                <div>
+                  <h2>Grow with CStore</h2>
+                  <h4>Apply today</h4>
                 </div>
               </Col>
             </Row>

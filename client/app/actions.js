@@ -10,7 +10,6 @@ import * as accountAction from './containers/Account/actions';
 import * as addressAction from './containers/Address/actions';
 import * as usersAction from './containers/Users/actions';
 import * as productAction from './containers/Product/actions';
-import * as categoryAction from './containers/Category/actions';
 import * as brandAction from './containers/Brand/actions';
 import * as menuAction from './containers/NavigationMenu/actions';
 import * as shopAction from './containers/Shop/actions';
@@ -31,7 +30,6 @@ export default function mapDispatchToProps(dispatch) {
       ...addressAction,
       ...usersAction,
       ...productAction,
-      ...categoryAction,
       ...brandAction,
       ...menuAction,
       ...shopAction,

@@ -8,7 +8,6 @@ import actions from '../../actions';
 
 import ProductsShop from '../ProductsShop';
 import BrandsShop from '../BrandsShop';
-import CategoryShop from '../CategoryShop';
 
 import Page404 from '../../components/Common/Page404';
 import Pagination from '../../components/Common/Pagination';
@@ -37,7 +36,6 @@ class Shop extends React.PureComponent {
           >
             <Switch>
               <Route exact path="/shop" component={ProductsShop} />
-              <Route path="/shop/category/:slug" component={CategoryShop} />
               <Route path="/shop/brand/:slug" component={BrandsShop} />
               <Route path="*" component={Page404} />
             </Switch>
