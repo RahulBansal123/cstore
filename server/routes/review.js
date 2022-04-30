@@ -53,6 +53,7 @@ router.get('/', async (req, res) => {
 
 // Get all reviews by product
 router.get('/:name', async (req, res) => {
+  console.log(req.params.name);
   try {
     const product = await Product.findOne({ slug: req.params.name });
 
@@ -61,9 +62,10 @@ router.get('/:name', async (req, res) => {
         message: 'No product',
       });
     }
+    console.log(product);
 
     const reviews = await Review.find({
-      product: productDoc._id,
+      product: product._id,
     })
       .populate({
         path: 'user',

@@ -244,7 +244,6 @@ export const addProduct = () => {
         price: product.price,
         quota: product.quota,
         image: product.image,
-        isActive: product.isActive,
         brand:
           user.role !== 'SELLER'
             ? brand != 0
@@ -260,28 +259,14 @@ export const addProduct = () => {
           'Description may not be greater than 200 characters.',
         'required.quota': 'Quantity is required.',
         'required.price': 'Price is required.',
-        'required.image': 'Please upload files with jpg, jpeg, png format.',
+        'required.image': 'Image URL is required',
       });
 
       if (!isValid) {
         return dispatch({ type: SET_PRODUCT_FORM_ERRORS, payload: errors });
       }
-      const formData = new FormData();
-      if (newProduct.image) {
-        for (const key in newProduct) {
-          if (newProduct.hasOwnProperty(key)) {
-            if (key === 'brand' && newProduct[key] === null) {
-              continue;
-            } else {
-              formData.set(key, newProduct[key]);
-            }
-          }
-        }
-      }
 
-      const response = await axios.post(`/api/product/add`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      const response = await axios.post(`/api/product/add`, newProduct);
 
       const successfulOptions = {
         title: `${response.data.message}`,

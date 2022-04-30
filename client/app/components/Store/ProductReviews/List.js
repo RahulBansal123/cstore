@@ -45,7 +45,6 @@ const List = (props) => {
               />
             </div>
             <p className="mb-2 fs-12">{dateFormat(`${review?.created}`)}</p>
-            <p className="mb-0 three-line-ellipsis word-break-all">{`${review?.review}`}</p>
           </div>
         </div>
       ))}

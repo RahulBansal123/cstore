@@ -9,7 +9,6 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../../Common/Input';
-import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
 import SelectOption from '../../Common/SelectOption';
 
@@ -21,7 +20,6 @@ const AddProduct = (props) => {
     productChange,
     addProduct,
     brands,
-    image,
   } = props;
 
   const handleSubmit = (event) => {
@@ -101,16 +99,17 @@ const AddProduct = (props) => {
               }}
             />
           </Col>
+          {console.log(productFormData)}
           <Col xs="12" md="12">
             <Input
-              type={'file'}
-              error={formErrors['file']}
+              type={'text'}
+              error={formErrors['image']}
+              label={'Image'}
               name={'image'}
-              label={'file'}
-              placeholder={'Please Upload Image'}
-              value={image}
+              placeholder={'Product Image'}
+              value={productFormData.image}
               onInputChange={(name, value) => {
-                productChange(name, value);
+                productChange('image', value);
               }}
             />
           </Col>

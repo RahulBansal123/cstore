@@ -3,7 +3,6 @@ import React from 'react';
 import ReactStars from 'react-rating-stars-component';
 
 import NotFound from '../../Common/NotFound';
-import { ReviewIcon } from '../../Common/Icon';
 
 const Summary = (props) => {
   const {
@@ -70,7 +69,6 @@ const Summary = (props) => {
         ))
       ) : (
         <NotFound>
-          <ReviewIcon width="40" height="40" className="my-2" />
           <p className="mb-2">Be the first to add a review.</p>
         </NotFound>
       )}

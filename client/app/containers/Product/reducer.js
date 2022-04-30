@@ -38,8 +38,7 @@ const initialState = {
     description: '',
     quota: 1,
     price: 1,
-    image: {},
-    isActive: true,
+    image: '',
     brand: {
       value: 0,
       label: 'No Options Selected',
@@ -160,8 +159,7 @@ const productReducer = (state = initialState, action) => {
           description: '',
           quota: 1,
           price: 1,
-          image: {},
-          isActive: true,
+          image: '',
           brand: {
             value: 0,
             label: 'No Options Selected',

@@ -73,25 +73,6 @@ router.get(
   }
 );
 
-router.get('/:bId', async (req, res) => {
-  try {
-    const bId = req.params.bId;
-    const bDoc = await Brand.findOne({ _id: bId });
-    if (!bDoc) {
-      res.status(404).json({
-        message: `not found`,
-      });
-    }
-    res.status(200).json({
-      brand: bDoc,
-    });
-  } catch (error) {
-    res.status(400).json({
-      error: 'try again.',
-    });
-  }
-});
-
 // Fetch brands of a seller
 router.get(
   '/all',
@@ -100,12 +81,13 @@ router.get(
   async (req, res) => {
     try {
       let brands = null;
-      const seller = req.user.seller;
+
+      console.log(req.user);
 
       if (req.user.seller) {
         brands = await Brand.find(
           {
-            seller,
+            seller: req.user.seller,
           },
           'name'
         );
@@ -118,7 +100,7 @@ router.get(
       });
     } catch (error) {
       res.status(400).json({
-        error: 'try again.',
+        error: 'qweqe',
       });
     }
   }
@@ -149,5 +131,24 @@ router.put(
     }
   }
 );
+
+router.get('/:bId', async (req, res) => {
+  try {
+    const bId = req.params.bId;
+    const bDoc = await Brand.findOne({ _id: bId });
+    if (!bDoc) {
+      res.status(404).json({
+        message: `not found`,
+      });
+    }
+    res.status(200).json({
+      brand: bDoc,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'try again',
+    });
+  }
+});
 
 module.exports = router;
