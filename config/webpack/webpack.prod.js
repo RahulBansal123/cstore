@@ -136,7 +136,7 @@ module.exports = {
     }),
     new WebpackPwaManifest({
       name: 'CStore',
-      short_name: 'MERNStore',
+      short_name: 'CStore',
       description: 'CStore!',
       background_color: '#fff',
       theme_color: '#4a68aa',

@@ -1,35 +1,19 @@
 {
-  "name": "mern-ecommerce",
+  "name": "cstore",
   "version": "1.0.0",
-  "description": "MERN Ecommerce",
+  "description": "cstore",
   "main": "server/index.js",
   "scripts": {
     "build": "npm run build:clean && cross-env NODE_ENV=production webpack --progress --colors",
     "build:clean": "rimraf ./dist",
     "start": "cross-env NODE_ENV=development nodemon server",
-    "start:production": "cross-env NODE_ENV=production node server",
-    "production": "npm run build",
-    "postinstall": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:production": "cross-env NODE_ENV=production node server"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mohamedsamara/mern-ecommerce.git"
   },
-  "keywords": [
-    "node",
-    "express",
-    "mongoose",
-    "react",
-    "redux",
-    "redux-thunk",
-    "webpack"
-  ],
-  "author": "Mohamed Samara (https://github.com/mohamedsamara)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mohamedsamara/mern-ecommerce/issues"
-  },
+  "author": "IIITD",
   "homepage": "https://github.com/mohamedsamara/mern-ecommerce#readme",
   "dependencies": {
     "autosuggest-highlight": "^3.1.1",
