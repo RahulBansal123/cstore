@@ -82,14 +82,14 @@ export const sellWithUs = () => {
 
       const response = await axios.post('/api/seller/new', seller);
 
-      const successfulOptions = {
+      const optionsS = {
         title: `${response.data.message}`,
         position: 'tr',
         autoDismiss: 1,
       };
 
       dispatch({ type: SELL_FORM_RESET });
-      dispatch(success(successfulOptions));
+      dispatch(success(optionsS));
     } catch (error) {
       console.log('error');
     } finally {
@@ -165,14 +165,14 @@ export const sellerSignUp = (token) => {
 
       await axios.post(`/api/seller/signup/${token}`, seller);
 
-      const successfulOptions = {
+      const optionsS = {
         title: `You have signed up successfully! Please sign in with the email and password. Thank you!`,
         position: 'tr',
         autoDismiss: 1,
       };
 
       dispatch(signOut());
-      dispatch(success(successfulOptions));
+      dispatch(success(optionsS));
       dispatch(push('/login'));
       dispatch({ type: SIGNUP_RESET });
     } catch (error) {
@@ -187,14 +187,14 @@ export const deleteSeller = (id) => {
     try {
       const response = await axios.delete(`/api/seller/delete/${id}`);
 
-      const successfulOptions = {
+      const optionsS = {
         title: `${response.data.message}`,
         position: 'tr',
         autoDismiss: 1,
       };
 
       if (response.data.success == true) {
-        dispatch(success(successfulOptions));
+        dispatch(success(optionsS));
         dispatch({
           type: REMOVE_SELLER,
           payload: id,

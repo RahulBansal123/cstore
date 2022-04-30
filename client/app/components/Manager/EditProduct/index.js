@@ -22,7 +22,6 @@ const EditProduct = (props) => {
     brands,
     updateProduct,
     deleteProduct,
-    activateProduct,
   } = props;
 
   const handleSubmit = (event) => {
@@ -102,18 +101,6 @@ const EditProduct = (props) => {
               />
             </Col>
           )}
-          <Col xs="12" md="12" className="mt-3 mb-2">
-            <Switch
-              id={`enable-product-${product._id}`}
-              name={'isActive'}
-              label={'Active?'}
-              checked={product?.isActive}
-              toggleCheckboxChange={(value) => {
-                productChange('isActive', value);
-                activateProduct(product._id, value);
-              }}
-            />
-          </Col>
         </Row>
         <hr />
         <div className="d-flex flex-column flex-md-row">

@@ -75,14 +75,14 @@ export const deleteReview = (id) => {
     try {
       const response = await axios.delete(`/api/review/delete/${id}`);
 
-      const successfulOptions = {
+      const optionsS = {
         title: `${response.data.message}`,
         position: 'tr',
         autoDismiss: 1,
       };
 
       if (response.data.success == true) {
-        dispatch(success(successfulOptions));
+        dispatch(success(optionsS));
         dispatch({
           type: REMOVE_REVIEW,
           payload: id,
@@ -150,14 +150,14 @@ export const addProductReview = () => {
 
       const response = await axios.post(`/api/review/add`, newReview);
 
-      const successfulOptions = {
+      const optionsS = {
         title: `${response.data.message}`,
         position: 'tr',
         autoDismiss: 1,
       };
 
       if (response.data.success === true) {
-        dispatch(success(successfulOptions));
+        dispatch(success(optionsS));
         dispatch(fetchProductReviews(product.slug));
 
         // dispatch({

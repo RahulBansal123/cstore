@@ -1,15 +1,12 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
-
 import actions from '../../actions';
-
 import AddAddress from '../../components/Manager/AddAddress';
 import SubPage from '../../components/Manager/SubPage';
 
 class Add extends React.PureComponent {
   render() {
-    const { history, addressFormData, formErrors, addressChange, addAddress } =
+    const { history, addressFormData, formErrors, changeAddress, addAddress } =
       this.props;
 
     return (
@@ -21,7 +18,7 @@ class Add extends React.PureComponent {
         <AddAddress
           addressFormData={addressFormData}
           formErrors={formErrors}
-          addressChange={addressChange}
+          changeAddress={changeAddress}
           addAddress={addAddress}
         />
       </SubPage>

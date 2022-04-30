@@ -1,9 +1,3 @@
-/*
- *
- * Brand actions
- *
- */
-
 import { goBack } from 'connected-react-router';
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
@@ -46,7 +40,6 @@ export const brandEditChange = (name, value) => {
   };
 };
 
-// fetch store brands api
 export const fetchStoreBrands = () => {
   return async (dispatch, getState) => {
     try {
@@ -62,7 +55,6 @@ export const fetchStoreBrands = () => {
   };
 };
 
-// fetch brands api
 export const fetchBrands = () => {
   return async (dispatch, getState) => {
     try {
@@ -82,7 +74,6 @@ export const fetchBrands = () => {
   };
 };
 
-// fetch brand api
 export const fetchBrand = (brandId) => {
   return async (dispatch, getState) => {
     try {
@@ -98,7 +89,6 @@ export const fetchBrand = (brandId) => {
   };
 };
 
-// fetch brands select api
 export const fetchBrandsSelect = () => {
   return async (dispatch, getState) => {
     try {
@@ -116,13 +106,12 @@ export const fetchBrandsSelect = () => {
   };
 };
 
-// add brand api
 export const addBrand = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
         name: 'required',
-        description: 'required|max:200',
+        description: 'required|max:100',
       };
 
       const brand = getState().brand.brandFormData;
@@ -131,7 +120,7 @@ export const addBrand = () => {
         'required.name': 'Name is required.',
         'required.description': 'Description is required.',
         'max.description':
-          'Description may not be greater than 200 characters.',
+          'Description may not be greater than 100 characters.',
       });
 
       if (!isValid) {
@@ -140,14 +129,14 @@ export const addBrand = () => {
 
       const response = await axios.post(`/api/brand/add`, brand);
 
-      const successfulOptions = {
+      const optionsS = {
         title: `${response.data.message}`,
         position: 'tr',
         autoDismiss: 1,
       };
 
       if (response.data.success === true) {
-        dispatch(success(successfulOptions));
+        dispatch(success(optionsS));
         dispatch({
           type: ADD_BRAND,
           payload: response.data.brand,
@@ -162,13 +151,12 @@ export const addBrand = () => {
   };
 };
 
-// update brand api
 export const updateBrand = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
         name: 'required',
-        description: 'required|max:200',
+        description: 'required|max:100',
       };
 
       const brand = getState().brand.brand;
@@ -182,7 +170,7 @@ export const updateBrand = () => {
         'required.name': 'Name is required.',
         'required.description': 'Description is required.',
         'max.description':
-          'Description may not be greater than 200 characters.',
+          'Description may not be greater than 100 characters.',
       });
 
       if (!isValid) {
@@ -193,14 +181,14 @@ export const updateBrand = () => {
         brand: newBrand,
       });
 
-      const successfulOptions = {
+      const optionsS = {
         title: `${response.data.message}`,
         position: 'tr',
         autoDismiss: 1,
       };
 
       if (response.data.success === true) {
-        dispatch(success(successfulOptions));
+        dispatch(success(optionsS));
 
         dispatch(goBack());
       }
@@ -210,45 +198,19 @@ export const updateBrand = () => {
   };
 };
 
-// activate brand api
-export const activateBrand = (id, value) => {
-  return async (dispatch, getState) => {
-    try {
-      const response = await axios.put(`/api/brand/${id}/active`, {
-        brand: {
-          isActive: value,
-        },
-      });
-
-      const successfulOptions = {
-        title: `${response.data.message}`,
-        position: 'tr',
-        autoDismiss: 1,
-      };
-
-      if (response.data.success === true) {
-        dispatch(success(successfulOptions));
-      }
-    } catch (error) {
-      console.log('error');
-    }
-  };
-};
-
-// delete brand api
 export const deleteBrand = (id) => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.delete(`/api/brand/delete/${id}`);
 
-      const successfulOptions = {
+      const optionsS = {
         title: `${response.data.message}`,
         position: 'tr',
         autoDismiss: 1,
       };
 
       if (response.data.success === true) {
-        dispatch(success(successfulOptions));
+        dispatch(success(optionsS));
         dispatch({
           type: REMOVE_BRAND,
           payload: id,

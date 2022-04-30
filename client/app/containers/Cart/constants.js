@@ -1,9 +1,3 @@
-/*
- *
- * Cart constants
- *
- */
-
 export const HANDLE_CART = 'src/Cart/HANDLE_CART';
 export const ADD_TO_CART = 'src/Cart/ADD_TO_CART';
 export const REMOVE_FROM_CART = 'src/Cart/REMOVE_FROM_CART';

@@ -18,7 +18,7 @@ import {
 import { setAuth, clearAuth } from '../Authentication/actions';
 import setToken from '../../utils/token';
 import { clearCart } from '../Cart/actions';
-import { clearAccount } from '../Account/actions';
+import { deleteAccount } from '../Account/actions';
 import { allFieldsValidation } from '../../utils/validation';
 
 export const loginChange = (name, value) => {
@@ -59,7 +59,7 @@ export const login = () => {
 
       const name = response.data.user.name;
 
-      const successfulOptions = {
+      const optionsS = {
         title: `Hey${name ? ` ${name}` : ''}, Welcome Back!`,
         position: 'tr',
         autoDismiss: 1,
@@ -70,7 +70,7 @@ export const login = () => {
       setToken(response.data.token);
 
       dispatch(setAuth());
-      dispatch(success(successfulOptions));
+      dispatch(success(optionsS));
 
       dispatch({ type: LOGIN_RESET });
     } catch (error) {
@@ -84,19 +84,18 @@ export const login = () => {
 
 export const signOut = () => {
   return (dispatch, getState) => {
-    const successfulOptions = {
+    const optionsS = {
       title: `You have signed out!`,
       position: 'tr',
       autoDismiss: 1,
     };
 
     dispatch(clearAuth());
-    dispatch(clearAccount());
+    dispatch(deleteAccount());
     dispatch(push('/login'));
 
     localStorage.removeItem('token');
 
-    dispatch(success(successfulOptions));
-    // dispatch(clearCart());
+    dispatch(success(optionsS));
   };
 };

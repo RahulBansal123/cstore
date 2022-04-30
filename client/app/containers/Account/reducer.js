@@ -1,9 +1,4 @@
-import {
-  ACCOUNT_CHANGE,
-  FETCH_PROFILE,
-  CLEAR_ACCOUNT,
-  SET_PROFILE_LOADING,
-} from './constants';
+import { ACCOUNT_UPDATE, FETCH_PROFILE, DELETE_ACCOUNT } from './constants';
 
 const initialState = {
   user: {
@@ -14,7 +9,7 @@ const initialState = {
 
 const accountReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ACCOUNT_CHANGE:
+    case ACCOUNT_UPDATE:
       return {
         ...state,
         user: {
@@ -30,17 +25,12 @@ const accountReducer = (state = initialState, action) => {
           ...action.payload,
         },
       };
-    case CLEAR_ACCOUNT:
+    case DELETE_ACCOUNT:
       return {
         ...state,
         user: {
           name: '',
         },
-      };
-    case SET_PROFILE_LOADING:
-      return {
-        ...state,
-        isLoading: action.payload,
       };
     default:
       return state;

@@ -26,7 +26,6 @@ import { BarsIcon } from '../../components/Common/Icon';
 class Navigation extends React.PureComponent {
   componentDidMount() {
     this.props.fetchStoreBrands();
-    this.props.fetchCategories();
   }
 
   toggleBrand() {
@@ -35,7 +34,6 @@ class Navigation extends React.PureComponent {
   }
 
   toggleMenu() {
-    this.props.fetchCategories();
     this.props.toggleMenu();
   }
 
@@ -103,8 +101,8 @@ class Navigation extends React.PureComponent {
       searchValue,
       suggestions,
       onSearch,
-      onSuggestionsFetchRequested,
-      onSuggestionsClearRequested,
+      searchProducts,
+      searchProductsClear,
     } = this.props;
 
     const inputProps = {
@@ -151,8 +149,8 @@ class Navigation extends React.PureComponent {
               >
                 <Autosuggest
                   suggestions={suggestions}
-                  onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-                  onSuggestionsClearRequested={onSuggestionsClearRequested}
+                  onSuggestionsFetchRequested={searchProducts}
+                  onSuggestionsClearRequested={searchProductsClear}
                   getSuggestionValue={this.getSuggestionValue}
                   renderSuggestion={this.renderSuggestion}
                   inputProps={inputProps}
@@ -235,7 +233,6 @@ const mapStateToProps = (state) => {
     isMenuOpen: state.navigation.isMenuOpen,
     isCartOpen: state.navigation.isCartOpen,
     cartItems: state.cart.cartItems,
-    categories: state.category.storeCategories,
     authenticated: state.authentication.authenticated,
     user: state.account.user,
     searchValue: state.navigation.searchValue,

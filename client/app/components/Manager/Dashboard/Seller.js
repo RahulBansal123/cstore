@@ -9,7 +9,6 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
 
-import AccountMenu from '../AccountMenu';
 import Page404 from '../../Common/Page404';
 
 import Account from '../../../containers/Account';
@@ -22,9 +21,6 @@ const Customer = (props) => {
   return (
     <div className="seller">
       <Row>
-        <Col xs="12" md="5" xl="3">
-          <AccountMenu {...props} />
-        </Col>
         <Col xs="12" md="7" xl="9">
           <div className="panel-body">
             <Switch>

@@ -7,10 +7,10 @@ import { SET_AUTH } from './containers/Authentication/constants';
 import Application from './containers/Application';
 import setToken from './utils/token';
 
-import 'font-awesome/css/font-awesome.min.css';
-import 'simple-line-icons/css/simple-line-icons.css';
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'rc-slider/assets/index.css';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'simple-line-icons/css/simple-line-icons.css';
+import 'font-awesome/css/font-awesome.min.css';
 import './styles/style.scss';
 
 const token = localStorage.getItem('token');

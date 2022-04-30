@@ -1,8 +1,8 @@
 import {
-  FETCH_ADDRESS,
-  FETCH_ADDRESSES,
-  ADDRESS_CHANGE,
-  ADDRESS_EDIT_CHANGE,
+  F_ADDRESS,
+  F_ADDRESSES,
+  CHANGE_ADDRESS,
+  ADDRESS_EDIT,
   SET_ADDRESS_FORM_ERRORS,
   SET_ADDRESS_FORM_EDIT_ERRORS,
   RESET_ADDRESS,
@@ -35,12 +35,12 @@ const initialState = {
 
 const addressReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_ADDRESSES:
+    case F_ADDRESSES:
       return {
         ...state,
         addresses: action.payload,
       };
-    case FETCH_ADDRESS:
+    case F_ADDRESS:
       return {
         ...state,
         address: action.payload,
@@ -60,7 +60,7 @@ const addressReducer = (state = initialState, action) => {
           ...state.addresses.slice(index + 1),
         ],
       };
-    case ADDRESS_CHANGE:
+    case CHANGE_ADDRESS:
       return {
         ...state,
         addressFormData: {
@@ -68,7 +68,7 @@ const addressReducer = (state = initialState, action) => {
           ...action.payload,
         },
       };
-    case ADDRESS_EDIT_CHANGE:
+    case ADDRESS_EDIT:
       return {
         ...state,
         address: {

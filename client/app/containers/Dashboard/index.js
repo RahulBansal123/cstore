@@ -24,7 +24,7 @@ class Dashboard extends React.PureComponent {
   }
 
   render() {
-    const { user, isLoading, isMenuOpen, toggleDashboardMenu } = this.props;
+    const { user, isLoading, toggleDashboardMenu } = this.props;
 
     return (
       <>
@@ -32,19 +32,16 @@ class Dashboard extends React.PureComponent {
           <Loading inline />
         ) : user.role === 'ADMIN' ? (
           <Admin
-            isMenuOpen={isMenuOpen}
             links={dashboardLinks['ADMIN']}
             toggleMenu={toggleDashboardMenu}
           />
         ) : user.role === 'SELLER' && user.seller ? (
           <Seller
-            isMenuOpen={isMenuOpen}
             links={dashboardLinks['SELLER']}
             toggleMenu={toggleDashboardMenu}
           />
         ) : (
           <Customer
-            isMenuOpen={isMenuOpen}
             links={dashboardLinks['MEMBER']}
             toggleMenu={toggleDashboardMenu}
           />
@@ -58,7 +55,6 @@ const mapStateToProps = (state) => {
   return {
     user: state.account.user,
     isLoading: state.account.isLoading,
-    isMenuOpen: state.dashboard.isMenuOpen,
   };
 };
 

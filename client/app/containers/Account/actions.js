@@ -1,47 +1,30 @@
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
+import { ACCOUNT_UPDATE, FETCH_PROFILE, DELETE_ACCOUNT } from './constants';
 
-import {
-  ACCOUNT_CHANGE,
-  FETCH_PROFILE,
-  CLEAR_ACCOUNT,
-  SET_PROFILE_LOADING,
-} from './constants';
-
-export const accountChange = (name, value) => {
+export const updateAccount = (name, value) => {
   let formData = {};
   formData[name] = value;
 
   return {
-    type: ACCOUNT_CHANGE,
+    type: ACCOUNT_UPDATE,
     payload: formData,
   };
 };
 
-export const clearAccount = () => {
+export const deleteAccount = () => {
   return {
-    type: CLEAR_ACCOUNT,
-  };
-};
-
-export const setProfileLoading = (value) => {
-  return {
-    type: SET_PROFILE_LOADING,
-    payload: value,
+    type: DELETE_ACCOUNT,
   };
 };
 
 export const fetchProfile = () => {
   return async (dispatch, getState) => {
     try {
-      dispatch(setProfileLoading(true));
       const response = await axios.get(`/api/user`);
-
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
     } catch (error) {
       console.log('error');
-    } finally {
-      dispatch(setProfileLoading(false));
     }
   };
 };
@@ -49,21 +32,17 @@ export const fetchProfile = () => {
 export const updateProfile = () => {
   return async (dispatch, getState) => {
     const profile = getState().account.user;
-
     try {
       const response = await axios.put(`/api/user`, {
         profile,
       });
-
-      const successfulOptions = {
+      const optionsS = {
         title: `${response.data.message}`,
         position: 'tr',
-        autoDismiss: 1,
+        autoDismiss: 2,
       };
-
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
-
-      dispatch(success(successfulOptions));
+      dispatch(success(optionsS));
     } catch (error) {
       console.log('error');
     }

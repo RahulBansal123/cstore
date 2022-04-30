@@ -66,7 +66,7 @@ export const signUp = () => {
 
       const response = await axios.post('/api/auth/register', user);
 
-      const successfulOptions = {
+      const optionsS = {
         title: `You have signed up successfully! You will be receiving an email as well. Thank you!`,
         position: 'tr',
         autoDismiss: 1,
@@ -77,7 +77,7 @@ export const signUp = () => {
       setToken(response.data.token);
 
       dispatch(setAuth());
-      dispatch(success(successfulOptions));
+      dispatch(success(optionsS));
       dispatch({ type: SIGNUP_RESET });
     } catch (error) {
       console.log('error');

@@ -14,7 +14,7 @@ import Button from '../../Common/Button';
 const EditAddress = (props) => {
   const {
     address,
-    addressChange,
+    changeAddress,
     defaultChange,
     formErrors,
     updateAddress,
@@ -39,7 +39,7 @@ const EditAddress = (props) => {
               placeholder={'Address: Street, House No / Apartment No'}
               value={address.address}
               onInputChange={(name, value) => {
-                addressChange(name, value);
+                changeAddress(name, value);
               }}
             />
           </Col>
@@ -52,7 +52,7 @@ const EditAddress = (props) => {
               placeholder={'City'}
               value={address.city}
               onInputChange={(name, value) => {
-                addressChange(name, value);
+                changeAddress(name, value);
               }}
             />
           </Col>
@@ -65,7 +65,7 @@ const EditAddress = (props) => {
               placeholder={'State'}
               value={address.state}
               onInputChange={(name, value) => {
-                addressChange(name, value);
+                changeAddress(name, value);
               }}
             />
           </Col>
@@ -78,7 +78,7 @@ const EditAddress = (props) => {
               placeholder={'Please Enter Your Country'}
               value={address.country}
               onInputChange={(name, value) => {
-                addressChange(name, value);
+                changeAddress(name, value);
               }}
             />
           </Col>
@@ -91,7 +91,7 @@ const EditAddress = (props) => {
               placeholder={'Please Enter Your Zipcode'}
               value={address.zipCode}
               onInputChange={(name, value) => {
-                addressChange(name, value);
+                changeAddress(name, value);
               }}
             />
           </Col>
@@ -103,7 +103,7 @@ const EditAddress = (props) => {
               checked={address.isDefault}
               value={address.isDefault}
               toggleCheckboxChange={(name, value) => {
-                addressChange(name, value);
+                changeAddress(name, value);
               }}
             /> */}
           </Col>

@@ -12,7 +12,7 @@ import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 
 const AddAddress = (props) => {
-  const { addressFormData, formErrors, addressChange, addAddress } = props;
+  const { addressFormData, formErrors, changeAddress, addAddress } = props;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -32,7 +32,7 @@ const AddAddress = (props) => {
               placeholder={'Address: Street, House No / Apartment No'}
               value={addressFormData.address}
               onInputChange={(name, value) => {
-                addressChange(name, value);
+                changeAddress(name, value);
               }}
             />
           </Col>
@@ -45,7 +45,7 @@ const AddAddress = (props) => {
               placeholder={'City'}
               value={addressFormData.city}
               onInputChange={(name, value) => {
-                addressChange(name, value);
+                changeAddress(name, value);
               }}
             />
           </Col>
@@ -58,7 +58,7 @@ const AddAddress = (props) => {
               placeholder={'State'}
               value={addressFormData.state}
               onInputChange={(name, value) => {
-                addressChange(name, value);
+                changeAddress(name, value);
               }}
             />
           </Col>
@@ -71,7 +71,7 @@ const AddAddress = (props) => {
               placeholder={'Please Enter Your country'}
               value={addressFormData.country}
               onInputChange={(name, value) => {
-                addressChange(name, value);
+                changeAddress(name, value);
               }}
             />
           </Col>
@@ -84,7 +84,7 @@ const AddAddress = (props) => {
               placeholder={'Please Enter Your Zipcode'}
               value={addressFormData.zipCode}
               onInputChange={(name, value) => {
-                addressChange(name, value);
+                changeAddress(name, value);
               }}
             />
           </Col>
@@ -95,7 +95,7 @@ const AddAddress = (props) => {
               name={'isDefault'}
               value={addressFormData.isDefault}
               toggleCheckboxChange={(name, value) => {
-                addressChange(name, value);
+                changeAddress(name, value);
               }}
             /> */}
           </Col>

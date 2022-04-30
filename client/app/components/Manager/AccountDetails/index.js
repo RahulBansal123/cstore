@@ -13,7 +13,7 @@ import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 
 const AccountDetails = (props) => {
-  const { user, accountChange, updateProfile } = props;
+  const { user, updateAccount, updateProfile } = props;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -38,7 +38,7 @@ const AccountDetails = (props) => {
               placeholder={'Please Enter Your First Name'}
               value={user.name ? user.name : ''}
               onInputChange={(name, value) => {
-                accountChange(name, value);
+                updateAccount(name, value);
               }}
             />
           </Col>
@@ -51,7 +51,7 @@ const AccountDetails = (props) => {
               placeholder={'Please Enter Your Email'}
               value={user.email ? user.email : ''}
               onInputChange={(name, value) => {
-                accountChange(name, value);
+                updateAccount(name, value);
               }}
             />
           </Col> */}
@@ -63,7 +63,7 @@ const AccountDetails = (props) => {
               placeholder={'Please Enter Your Phone Number'}
               value={user.phone ? user.phone : ''}
               onInputChange={(name, value) => {
-                accountChange(name, value);
+                updateAccount(name, value);
               }}
             />
           </Col>

@@ -12,19 +12,19 @@ import Input from '../../Common/Input';
 import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
 
-const AddBrand = props => {
+const AddBrand = (props) => {
   const { brandFormData, formErrors, brandChange, addBrand } = props;
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     addBrand();
   };
 
   return (
-    <div className='add-brand'>
+    <div className="add-brand">
       <form onSubmit={handleSubmit} noValidate>
         <Row>
-          <Col xs='12'>
+          <Col xs="12">
             <Input
               type={'text'}
               error={formErrors['name']}
@@ -37,7 +37,7 @@ const AddBrand = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12'>
+          <Col xs="12" md="12">
             <Input
               type={'textarea'}
               error={formErrors['description']}
@@ -50,19 +50,10 @@ const AddBrand = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12' className='my-2'>
-            <Switch
-              id={'active-brand'}
-              name={'isActive'}
-              label={'Active?'}
-              checked={brandFormData.isActive}
-              toggleCheckboxChange={value => brandChange('isActive', value)}
-            />
-          </Col>
         </Row>
         <hr />
-        <div className='add-brand-actions'>
-          <Button type='submit' text='Add Brand' />
+        <div className="add-brand-actions">
+          <Button type="submit" text="Add Brand" />
         </div>
       </form>
     </div>

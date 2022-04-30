@@ -1,9 +1,3 @@
-/**
- *
- * Authentication
- *
- */
-
 import React from 'react';
 
 import { connect } from 'react-redux';
@@ -17,16 +11,16 @@ export default function (ComposedComponent) {
       const { authenticated } = this.props;
 
       if (!authenticated) {
-        return <Redirect to='/login' />;
+        return <Redirect to="/login" />;
       } else {
         return <ComposedComponent {...this.props} />;
       }
     }
   }
 
-  const mapStateToProps = state => {
+  const mapStateToProps = (state) => {
     return {
-      authenticated: state.authentication.authenticated
+      authenticated: state.authentication.authenticated,
     };
   };
 

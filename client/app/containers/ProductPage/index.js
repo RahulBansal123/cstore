@@ -37,8 +37,8 @@ class ProductPage extends React.PureComponent {
       shopFormErrors,
       itemsInCart,
       productShopChange,
-      handleAddToCart,
-      handleRemoveFromCart,
+      addToCart,
+      removeFromCart,
       addProductReview,
       reviewsSummary,
       reviews,
@@ -105,7 +105,7 @@ class ProductPage extends React.PureComponent {
                           }
                           text="Remove From Basket"
                           className="bag-btn"
-                          onClick={() => handleRemoveFromCart(product)}
+                          onClick={() => removeFromCart(product)}
                         />
                       ) : (
                         <Button
@@ -115,7 +115,7 @@ class ProductPage extends React.PureComponent {
                           }
                           text="Add To Basket"
                           className="bag-btn"
-                          onClick={() => handleAddToCart(product)}
+                          onClick={() => addToCart(product)}
                         />
                       )}
                     </div>

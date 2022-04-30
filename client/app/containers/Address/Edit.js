@@ -26,7 +26,7 @@ class Edit extends React.PureComponent {
       history,
       address,
       formErrors,
-      addressEditChange,
+      editAddress,
       defaultChange,
       updateAddress,
       deleteAddress,
@@ -41,7 +41,7 @@ class Edit extends React.PureComponent {
         {address?._id ? (
           <EditAddress
             address={address}
-            addressChange={addressEditChange}
+            changeAddress={editAddress}
             formErrors={formErrors}
             updateAddress={updateAddress}
             deleteAddress={deleteAddress}

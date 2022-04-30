@@ -1,9 +1,3 @@
-/*
- *
- * Cart actions
- *
- */
-
 import { push } from 'connected-react-router';
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
@@ -26,7 +20,7 @@ import { allFieldsValidation } from '../../utils/validation';
 import { toggleCart } from '../Navigation/actions';
 
 // Handle Add To Cart
-export const handleAddToCart = (product) => {
+export const addToCart = (product) => {
   return (dispatch, getState) => {
     product.quota = Number(getState().product.productShopData.quota);
     product.netPrice = product.quota * product.price;
@@ -62,7 +56,7 @@ export const handleAddToCart = (product) => {
 };
 
 // Handle Remove From Cart
-export const handleRemoveFromCart = (product) => {
+export const removeFromCart = (product) => {
   return (dispatch, getState) => {
     dispatch({
       type: REMOVE_FROM_CART,
@@ -113,7 +107,7 @@ export const handleCart = () => {
 
 export const handleCheckout = () => {
   return (dispatch, getState) => {
-    const successfulOptions = {
+    const optionsS = {
       title: `Please Login to proceed to checkout`,
       position: 'tr',
       autoDismiss: 1,
@@ -121,7 +115,7 @@ export const handleCheckout = () => {
 
     dispatch(toggleCart());
     dispatch(push('/login'));
-    dispatch(success(successfulOptions));
+    dispatch(success(optionsS));
   };
 };
 

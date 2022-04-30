@@ -40,13 +40,12 @@ class Edit extends React.PureComponent {
       productEditChange,
       updateProduct,
       deleteProduct,
-      activateProduct
     } = this.props;
 
     return (
       <SubPage
-        title='Edit Product'
-        actionTitle='Cancel'
+        title="Edit Product"
+        actionTitle="Cancel"
         handleAction={history.goBack}
       >
         {product?._id ? (
@@ -58,22 +57,21 @@ class Edit extends React.PureComponent {
             productChange={productEditChange}
             updateProduct={updateProduct}
             deleteProduct={deleteProduct}
-            activateProduct={activateProduct}
           />
         ) : (
-          <NotFound message='no product found.' />
+          <NotFound message="no product found." />
         )}
       </SubPage>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.account.user,
     product: state.product.product,
     formErrors: state.product.editFormErrors,
-    brands: state.brand.brandsSelect
+    brands: state.brand.brandsSelect,
   };
 };
 

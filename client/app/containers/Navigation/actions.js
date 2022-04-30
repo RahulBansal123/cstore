@@ -32,7 +32,7 @@ export const onSearch = (v) => {
   };
 };
 
-export const onSuggestionsFetchRequested = (value) => {
+export const searchProducts = (value) => {
   const inputValue = value.value.trim().toLowerCase();
 
   return async (dispatch, getState) => {
@@ -50,7 +50,7 @@ export const onSuggestionsFetchRequested = (value) => {
   };
 };
 
-export const onSuggestionsClearRequested = () => {
+export const searchProductsClear = () => {
   return {
     type: SUGGESTIONS_CLEAR_REQUEST,
     payload: [],

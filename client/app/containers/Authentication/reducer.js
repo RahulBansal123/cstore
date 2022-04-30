@@ -1,14 +1,8 @@
-/*
- *
- * Authentication reducer
- *
- */
-
 import { SET_AUTH, CLEAR_AUTH } from './constants';
 
 const initialState = {
   authenticated: false,
-  isLoading: false
+  isLoading: false,
 };
 
 const authenticationReducer = (state = initialState, action) => {
@@ -16,12 +10,12 @@ const authenticationReducer = (state = initialState, action) => {
     case SET_AUTH:
       return {
         ...state,
-        authenticated: true
+        authenticated: true,
       };
     case CLEAR_AUTH:
       return {
         ...state,
-        authenticated: false
+        authenticated: false,
       };
     default:
       return state;

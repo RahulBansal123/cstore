@@ -244,7 +244,6 @@ export const addProduct = () => {
         price: product.price,
         quota: product.quota,
         image: product.image,
-        isActive: product.isActive,
         brand:
           user.role !== 'SELLER'
             ? brand != 0
@@ -283,14 +282,14 @@ export const addProduct = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      const successfulOptions = {
+      const optionsS = {
         title: `${response.data.message}`,
         position: 'tr',
         autoDismiss: 1,
       };
 
       if (response.data.success === true) {
-        dispatch(success(successfulOptions));
+        dispatch(success(optionsS));
         dispatch({
           type: ADD_PRODUCT,
           payload: response.data.product,
@@ -347,41 +346,16 @@ export const updateProduct = () => {
         product: newProduct,
       });
 
-      const successfulOptions = {
+      const optionsS = {
         title: `${response.data.message}`,
         position: 'tr',
         autoDismiss: 1,
       };
 
       if (response.data.success === true) {
-        dispatch(success(successfulOptions));
+        dispatch(success(optionsS));
 
         //dispatch(goBack());
-      }
-    } catch (error) {
-      console.log('error');
-    }
-  };
-};
-
-// activate product api
-export const activateProduct = (id, value) => {
-  return async (dispatch, getState) => {
-    try {
-      const response = await axios.put(`/api/product/${id}/active`, {
-        product: {
-          isActive: value,
-        },
-      });
-
-      const successfulOptions = {
-        title: `${response.data.message}`,
-        position: 'tr',
-        autoDismiss: 1,
-      };
-
-      if (response.data.success === true) {
-        dispatch(success(successfulOptions));
       }
     } catch (error) {
       console.log('error');
@@ -395,14 +369,14 @@ export const deleteProduct = (id) => {
     try {
       const response = await axios.delete(`/api/product/delete/${id}`);
 
-      const successfulOptions = {
+      const optionsS = {
         title: `${response.data.message}`,
         position: 'tr',
         autoDismiss: 1,
       };
 
       if (response.data.success === true) {
-        dispatch(success(successfulOptions));
+        dispatch(success(optionsS));
         dispatch({
           type: REMOVE_PRODUCT,
           payload: id,
@@ -418,21 +392,9 @@ export const deleteProduct = (id) => {
 // TODO: Need improvement
 const productsFilterOrganizer = (n, v, s) => {
   switch (n) {
-    case 'category':
-      return {
-        name: s.name,
-        category: v,
-        brand: s.brand,
-        min: s.min,
-        max: s.max,
-        stars: s.stars,
-        order: s.order,
-        pageNumber: 1, //s.pageNumber
-      };
     case 'brand':
       return {
         name: s.name,
-        category: s.category,
         brand: v,
         min: s.min,
         max: s.max,
@@ -443,7 +405,6 @@ const productsFilterOrganizer = (n, v, s) => {
     case 'sorting':
       return {
         name: s.name,
-        category: s.category,
         brand: s.brand,
         min: s.min,
         max: s.max,
@@ -454,7 +415,6 @@ const productsFilterOrganizer = (n, v, s) => {
     case 'price':
       return {
         name: s.name,
-        category: s.category,
         brand: s.brand,
         min: v[0],
         max: v[1],
@@ -465,7 +425,6 @@ const productsFilterOrganizer = (n, v, s) => {
     case 'stars':
       return {
         name: s.name,
-        category: s.category,
         brand: s.brand,
         min: s.min,
         max: s.max,
@@ -476,7 +435,6 @@ const productsFilterOrganizer = (n, v, s) => {
     case 'pagination':
       return {
         name: s.name,
-        category: s.category,
         brand: s.brand,
         min: s.min,
         max: s.max,
@@ -487,7 +445,6 @@ const productsFilterOrganizer = (n, v, s) => {
     default:
       return {
         name: s.name,
-        category: s.category,
         brand: s.brand,
         min: s.min,
         max: s.max,

@@ -1,9 +1,3 @@
-/*
- *
- * Add
- *
- */
-
 import React from 'react';
 
 import { connect } from 'react-redux';
@@ -15,18 +9,13 @@ import SubPage from '../../components/Manager/SubPage';
 
 class Add extends React.PureComponent {
   render() {
-    const {
-      history,
-      brandFormData,
-      formErrors,
-      brandChange,
-      addBrand
-    } = this.props;
+    const { history, brandFormData, formErrors, brandChange, addBrand } =
+      this.props;
 
     return (
       <SubPage
-        title='Add Brand'
-        actionTitle='Cancel'
+        title="Add Brand"
+        actionTitle="Cancel"
         handleAction={() => history.goBack()}
       >
         <AddBrand
@@ -40,10 +29,10 @@ class Add extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     brandFormData: state.brand.brandFormData,
-    formErrors: state.brand.formErrors
+    formErrors: state.brand.formErrors,
   };
 };
 

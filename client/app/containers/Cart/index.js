@@ -18,7 +18,7 @@ class Cart extends React.PureComponent {
       toggleCart,
       handleShopping,
       handleCheckout,
-      handleRemoveFromCart,
+      removeFromCart,
       placeOrder,
       authenticated,
     } = this.props;
@@ -43,7 +43,7 @@ class Cart extends React.PureComponent {
             <CartList
               toggleCart={toggleCart}
               cartItems={cartItems}
-              handleRemoveFromCart={handleRemoveFromCart}
+              removeFromCart={removeFromCart}
             />
           </div>
         ) : (

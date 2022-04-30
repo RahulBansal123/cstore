@@ -141,13 +141,13 @@ export const updateOrderItemStatus = (itemId, status) => {
         dispatch(fetchOrder(order._id, false));
       }
 
-      const successfulOptions = {
+      const optionsS = {
         title: `${response.data.message}`,
         position: 'tr',
         autoDismiss: 1,
       };
 
-      dispatch(success(successfulOptions));
+      dispatch(success(optionsS));
     } catch (error) {
       console.log('error');
     }

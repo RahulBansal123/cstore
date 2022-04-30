@@ -4,7 +4,6 @@
     { "to": "/security", "name": "Account Security" },
     { "to": "/address", "name": "Address" },
     { "to": "/product", "name": "Products" },
-    { "to": "/category", "name": "Categories" },
     { "to": "/brand", "name": "Brands" },
     { "to": "/users", "name": "Users" },
     { "to": "/sellers", "name": "Sellers" },

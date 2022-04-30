@@ -39,7 +39,6 @@ const initialState = {
     quota: 1,
     price: 1,
     image: {},
-    isActive: true,
     brand: {
       value: 0,
       label: 'No Options Selected',
@@ -54,7 +53,6 @@ const initialState = {
   shopFormErrors: {},
   advancedFilters: {
     name: 'all',
-    category: 'all',
     brand: 'all',
     min: 1,
     max: 5000,
@@ -162,7 +160,6 @@ const productReducer = (state = initialState, action) => {
           quota: 1,
           price: 1,
           image: {},
-          isActive: true,
           brand: {
             value: 0,
             label: 'No Options Selected',
@@ -194,7 +191,6 @@ const productReducer = (state = initialState, action) => {
         ...state,
         advancedFilters: {
           name: 'all',
-          category: 'all',
           brand: 'all',
           min: 1,
           max: 5000,

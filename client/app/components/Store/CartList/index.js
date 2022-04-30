@@ -6,7 +6,7 @@ import { Container, Row, Col } from 'reactstrap';
 import Button from '../../Common/Button';
 
 const CartList = (props) => {
-  const { cartItems, handleRemoveFromCart } = props;
+  const { cartItems, removeFromCart } = props;
 
   const handleProductClick = () => {
     props.toggleCart();
@@ -45,7 +45,7 @@ const CartList = (props) => {
                     variant="empty"
                     ariaLabel={`remove ${item.name} from cart`}
                     icon={<i className="icon-trash" aria-hidden="true" />}
-                    onClick={() => handleRemoveFromCart(item)}
+                    onClick={() => removeFromCart(item)}
                   />
                 </Col>
               </Row>
