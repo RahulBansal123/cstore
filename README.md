@@ -4,7 +4,7 @@
 git clone https://github.com/RahulBansal123/cstore.git
 cd cstore
 npm install
-npm start
+
 ```
 
 ## Triggers are created for updated field for users(triggerUser), cart(triggerCart) and seller(triggerSeller)
