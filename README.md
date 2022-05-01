@@ -4,6 +4,7 @@
 git clone https://github.com/RahulBansal123/cstore.git
 cd cstore
 npm install
+npm start
 
 ```
 
